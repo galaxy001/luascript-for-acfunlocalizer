@@ -28,6 +28,7 @@
 --[[edit 20130423 fro parse for iqiyi]]
 --[[edit 20130423 for iqiyi 0x96283BC0]]
 --[[edit 20130503 for bilibili only 6min video]]
+--[[edit 20130512 for parse for sohu]]
 
 require "luascript/lib/bit"
 
@@ -80,6 +81,7 @@ function readUntil( file, str_tag , str_old)
 	repeat
 		str_line = file:read("*l");
 		print(str_line);
+		--dbgMessage(str_line);
 	until str_line==nil or string.find(str_line, str_tag, 1, true)~=nil
 	return str_line;
 end
@@ -351,6 +353,7 @@ fls["tudou"]=4;
 fls["6cn"]=5;
 fls["bili"]=6;
 fls["iqiyi"]=7;
+fls["sohu"]=8;
 
 
 --BOOLEAN
@@ -1289,6 +1292,136 @@ function getRealUrls_iqiyi (str_id, str_tmpfile, pDlg)
 
 end
 
+
+--[[read real urls from sohu through vid]]
+function getRealUrls_sohu (str_id, str_tmpfile, pDlg)
+	local tbl_urls = {};
+	local index = 0;
+
+	local str_dynurl = "http://hot.vrs.sohu.com/vrs_flash.action?vid=" .. str_id;
+
+	--dbgMessage(str_dynurl);
+
+	if pDlg~=nil then
+		sShowMessage(pDlg, '正在读取转接页面..');
+	end
+
+	local re = dlFile(str_tmpfile, str_dynurl);
+	if re~=0
+	then
+		if pDlg~=nil then
+			sShowMessage(pDlg, '转接页面读取错误。');
+		end
+		return index, tbl_urls;
+	else
+		if pDlg~=nil then
+			sShowMessage(pDlg, '读取转接页面成功，正在分析..');
+		end
+	end
+
+	local file = io.open(str_tmpfile, "r");
+	if file==nil
+	then
+		if pDlg~=nil then
+			sShowMessage(pDlg, '转接页面读取错误。');
+		end
+		return;
+	end
+
+	local str_line = readUntil(file, "\"clipsURL\"");
+
+	io.close(file);
+
+	str_line = utf8_to_lua(str_line);
+	--dbgMessage(str_line);
+
+	local str_prot = getMedText(str_line, "\"prot\":", "," );
+	local str_allot = getMedText(str_line, "\"allot\":\"", "\"");
+	local str_clipsURLs = getMedText(str_line, "\"clipsURL\":[", "]");
+	local str_sus = getMedText(str_line, "\"su\":[", "]");
+
+	--str_line = getMedText(str_line, "<fileUrl>", "</fileUrl>")
+	--dbgMessage(str_line)
+	--dbgMessage(str_Name);
+	while str_clipsURLs ~= nil  and str_sus ~=nil do
+		local str_clipsURL, se_clipsURL = getMedText(str_clipsURLs, "\"", "\"");
+		--dbgMessage(str_clipsURL);
+		local str_su, se_su = getMedText(str_sus, "\"", "\"");
+		--dbgMessage(str_su);
+		if str_clipsURL == nil or str_su == nil then
+			break;
+		end
+
+		local str_transurl = "http://"..str_allot.."/?prot="..str_prot.."&file="..str_clipsURL.."&new="..str_su;
+
+		local str_line_trans = nil;
+		repeat
+			if pDlg~=nil then
+				sShowMessage(pDlg, '正在读取转接页面..');
+			end
+
+			re = dlFile(str_tmpfile, str_transurl);
+			if re~=0
+			then
+				if pDlg~=nil then
+					sShowMessage(pDlg, '转接页面读取错误。');
+				end
+				return index, tbl_urls;
+			else
+				if pDlg~=nil then
+					sShowMessage(pDlg, '读取转接页面成功，正在分析..');
+				end
+			end
+
+			file = io.open(str_tmpfile, "r");
+			if file==nil
+			then
+				if pDlg~=nil then
+					sShowMessage(pDlg, '转接页面读取错误。');
+				end
+				return;
+			end
+
+			str_line_trans = readUntil(file, "http");
+
+			io.close(file);
+		until str_line_trans ~= nil;
+
+		--dbgMessage(str_line_trans);
+
+		local _,_,str_realurl, str_host, str_key  = string.find(str_line_trans, "([^%|]+)|[^%|]+|([^%|]+)|([^%|]+)|[^%|]+|[^%|]+");
+
+		--dbgMessage(str_realurl);
+		--dbgMessage(str_host);
+		--dbgMessage(str_key);
+
+		str_realurl = string.sub(str_realurl,0,-2)..str_su.."?key="..str_key;
+
+		--dbgMessage(str_realurl);
+
+		local str_index = string.format("%d", index);
+		tbl_urls[str_index] = str_realurl;
+		index = index+1;
+		if se_clipsURL~=nil then
+			str_clipsURLs = string.sub(str_clipsURLs,se_clipsURL+1);
+		else
+			str_clipsURLs = nil;
+		end
+
+		if se_su ~=nil then
+			str_sus = string.sub(str_sus, se_su+1);
+		else
+			str_sus = nil;
+		end
+		--dbgMessage(str_line);
+	end
+
+
+
+
+	return index, tbl_urls;
+
+end
 
 
 
