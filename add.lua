@@ -1,4 +1,4 @@
-----[[version: 20130503.00]]
+----[[version: 20130512.00]]
 ---[[by lostangel 20100528]]
 ---[[edit 20101117]]
 ---[[edit 20110402 for new return struct]]
@@ -11,6 +11,7 @@
 ---[[edit 20121119 for ifeng]]
 ---[[edit 20130204 for cntv]]
 ---[[edit 20130423 for iqiyi]]
+---[[edit 20130512 for sohu]]
 
 
 require "luascript/sitelist/acfun"
@@ -24,6 +25,7 @@ require "luascript/sitelist/sina"
 require "luascript/sitelist/ifeng"
 require "luascript/sitelist/cntv"
 require "luascript/sitelist/iqiyi"
+require "luascript/sitelist/sohu"
 require "luascript/customadd"
 --require "your site parse script"
 
@@ -114,6 +116,11 @@ function getTaskAttribute ( str_url, str_tmpfile ,str_servername, pDlg)
 	if string.find(str_url, "iqiyi.com", 1, true)~=nil
 	then
 		return getTaskAttribute_iqiyi(str_url, str_tmpfile, pDlg);
+	end
+
+	if string.find(str_url, "sohu.com", 1, true)~=nil
+	then
+		return getTaskAttribute_sohu(str_url, str_tmpfile, pDlg);
 	end
 	--if ..add more site parser here
 	return getTaskAttribute_Custom(str_url, str_tmpfile, str_servername, pDlg);

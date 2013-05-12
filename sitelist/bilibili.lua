@@ -31,6 +31,7 @@
 ---[[edit 20130427 for bilibili iqiyi source video's subxml]]
 ---[[edit 20130428 for bilibili iqiyi.swf video & subxml]]
 ---[[edit 20130505 for bilibili file=...&...]]
+---[[edit 20130512 for bilibili sohu src video and subxml]]
 
 require "luascript/lib/lalib"
 require "luascript/lib/login"
@@ -215,6 +216,10 @@ function getTaskAttribute_bilibili ( str_url, str_tmpfile, pDlg, isNeedLogin)
 		str_id = getMedText2end(str_embed, "id=", "\"", "&");
 	end
 
+	if string.find(str_embed, "sohu.com", 1,true)~=nil then
+		str_id = getMedText2end(str_embed, "sohu.com/", "/", "/v.swf");
+	end
+
 	--dbgMessage(str_id);
 
 
@@ -240,6 +245,8 @@ function getTaskAttribute_bilibili ( str_url, str_tmpfile, pDlg, isNeedLogin)
 			int_foreignlinksite = fls["bili"];
 		elseif string.find(str_embed, "iqiyi.com", 1,true)~=nil or string.find(str_embed, "iqiyi.swf", 1,true)~=nil then
 			int_foreignlinksite = fls["iqiyi"];
+		elseif string.find(str_embed, "sohu.com", 1,true)~=nil then
+			int_foreignlinksite = fls["sohu"];
 		else
 			int_foreignlinksite = fls["sina"];
 		end
@@ -270,7 +277,7 @@ function getTaskAttribute_bilibili ( str_url, str_tmpfile, pDlg, isNeedLogin)
 	--str_subxmlurl = "http://comment.bilibili.tv/dm," .. str_id;
 	str_subxmlurl = "http://comment.bilibili.tv/" .. str_id .. ".xml";
 
-	if int_foreignlinksite == fls["iqiyi"] then
+	if int_foreignlinksite == fls["iqiyi"] or int_foreignlinksite == fls["sohu"] then
 		local str_cid = getRealCommentID_bilibili(str_url, str_tmpfile, pDlg);
 		if str_cid ~= nil then
 			str_subxmlurl = "http://comment.bilibili.tv/" .. str_cid .. ".xml";
@@ -305,6 +312,9 @@ function getTaskAttribute_bilibili ( str_url, str_tmpfile, pDlg, isNeedLogin)
 	elseif int_foreignlinksite == fls["iqiyi"]
 	then
 		int_realurlnum, tbl_readurls = getRealUrls_iqiyi(str_id, str_tmpfile, pDlg);
+	elseif int_foreignlinksite == fls["sohu"]
+	then
+		int_realurlnum, tbl_readurls = getRealUrls_sohu(str_id, str_tmpfile, pDlg);
 	else
 		int_realurlnum = 1;
 		tbl_readurls = {};
