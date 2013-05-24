@@ -1,4 +1,4 @@
-----[[version: 20130512.00]]
+----[[version: 20130524.00]]
 ---[[by lostangel 20100528]]
 ---[[edit 20101117]]
 ---[[edit 20110402 for new return struct]]
