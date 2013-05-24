@@ -29,6 +29,7 @@
 --[[edit 20130423 for iqiyi 0x96283BC0]]
 --[[edit 20130503 for bilibili only 6min video]]
 --[[edit 20130512 for parse for sohu]]
+--[[edit 20130524 for bilibili backup_url]]
 
 require "luascript/lib/bit"
 
@@ -964,7 +965,12 @@ function getRealUrls_bili(str_id, str_tmpfile, pDlg)
 		index = index+1;
 
 		str_line = string.sub(str_line, string.find(str_line, "</url>")+string.len("</url>"));
-		if string.find(str_line, "<url>",1,true)==nil then
+		while str_line~=nil and string.find(str_line, "<url>",1,true)==nil do
+			--str_line = "";
+			str_line = readIntoUntil(file, str_line, "<url>");
+			if string.find(str_line, "<backup_url>")~=nil then
+				str_line = readUntil(file, "</backup_url>");
+			end
 			str_line = readUntil(file, "<url>");
 		end
 	end
