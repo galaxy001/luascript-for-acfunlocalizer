@@ -30,6 +30,7 @@
 --[[edit 20130503 for bilibili only 6min video]]
 --[[edit 20130512 for parse for sohu]]
 --[[edit 20130524 for bilibili backup_url]]
+--[[edit 20130607 for bilibili durl url backup_url]]
 
 require "luascript/lib/bit"
 
@@ -931,14 +932,62 @@ function getRealUrls_bili(str_id, str_tmpfile, pDlg)
 		return;
 	end
 
-	local str_line = readUntil(file, "<url>");
-	--dbgMessage(str_line);
+--~		local str_line = readUntil(file, "<url>");
+--~		--dbgMessage(str_line);
 
+--~ 	while str_line ~= nil do
+--~ 		local str_line_end = str_line;
+--~ 		if string.find(str_line, "</url>",1,true)==nil then
+--~ 			str_line_end = readIntoUntil(file , str_line, "</url>");
+--~ 		end
+--~ 		--dbgMessage(str_line_end);
+
+--~ 		local str_v_realurl = getMedText(str_line_end, "<url><![CDATA[", "]]></url>");
+
+--~ 		--str_v_realurl = encodeUrl(str_v_realurl);
+
+--~ 		--there is something wrong with the realurl from qqvideo get from bili, change it:
+--~ 		if string.find(str_v_realurl , "qqvideo.tc.qq.com") ~=nil then
+--~ 			--dbgMessage(str_v_realurl);
+--~ 			local _,_,str_channel,str_posfix,str_quote = string.find(str_v_realurl,
+--~ 				'http://([^%.]+)%.[^/]+/([^%?]+)%?(.+)');
+--~ 			--dbgMessage(str_channel);
+--~ 			--dbgMessage(str_posfix);
+--~ 			--dbgMessage(str_quote);
+
+--~ 			str_v_realurl = 'http://vsrc.store.qq.com/' .. str_posfix .. '?channel=' .. str_channel .. '&' .. str_quote;--sdtfrom=v2&r=256&rfc=v10
+--~ 		end
+
+
+--~ 		str_v_realurl = encodeUrl(str_v_realurl);
+--~ 		--dbgMessage(str_v_realurl);
+--~ 		local str_index = string.format("%d",index);
+--~ 		tbl_urls[str_index] = str_v_realurl;
+--~ 		index = index+1;
+
+--~
+--~ 		str_line = string.sub(str_line, string.find(str_line, "</url>")+string.len("</url>"));
+--~ 		while str_line~=nil and string.find(str_line, "<url>",1,true)==nil do
+--~ 			--str_line = "";
+--~ 			str_line = readIntoUntil(file, str_line, "<url>");
+--~ 			if string.find(str_line, "<backup_url>")~=nil then
+--~ 				str_line = readUntil(file, "</backup_url>");
+--~ 			end
+--~ 			str_line = readUntil(file, "<url>");
+--~ 		end
+--~ 	end
+
+	local str_line = readUntil(file, "<durl>");
 	while str_line ~= nil do
 		local str_line_end = str_line;
-		if string.find(str_line, "</url>",1,true)==nil then
-			str_line_end = readIntoUntil(file , str_line, "</url>");
-		end
+		--if string.find(str_line, "</url>",1,true)==nil then
+		--	str_line_end = readIntoUntil(file , str_line, "</url>");
+		--end
+		--dbgMessage(str_line_end);
+
+		str_line = readIntoUntil(file, str_line, "</durl>");
+		str_line_end = (string.gsub(str_line, '<backup_url>.*</backup_url>', ''));
+		--dbgMessage(str_line);
 		--dbgMessage(str_line_end);
 
 		local str_v_realurl = getMedText(str_line_end, "<url><![CDATA[", "]]></url>");
@@ -964,14 +1013,10 @@ function getRealUrls_bili(str_id, str_tmpfile, pDlg)
 		tbl_urls[str_index] = str_v_realurl;
 		index = index+1;
 
-		str_line = string.sub(str_line, string.find(str_line, "</url>")+string.len("</url>"));
-		while str_line~=nil and string.find(str_line, "<url>",1,true)==nil do
-			--str_line = "";
-			str_line = readIntoUntil(file, str_line, "<url>");
-			if string.find(str_line, "<backup_url>")~=nil then
-				str_line = readUntil(file, "</backup_url>");
-			end
-			str_line = readUntil(file, "<url>");
+
+		str_line = string.sub(str_line, string.find(str_line, "</durl>")+string.len("</durl>"));
+		if str_line~=nil and string.find(str_line, "<durl>",1,true)==nil then
+			str_line = readUntil(file, "<durl>");
 		end
 	end
 
