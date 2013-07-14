@@ -31,6 +31,7 @@
 --[[edit 20130512 for parse for sohu]]
 --[[edit 20130524 for bilibili backup_url]]
 --[[edit 20130607 for bilibili durl url backup_url]]
+--[[edit 20130714 for letv-bilibili comment]]
 
 require "luascript/lib/bit"
 
@@ -42,7 +43,7 @@ function getACFPV ( str_url, str_servername)
 	then
 		return 1;--ACFPV_NEW
 		--return 65535;
-	elseif string.find(str_url, "bilibili.kankanews.com",1,true)~=nil or string.find(str_url, "bilibili.us",1,true)~=nil or string.find(str_url, "bilibili.tv",1,true)~=nil
+	elseif string.find(str_url, "bilibili.kankanews.com",1,true)~=nil or string.find(str_url, "bilibili.us",1,true)~=nil or string.find(str_url, "bilibili.tv",1,true)~=nil or string.find(str_url, "letv.com", 1, true)~=nil
 	then
 		return 3;--BIRIBIRIPAD
 	elseif string.find(str_url, "mikufans.cn",1,true)~=nil  or string.find(str_url, "danmaku.us", 1, true)~=nil
@@ -1468,6 +1469,121 @@ function getRealUrls_sohu (str_id, str_tmpfile, pDlg)
 	end
 
 
+
+
+	return index, tbl_urls;
+
+end
+
+--[[read real urls from letv through vid]]
+function getRealUrls_letv (str_id, str_tmpfile, pDlg)
+	local tbl_urls = {};
+	local index = 0;
+
+	local str_dynurl = "http://www.letv.com/v_xml/" .. str_id .. ".xml";
+
+	--dbgMessage(str_dynurl);
+
+	if pDlg~=nil then
+		sShowMessage(pDlg, '正在读取转接页面..');
+	end
+
+	local re = dlFile(str_tmpfile, str_dynurl);
+	if re~=0
+	then
+		if pDlg~=nil then
+			sShowMessage(pDlg, '转接页面读取错误。');
+		end
+		return index, tbl_urls;
+	else
+		if pDlg~=nil then
+			sShowMessage(pDlg, '读取转接页面成功，正在分析..');
+		end
+	end
+
+	local file = io.open(str_tmpfile, "r");
+	if file==nil
+	then
+		if pDlg~=nil then
+			sShowMessage(pDlg, '转接页面读取错误。');
+		end
+		return;
+	end
+
+	local str_line = readUntil(file, "<playurl>");
+	str_line = utf8_to_lua(str_line);
+	--dbgMessage(str_line);
+
+	str_line = getMedText(str_line, "\"dispatch\"", "]}")
+
+	local str_transurl = "";
+	while str_line ~= nil do
+		local str_transurl_tmp, se = getMedText(str_line, ":[\"","\"");
+
+		if str_transurl_tmp ~= nil then
+			str_transurl = str_transurl_tmp;
+		end
+
+		if se~=nil then
+			str_line = string.sub(str_line,se+1);
+		else
+			str_line = nil
+		end
+
+		--dbgMessage(str_line);
+	end
+
+	io.close(file);
+
+	--dbgMessage(str_transurl);
+
+	str_transurl = str_transurl .. "&format=1";
+	str_transurl = string.gsub(str_transurl, "\\/", "/");
+
+	--dbgMessage(str_transurl);
+
+	--[[read trans url]]
+	if pDlg~=nil then
+		sShowMessage(pDlg, '正在读取转接页面..');
+	end
+
+	re = dlFile(str_tmpfile, str_transurl);
+	if re~=0
+	then
+		if pDlg~=nil then
+			sShowMessage(pDlg, '转接页面读取错误。');
+		end
+		return index, tbl_urls;
+	else
+		if pDlg~=nil then
+			sShowMessage(pDlg, '读取转接页面成功，正在分析..');
+		end
+	end
+
+	file = io.open(str_tmpfile, "r");
+	if file==nil
+	then
+		if pDlg~=nil then
+			sShowMessage(pDlg, '转接页面读取错误。');
+		end
+		return;
+	end
+
+	str_line = readUntil(file, "\"location\":");
+	str_line = utf8_to_lua(str_line);
+	--dbgMessage(str_line);
+
+	str_realurl = getMedText(str_line, "\"location\": \"", "\"");
+
+	--dbgMessage(str_realurl);
+	str_realurl = string.gsub(str_realurl, "\\/", "/");
+	--dbgMessage(str_realurl);
+
+	io.close(file);
+
+	local str_index = string.format("%d",index);
+	tbl_urls[str_index] = str_realurl;
+	index = index+1;
 
 
 	return index, tbl_urls;
