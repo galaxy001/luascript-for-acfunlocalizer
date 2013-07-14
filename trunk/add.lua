@@ -1,4 +1,4 @@
-----[[version: 20130714.00]]
+----[[version: 20130714.01]]
 ---[[by lostangel 20100528]]
 ---[[edit 20101117]]
 ---[[edit 20110402 for new return struct]]
@@ -13,6 +13,7 @@
 ---[[edit 20130423 for iqiyi]]
 ---[[edit 20130512 for sohu]]
 ---[[edit 20130714 for letv]]
+---[[edit 20130714 for letv multi-P]]
 
 
 require "luascript/sitelist/acfun"
@@ -157,6 +158,11 @@ function getTaskAttributeBatch ( str_url, str_tmpfile, str_servername, pDlg)
 	if string.find(str_url, "youku.com", 1, true)~=nil
 	then
 		return getTaskAttributeBatch_youku(str_url, str_tmpfile, pDlg);
+	end
+
+	if string.find(str_url, "letv.com", 1, true)~=nil
+	then
+		return getTaskAttributeBatch_letv(str_url, str_tmpfile, pDlg);
 	end
 
 	--elseif ..add more site parser here
