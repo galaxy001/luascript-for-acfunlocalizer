@@ -32,6 +32,7 @@
 --[[edit 20130524 for bilibili backup_url]]
 --[[edit 20130607 for bilibili durl url backup_url]]
 --[[edit 20130714 for letv-bilibili comment]]
+--[[edit 20130801 for sinaflv parse, temp with sex.acfun]]
 
 require "luascript/lib/bit"
 
@@ -369,7 +370,8 @@ function getRealUrls (str_id, str_tmpfile, pDlg)
 	local tbl_urls = {};
 	local index = 0;
 
-	local str_dynurl = "http://v.iask.com/v_play.php?vid="..str_id;
+	--local str_dynurl = "http://v.iask.com/v_play.php?vid="..str_id;
+	local str_dynurl = "http://sex.acfun.tv/Home/Sina?app_key=1917945218&vid=".. str_id .. "&dtime=1374599847484"
 	if pDlg~=nil then
 		sShowMessage(pDlg, '正在读取转接页面..');
 	end
@@ -404,6 +406,7 @@ function getRealUrls (str_id, str_tmpfile, pDlg)
 	do
 		str_line = readUntil(file, "<url>");
 		str_line = readIntoUntil(file, str_line, "</url>");
+		--dbgMessage(str_line);
 		if str_line~=nil and string.find(str_line, "<url>")~=nil
 		then
 			local str_index = string.format("%d",index);
