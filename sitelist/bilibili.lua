@@ -33,6 +33,7 @@
 ---[[edit 20130505 for bilibili file=...&...]]
 ---[[edit 20130512 for bilibili sohu src video and subxml]]
 ---[[edit 20130701 for bilibili cid: tag]]
+---[[edit 20130812 for bilibili batch 503 fast]]
 
 require "luascript/lib/lalib"
 require "luascript/lib/login"
@@ -244,7 +245,7 @@ function getTaskAttribute_bilibili ( str_url, str_tmpfile, pDlg, isNeedLogin)
 			int_foreignlinksite = fls["6cn"];
 		elseif string.find(str_embed, "cid=", 1,true)~=nil then
 			int_foreignlinksite = fls["bili"];
-			
+
 		elseif string.find(str_embed, "iqiyi.com", 1,true)~=nil or string.find(str_embed, "iqiyi.swf", 1,true)~=nil then
 			int_foreignlinksite = fls["iqiyi"];
 		elseif string.find(str_embed, "sohu.com", 1,true)~=nil then
@@ -283,7 +284,7 @@ function getTaskAttribute_bilibili ( str_url, str_tmpfile, pDlg, isNeedLogin)
 	--str_subxmlurl = "http://comment.bilibili.tv/dm," .. str_id;
 	str_subxmlurl = "http://comment.bilibili.tv/" .. str_id .. ".xml";
 
-	
+
 	if str_cid~=nil then
 		str_subxmlurl = "http://comment.bilibili.tv/" .. str_cid .. ".xml";
 	end
@@ -485,22 +486,26 @@ function getTaskAttributeBatch_bilibili ( str_url, str_tmpfile , pDlg)
 
 	local tbl_re = {};
 	local index2= 0;
+	local maxretry = 5;
 	for ti = 0, index-1, 1 do
 		local str_index = string.format("%d", ti);
 		--dbgMessage(str_index);
 		--dbgMessage(tbl_shorturls[str_index]);
 		sShowMessage(pDlg, string.format("正在解析地址(%d/%d)\"%s\",请等待..",ti+1,index,tbl_shorturls[str_index]));
-		for tj = 0, 5, 1 do
+		for tj = 0, maxretry, 1 do
 			local str_son_url = urlprefix..tbl_shorturls[str_index];
 			--dbgMessage(str_son_url);
 			local tbl_sig = getTaskAttribute_bilibili(str_son_url, str_tmpfile, str_servername, false);
-			if tbl_sig~=nil then
+			if (tbl_sig~=nil and tbl_sig["0"]["realurlnum"]~=0) or tj+1 == maxretry then
 				--tbl_sig["0"]["descriptor"] = --[[str_title]]tbl_sig["0"]["descriptor"].."-"..tbl_descriptors[str_index];
 				local str_index2 = string.format("%d",index2);
 				tbl_re[str_index2] = deepcopy(tbl_sig)["0"];--dumpmytable(tbl_sig["0"]);--
 				index2 = index2+1;
+				time_sleep(2000,500);
 				break;
 			end
+
+			time_sleep(30000,5000);
 		end
 
 	end

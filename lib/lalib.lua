@@ -33,6 +33,7 @@
 --[[edit 20130607 for bilibili durl url backup_url]]
 --[[edit 20130714 for letv-bilibili comment]]
 --[[edit 20130801 for sinaflv parse, temp with sex.acfun]]
+--[[edit 20130812 for iqiyi new key]]
 
 require "luascript/lib/bit"
 
@@ -1291,7 +1292,7 @@ function getRealUrls_iqiyi (str_id, str_tmpfile, pDlg)
 		end
 		--dbgMessage(str_fakeurl);
 
-		str_fakeurl = string.sub(str_fakeurl,0,-4) .. "hml?v=" .. tostring(bit.bxor(os.time(),0x96283BC0));--+2391355385);--2391363447);--this number maybe varified.
+		str_fakeurl = string.sub(str_fakeurl,0,-4) .. "hml?v=" .. tostring(bit.bxor(os.time(),0x8E8AD011));--0x96283BC0));--+2391355385);--2391363447);--this number maybe varified.
 
 		--dbgMessage(str_fakeurl);
 
@@ -1322,6 +1323,7 @@ function getRealUrls_iqiyi (str_id, str_tmpfile, pDlg)
 		end
 
 		local str_line_real = readUntil(file, "\"l\"");
+		--dbgMessage(str_realurl);
 
 		io.close(file);
 
@@ -1625,6 +1627,7 @@ function time_sleep(int_millisecond, int_random_max)
 	local t_diff = (int_millisecond+int_random)/1000;
 	while true do
 		local toc = os.time();
+		--dbgMessage(string.format("%d/%d", toc, t_diff));
 		if os.difftime(toc, tic)>=t_diff then
 			break;
 		end
