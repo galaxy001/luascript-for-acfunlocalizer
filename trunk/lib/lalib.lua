@@ -366,6 +366,9 @@ fls["sohu"]=8;
 SUCCESS = 1;
 FAILURE = 0;
 
+--MAGIC
+iqiyi_MAGIC = 0x6659AAA9;
+
 
 --[[read real urls from sina through vid]]
 function getRealUrls (str_id, str_tmpfile, pDlg)
@@ -1293,8 +1296,7 @@ function getRealUrls_iqiyi (str_id, str_tmpfile, pDlg)
 		end
 		--dbgMessage(str_fakeurl);
 
-		str_fakeurl = string.sub(str_fakeurl,0,-4) .. "hml?v=" .. tostring(bit.bxor(os.time(),0x6659A952));
-		--0x8E8AD011));--0x96283BC0));--+2391355385);--2391363447);--this number maybe varified.
+		str_fakeurl = string.sub(str_fakeurl,0,-4) .. "hml?v=" .. tostring(bit.bxor(os.time(),iqiyi_MAGIC));
 
 		--dbgMessage(str_fakeurl);
 

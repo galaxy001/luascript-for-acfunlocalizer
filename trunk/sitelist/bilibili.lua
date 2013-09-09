@@ -34,6 +34,7 @@
 ---[[edit 20130512 for bilibili sohu src video and subxml]]
 ---[[edit 20130701 for bilibili cid: tag]]
 ---[[edit 20130812 for bilibili batch 503 fast]]
+---[[edit 20130909 for bilibili no embed or iframe]]
 
 require "luascript/lib/lalib"
 require "luascript/lib/login"
@@ -160,7 +161,8 @@ function getTaskAttribute_bilibili ( str_url, str_tmpfile, pDlg, isNeedLogin)
 	local str_embed_start = "<div class=\"scontent\" id=\"bofqi\">";
 	--local str_embed_end = "</div><!-- /content -->";
 	--local str_embed_end = "</div>";
-	local str_embed_end = {"</embed>","</iframe>"};
+	--local str_embed_end = {"</embed>","</iframe>"};
+	local str_embed_end = {"<div class=\"s_center\">","</iframe>"};
 	str_line = readUntilFromUTF8(file, str_embed_start, str_line);--"<embed ");
 	--str_line = readNextLineFromUTF8(file);
 --dbgMessage(str_line);
