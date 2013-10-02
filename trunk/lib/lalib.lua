@@ -35,6 +35,7 @@
 --[[edit 20130801 for sinaflv parse, temp with sex.acfun]]
 --[[edit 20130812 for iqiyi new key]]
 --[[edit 20130902 for iqiyi new key]]
+--[[edit 20130924 for tudou]]
 
 require "luascript/lib/bit"
 
@@ -724,7 +725,8 @@ function getRealUrls_tudou (str_id, str_tmpfile, pDlg)
 
 	--dbgMessage(str_id);
 
-	local str_oriurl = "http://www.tudou.com/programs/view/" .. str_id .. "/";
+	--local str_oriurl = "http://www.tudou.com/programs/view/" .. str_id .. "/";
+	local str_oriurl = "http://www.tudou.com/outplay/goto/getItemSegs.action?iid=" .. str_id ;
 
 	if pDlg~=nil then
 		sShowMessage(pDlg, '正在读取转接页面..');
@@ -751,20 +753,26 @@ function getRealUrls_tudou (str_id, str_tmpfile, pDlg)
 		return;
 	end
 
-	local str_line = readUntil(file, "document.domain");
-	local str_line_end = readIntoUntil(file , str_line, "</script>");
+	--local str_line = readUntil(file, "document.domain");
+	local str_line = readUntil(file, "\"k\":");
+	--local str_line_end = readIntoUntil(file , str_line, "</script>");
+	local str_line_end = readIntoUntil(file , str_line, "\"k\":");
 	--dbgMessage(str_line_end);
-	local iid = getMedText(str_line_end, "iid: ", ",");
+	--local iid = getMedText(str_line_end, "iid: ", ",");
+	local k = getMedText(str_line_end, "\"k\":", ",");
 
 	--read iid ok closefile
 	io.close(file);
 
-	if iid==nil then
-		iid=str_id;
-	end
+	--dbgMessage(k);
+	--if iid==nil then
+	--	iid=str_id;
+	--end
 
 	--dbgMessage(iid);
-	local str_preurl = "http://v2.tudou.com/v?st=1%2C2%2C3%2C4%2C99&it=" .. iid;
+	--local str_preurl = "http://v2.tudou.com/v?st=1%2C2%2C3%2C4%2C99&it=" .. iid;
+	local str_preurl = "http://v2.tudou.com/f?sj=1&sid=10000&hd=2&r=4485&id=" .. k ; --hd=2&
+	--local str_preurl = "http://v2.tudou.com/f?hd=2&id=" .. k ; --hd=2&
 	--dbgMessage(str_preurl)
 
 	re = dlFile(str_tmpfile, str_preurl);
@@ -794,6 +802,7 @@ function getRealUrls_tudou (str_id, str_tmpfile, pDlg)
 	--local _, _, str_v_realurl= string.find(str_line,
 	--		"<[ab]><f [^>]+>([^<]+)</f>.*</[ab]>");
 	--	--dbgMessage(str_v_realurl);
+	--dbgMessage(str_line);
 
 	local str_v_realurl = nil;
 	local brt = 0;
@@ -803,6 +812,11 @@ function getRealUrls_tudou (str_id, str_tmpfile, pDlg)
 			"<f [^>]+>([^<]+)</f>");
 		local _, _, str_brt = string.find(str_line,
 			'<f [^>]+brt="(%d+)"[^>]*>[^<]+</f>');
+		if str_brt==nil then
+			str_brt="2";
+		end
+		--dbgMessage(str_v_realurl_tmp);
+		--dbgMessage(str_brt);
 		if str_brt~=nil and str_v_realurl_tmp ~=nil then
 			local int_brt = tonumber(str_brt);
 			if int_brt > brt then

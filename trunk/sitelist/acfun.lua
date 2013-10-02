@@ -25,10 +25,11 @@
 ---[[edit 20120925 for acfun Video tag (video)]]
 ---[[edit 20121127 for acfun video <embed> parse ]]
 ---[[edit 20130117 for acfun batch]]
+---[[edit 20131002 for acfun.com no response]]
 
 require "luascript/lib/lalib"
 
-acfun_xml_servername = 'www.acfun.com'; --'124.228.254.234';--'www.sjfan.com.cn';
+acfun_xml_servername = 'www.acfun.tv'; --'124.228.254.234';--'www.sjfan.com.cn';
 acfun_comment_servername = 'comment.acfun.tv';--'122.224.11.162';--
 
 --[[parse single acfun url]]
@@ -248,6 +249,8 @@ function getTaskAttribute_acfun ( str_url, str_tmpfile ,str_servername, pDlg)
 		str_subxmlurl_super = "http://"..acfun_xml_servername.."/newflvplayer/xmldata/"..str_subid.."/comment_super.xml";
 		str_subxmlurl_20111106 = "http://"..acfun_comment_servername.."/".. str_subid ..".json?clientID=0.9264421034604311";
 		str_subxmlurl_lock_20111106 = "http://"..acfun_comment_servername.."/".. str_subid .."_lock.json?clientID=0.4721592585556209";
+		--str_subxmlurl_20111106 = "http://"..acfun_comment_servername.."/".. str_subid ..".json";
+		--str_subxmlurl_lock_20111106 = "http://"..acfun_comment_servername.."/".. str_subid .."_lock.json";
 	else --ACFPV_ORI
 		str_subxmlurl = "http://"..acfun_xml_servername.."/flvplayer/xmldata/"..str_subid.."/comment_on.xml?a=1";
 	end
