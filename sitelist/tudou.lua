@@ -1,5 +1,6 @@
 
 ---[[by lostangel 20110402]]
+---[[edit 20130924 for new parse]]
 
 require "luascript/lib/lalib"
 
@@ -12,10 +13,11 @@ function getTaskAttribute_tudou ( str_url, str_tmpfile ,str_servername, pDlg)
 
 	-------[[read flv id start]]
 
-	local _, _, str_id = string.find(str_url, "/programs/view/([^%.]+)/");--"/id_([^\.]+)\./");
-	if str_id==nil then
-		return;
-	end
+	--local _, _, str_id = string.find(str_url, "/programs/view/([^%.]+)/");--"/id_([^\.]+)\./");
+	--if str_id==nil then
+	--	return;
+	--end
+	local str_id = nil;
 	--[[get descriptor]]
 	local re = dlFile(str_tmpfile, str_url);
 	if re~=0
@@ -46,6 +48,15 @@ function getTaskAttribute_tudou ( str_url, str_tmpfile ,str_servername, pDlg)
 	local str_title = getMedText(str_title_line, "<title>", "</title>");
 	local str_descriptor = str_title;
 	--dbgMessage(str_descriptor);
+
+	str_line = readUntil(file, ",itemData={");
+	local str_k_line = readIntoUntil(file, str_line, ",segs:");
+	local str_iid = getMedText(str_k_line, "iid:", ",");
+	if str_iid ~= nil then
+		str_id = str_iid;
+	end
+
+	--dbgMessage(str_id);
 
 	io.close(file);
 	--[[end get descriptor]]
