@@ -36,6 +36,7 @@
 --[[edit 20130812 for iqiyi new key]]
 --[[edit 20130902 for iqiyi new key]]
 --[[edit 20130924 for tudou]]
+--[[edit 20131016 for suspend dl iqiyi video]]
 
 require "luascript/lib/bit"
 
@@ -1262,6 +1263,16 @@ function getRealUrls_iqiyi (str_id, str_tmpfile, pDlg)
 	local tbl_urls = {};
 	local index = 0;
 
+	--[[if qiyi ok, comment this block]]
+	dbgMessage('当前版本不能解析爱奇艺源视频，请选择其它下载工具下载视频。弹幕将正常下载。');
+	local str_index = string.format("%d", index);
+	tbl_urls[str_index] = 'http://static.hdslb.com/error/404.png';
+	index = index+1;
+	if true then
+		return index, tbl_urls;
+	end
+	--[[block ends]]
+
 	local str_dynurl = "http://cache.video.qiyi.com/v/" .. str_id;
 
 	--dbgMessage(str_dynurl);
@@ -1359,7 +1370,6 @@ function getRealUrls_iqiyi (str_id, str_tmpfile, pDlg)
 		end
 		--dbgMessage(str_line);
 	end
-
 
 
 
