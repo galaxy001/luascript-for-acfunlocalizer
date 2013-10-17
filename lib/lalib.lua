@@ -37,6 +37,7 @@
 --[[edit 20130902 for iqiyi new key]]
 --[[edit 20130924 for tudou]]
 --[[edit 20131016 for suspend dl iqiyi video]]
+--[[edit 20131017 for bilibili qq source video]]
 
 require "luascript/lib/bit"
 
@@ -569,6 +570,13 @@ function getRealUrls_QQ (str_id, str_tmpfile, pDlg)
 		str_realurl = getDefaultFlvUrl_QQ(str_id);
 	end
 
+	--dbgMessage(str_realurl);
+
+	--[[videoctfs.tc.qq.com cannot be resolved]]
+	if str_realurl ~=nil then
+		str_realurl = string.gsub(str_realurl, "videoctfs.tc", "vsrc.store");
+	end
+
 	if index==0 then
 		local str_index = string.format("%d",index);
 		tbl_urls[str_index] = str_realurl;
@@ -1019,7 +1027,7 @@ function getRealUrls_bili(str_id, str_tmpfile, pDlg)
 		--str_v_realurl = encodeUrl(str_v_realurl);
 
 		--there is something wrong with the realurl from qqvideo get from bili, change it:
-		if string.find(str_v_realurl , "qqvideo.tc.qq.com") ~=nil then
+		if string.find(str_v_realurl , "qqvideo.tc.qq.com") ~=nil or string.find(str_v_realurl, "videoctfs.tc.qq.com")~=nil then
 			--dbgMessage(str_v_realurl);
 			local _,_,str_channel,str_posfix,str_quote = string.find(str_v_realurl,
 				'http://([^%.]+)%.[^/]+/([^%?]+)%?(.+)');
@@ -1027,7 +1035,7 @@ function getRealUrls_bili(str_id, str_tmpfile, pDlg)
 			--dbgMessage(str_posfix);
 			--dbgMessage(str_quote);
 
-			str_v_realurl = 'http://vsrc.store.qq.com/' .. str_posfix .. '?channel=' .. str_channel .. '&' .. str_quote;--sdtfrom=v2&r=256&rfc=v10
+			str_v_realurl = 'http://vsrc.store.qq.com/' .. str_posfix .. '?' .. str_quote;--'?channel=' .. str_channel .. '&' .. str_quote;--sdtfrom=v2&r=256&rfc=v10
 		end
 
 
