@@ -3,12 +3,12 @@
 
 =问与答=
 
-下载
+ * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#下载 下载]
 
-1.最简单暴力地下载acfun视频的方法？
-2.我能否仅下载字幕，因为我觉得这个下载器下载视频太慢，我想用其它方法下载视频？
-3.我能否从浏览器的缓存中直接复制视频？
-4.AcFun的地址老变，有时候就下载不下来了，怎么办？
+   * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:最简单暴力地下载acfun视频的方法？ 最简单暴力地下载acfun视频的方法？]
+   * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:我能否仅下载字幕，因为我觉得这个下载器下�� 我能否仅下载字幕，因为我觉得这个下载器下载视频太慢，我想用其它方法下载视频？]
+   * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:我能否从浏览器的缓存中直接复制视频？ 我能否从浏览器的缓存中直接复制视频？]
+   * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:_的地址老变，有时候就下载不下来了，怎么办� AcFun的地址老变，有时候就下载不下来了，怎么办？]
 5.下载总是不成功,怎么办?
 6.多part的视频是否可以批量添加下载任务？
 7.添加任务时总是出现解析FLV ID失败，这是怎么回事？
