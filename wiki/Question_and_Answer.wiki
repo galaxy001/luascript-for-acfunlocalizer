@@ -4,32 +4,30 @@
 =问与答=
 
  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#下载 下载]
-
-   * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:最简单暴力地下载acfun视频的方法？ 最简单暴力地下载acfun视频的方法？]
-   * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:我能否仅下载字幕，因为我觉得这个下载器下�� 我能否仅下载字幕，因为我觉得这个下载器下载视频太慢，我想用其它方法下载视频？]
-   * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:我能否从浏览器的缓存中直接复制视频？ 我能否从浏览器的缓存中直接复制视频？]
-   * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:_的地址老变，有时候就下载不下来了，怎么办� AcFun的地址老变，有时候就下载不下来了，怎么办？]
-5.下载总是不成功,怎么办?
-6.多part的视频是否可以批量添加下载任务？
-7.添加任务时总是出现解析FLV ID失败，这是怎么回事？
-8.如何改变缓存目录的位置？
-9.下载时出现“句柄无效”，是怎么回事？
-10.添加任务时总是出现“未读取到有效的视频原始地址”，是怎么回事？
-11.除了支持acfun,bilibili,mikufans的下载之外，还能否支持其它网站内容的下载？
-12.下载nico系视频的时候总是显示解析失败, 为什么?
-13.下载多段视频合并时总是得不到最终文件或者最终只得到0kb的flv是怎么回事？
-14.为什么有部分bilibili视频无法解析？
-15.为什么明明IE浏览器已经缓冲好了，但是下载器就是不能直接从缓存中抓取视频？
-16.为什么有时候下载完视频后并没有出现视频，而是弹出一个脚本运行的窗口？并且有时会被360提示有安全问题？
-17.为什么有时候下载视频时会出现“内存不足”的错误？
-18.我如何快速调整正在下载列表中的任务顺序？ 
-字幕转换
-
-1.我以前用过其它一些下载弹幕的工具，我不需要从网络上再次下载弹幕，有没有办法转换本地的弹幕成SSA格式的字幕？
-2.以前AcFun网站的弹幕格式与现在的不同，可以转换吗？
-3.如何打开/关闭滚动字幕在追上其它字幕时自动换行的功能?
-4.所谓的更新是什么意思？如何进行？
-5.有些视频在acfun上被分割成了part1,part2这样的,如何下载并合并成同一个文件?
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:最简单暴力地下载acfun视频的方法？ 最简单暴力地下载acfun视频的方法？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:我能否仅下载字幕，因为我觉得这个下载器下�� 我能否仅下载字幕，因为我觉得这个下载器下载视频太慢，我想用其它方法下载视频？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:我能否从浏览器的缓存中直接复制视频？ 我能否从浏览器的缓存中直接复制视频？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:_的地址老变，有时候就下载不下来了，怎么办� AcFun的地址老变，有时候就下载不下来了，怎么办？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:下载总是不成功,怎么办? 下载总是不成功,怎么办?]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:多part的视频是否可以批量添加下载任务？ 多part的视频是否可以批量添加下载任务？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:添加任务时总是出现解析FLV_ID失败，这是怎么�� 添加任务时总是出现解析FLV ID失败，这是怎么回事？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:如何改变缓存目录的位置？ 如何改变缓存目录的位置？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:下载时出现“句柄无效”，是怎么回事？ 下载时出现“句柄无效”，是怎么回事？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:添加任务时总是出现“未读取到有效的视频原�� 添加任务时总是出现“未读取到有效的视频原始地址”，是怎么回事？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:除了支持acfun,bilibili,mikufans的下载之外，还能否 除了支持acfun,bilibili,mikufans的下载之外，还能否支持其它网站内容的下载？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:下载nico系视频的时候总是显示解析失败,_为什�� 下载nico系视频的时候总是显示解析失败, 为什么?]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:下载多段视频合并时总是得不到最终文件或者�� 下载多段视频合并时总是得不到最终文件或者最终只得到0kb的flv是怎么回事？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:为什么有部分bilibili视频无法解析？ 为什么有部分bilibili视频无法解析？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:为什么明明IE浏览器已经缓冲好了，但是下载器 为什么明明IE浏览器已经缓冲好了，但是下载器就是不能直接从缓存中抓取视频？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:为什么有时候下载完视频后并没有出现视频，�� 为什么有时候下载完视频后并没有出现视频，而是弹出一个脚本运行的窗口？并且有时会被360提示有安全问题？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:为什么有时候会出现内存不足的错误? 为什么有时候下载视频时会出现“内存不足”的错误？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:我如何快速调整正在下载列表中的任务顺序？ 我如何快速调整正在下载列表中的任务顺序？ ]
+ ** [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#字幕转换 字幕转换]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:我以前用过其它一些下载弹幕的工具，我不需�� 我以前用过其它一些下载弹幕的工具，我不需要从网络上再次下载弹幕，有没有办法转换本地的弹幕成SSA格式的字幕？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:以前_网站的弹幕格式与现在的不同，可以转换� 以前AcFun网站的弹幕格式与现在的不同，可以转换吗？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:如何打开/关闭滚动字幕在追上其它字幕时自动� 如何打开/关闭滚动字幕在追上其它字幕时自动换行的功能?]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:所谓的更新是什么意思？如何进行？ 所谓的更新是什么意思？如何进行？]
+ * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:有些视频在acfun上被分割成了part1,part2这样的,如 有些视频在acfun上被分割成了part1,part2这样的,如何下载并合并成同一个文件?]
 6.我转换出来的字幕有些会有错位,这是怎么回事?
 7.转换的字幕里有很多没用的评论，我该如何去掉它们？
 8.如何进行多个字幕的合并？
