@@ -1,6 +1,7 @@
 #labels Featured,Phase-QA
 =Guide=
 [[Guide#1|1]]
+[Guide#1]
 [Guide#谁是适合阅读本文的小朋友们？]
 1 谁是适合阅读本文的小朋友们？
 
