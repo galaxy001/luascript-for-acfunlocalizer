@@ -15,7 +15,7 @@
   # [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Guide#4.2_弹幕转换功能 弹幕转换功能]
   # [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Guide#4.3_本地视频合并与修复 本地视频合并与修复]
   # [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Guide#4.4_播放器的选择与配置 播放器的选择与配置]
-  # http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Guide#4.5_将ssa弹幕文件内嵌入视频 将ssa弹幕文件内嵌入视频]
+  # [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Guide#4.5_将ssa弹幕文件内嵌入视频 将ssa弹幕文件内嵌入视频]
   # [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Guide#4.6_下载其它网站内容 下载其它网站的内容]
   # [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Guide#4.7_使用代理及自动登录 使用代理及自动登录]
  # [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Guide#5_如何保存神弹幕？如何去除多余的评论？—— 如何保存神弹幕？如何去除多余的评论？——AcFunSubFilter]
