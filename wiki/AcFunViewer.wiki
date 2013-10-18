@@ -1,5 +1,5 @@
 #labels Featured,Phase-Design
-＝AcFunViewer=
+=AcFunViewer=
 
 AcFunViewer是一款离线查询/收藏AcFun/Bilibili网站节目列表的软件，其主要功能包括：
 
