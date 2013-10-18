@@ -27,44 +27,40 @@
   * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:以前_网站的弹幕格式与现在的不同，可以转换� 以前AcFun网站的弹幕格式与现在的不同，可以转换吗？]
   * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:如何打开/关闭滚动字幕在追上其它字幕时自动� 如何打开/关闭滚动字幕在追上其它字幕时自动换行的功能?]
   * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:所谓的更新是什么意思？如何进行？ 所谓的更新是什么意思？如何进行？]
- * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:有些视频在acfun上被分割成了part1,part2这样的,如 有些视频在acfun上被分割成了part1,part2这样的,如何下载并合并成同一个文件?]
-6.我转换出来的字幕有些会有错位,这是怎么回事?
-7.转换的字幕里有很多没用的评论，我该如何去掉它们？
-8.如何进行多个字幕的合并？
-9.为什么在手动转换字幕的时候跳出程序崩溃的窗口？
-10.我是否可以在下载自动转换弹幕时只保留神弹幕？
-11.如何关闭分层弹幕渲染？
-12.为什么下载转换的弹幕比网站上的少了很多？
-13.为什么手动转换的弹幕比自动下载时转换的少了很多？
-
-任务列表
-
-1.如何重新下载历史任务列表中的任务？
-2.如何快速打开已下载完的任务？
-3.任务列表中的↓√×T表示什么意思？
-4.如何调整下载任务的顺序？
-5.为什么有些任务无法删除？ 6.在长期下载过程中，列表越来越长，很难找到以前下载到的视频，怎么办？ 
-视频字幕播放
-
-1.为什么转换后的字幕在播放本地视频的时候没有出现弹幕？
-2.为什么字幕在播放时比较卡？
-3.为什么播放时没有声音？
-4.为什么播放时没有图像只有声音？
-5.KMP无法像AC那样让字幕滚动飘过，就是普通外挂电影字幕那样,集中显示在下方，KMP上还需要设置一下什么吗?
-6.完美解码的KMP中出现了2个字幕,一个正常的,一个很卡,这是怎么回事?
-7.为什么下下来的视频播放不出来,一秒一分钟的快进黑屏?
-8.为什么下下来的视频修复时显示不必修复，但是又不能播放?
-9.为什么下下来的视频播放时像幻灯片一样，特别的卡？
-10.为什么我装了klite mega codec pack，使用wmp或mpc仍然无法观看到流畅的弹幕?
-
-其它
-
-1.有时在下载时会出现C++Runtime错误，这是为什么？
-2.清除缓存.bat这个是干什么用的?
-3.如何修改默认关闭的动作？
-4.运行时出现找不到xxxx.dll是怎么回事？
-5.英文系统出现乱码怎么办？
-6.如何为IE添加右键使用Acfunlocalizer下载的菜单？ 
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:有些视频在acfun上被分割成了part1,part2这样的,如 有些视频在acfun上被分割成了part1,part2这样的,如何下载并合并成同一个文件?]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:我转换出来的字幕有些会有错位,这是怎么回事? 我转换出来的字幕有些会有错位,这是怎么回事?]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:转换的字幕里有很多没用的评论，我该如何去�� 转换的字幕里有很多没用的评论，我该如何去掉它们？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:如何进行多个字幕的合并？ 如何进行多个字幕的合并？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:为什么在手动转换字幕的时候跳出程序崩溃的�� 为什么在手动转换字幕的时候跳出程序崩溃的窗口？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:我是否可以在下载自动转换弹幕时只保留神弹�� 我是否可以在下载自动转换弹幕时只保留神弹幕？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:如何关闭分层弹幕渲染？ 如何关闭分层弹幕渲染？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:为什么下载转换的弹幕比网站上的少了很多？ 为什么下载转换的弹幕比网站上的少了很多？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:为什么手动转换的弹幕比自动下载时转换的少�� 为什么手动转换的弹幕比自动下载时转换的少了很多？]
+ ** [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#任务列表 任务列表]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:如何重新下载历史任务列表中的任务？ 如何重新下载历史任务列表中的任务？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:如何快速打开已下载完的任务？ 如何快速打开已下载完的任务？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:任务列表中的↓√×T表示什么意思？ 任务列表中的↓√×T表示什么意思？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:任务列表中的↓√×T表示什么意思？ 如何调整下载任务的顺序？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:为什么有些任务无法删除？ 为什么有些任务无法删除？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:在长期下载过程中，列表越来越长，很难找到�� 在长期下载过程中，列表越来越长，很难找到以前下载到的视频，怎么办？] 
+ ** [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#视频字幕播放 视频字幕播放]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:为什么转换后的字幕在播放本地视频的时候没�� 为什么转换后的字幕在播放本地视频的时候没有出现弹幕？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:为什么字幕在播放时比较卡？ 为什么字幕在播放时比较卡？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:为什么播放时没有声音？ 为什么播放时没有声音？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:为什么播放时没有图像只有声音？ 为什么播放时没有图像只有声音？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:KMP无法像AC那样让字幕滚动飘过，就是普通外挂 KMP无法像AC那样让字幕滚动飘过，就是普通外挂电影字幕那样,集中显示在下方，KMP上还需要设置一下什么吗?]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:完美解码的KMP中出现了2个字幕,一个正常的,一�� 完美解码的KMP中出现了2个字幕,一个正常的,一个很卡,这是怎么回事?]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:为什么下下来的视频播放不出来,一秒一分钟的� 为什么下下来的视频播放不出来,一秒一分钟的快进黑屏?]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:为什么下下来的视频修复时显示不必修复，但�� 为什么下下来的视频修复时显示不必修复，但是又不能播放?]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:为什么下下来的视频播放时像幻灯片一样，特�� 为什么下下来的视频播放时像幻灯片一样，特别的卡？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:为什么我装了klite_mega_codec_pack，使用wmp或mpc仍�� 为什么我装了klite mega codec pack，使用wmp或mpc仍然无法观看到流畅的弹幕?]
+ ** [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#其它 其它]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:有时在下载时会出现C++Runtime错误，这是为什么� 有时在下载时会出现C++Runtime错误，这是为什么？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:清除缓存.bat这个是干什么用的? 清除缓存.bat这个是干什么用的?]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:如何修改默认关闭的动作？ 如何修改默认关闭的动作？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:为什么运行程序时报找不到xxxx.dll等类似错误？ 运行时出现找不到xxxx.dll是怎么回事？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:英文系统出现乱码怎么办？ 英文系统出现乱码怎么办？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:如何添加IE右键下载菜单？ 如何为IE添加右键使用Acfunlocalizer下载的菜单？]
 
 =下载=
  
