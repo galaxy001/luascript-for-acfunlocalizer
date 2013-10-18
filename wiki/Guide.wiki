@@ -1,6 +1,7 @@
 #labels Featured,Phase-QA
 =AcFun 桌面增强软件包用户指南=
 
+[Guide#1_谁是适合阅读本文的小朋友们？]
 1 谁是适合阅读本文的小朋友们？
 
 2 软件包功能简介
