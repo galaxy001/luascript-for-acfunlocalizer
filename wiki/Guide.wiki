@@ -1,6 +1,7 @@
 #labels Featured,Phase-QA
-=Guide=
+=使用指南=
 
+ # [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Guide#1._谁是适合阅读本文的小朋友们 谁是适合阅读本文的小朋友们？]
  # 谁是适合阅读本文的小朋友们？
  # 软件包功能简介
  # 如何在本地查找视频？如何挖掘节目列表当中的奥秘？——AcFunViewer
