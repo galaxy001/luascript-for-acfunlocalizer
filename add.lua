@@ -1,4 +1,4 @@
-----[[version: 20131017.00]]
+----[[version: 20131109.00]]
 ---[[by lostangel 20100528]]
 ---[[edit 20101117]]
 ---[[edit 20110402 for new return struct]]
@@ -29,6 +29,8 @@ require "luascript/sitelist/cntv"
 require "luascript/sitelist/iqiyi"
 require "luascript/sitelist/sohu"
 require "luascript/sitelist/letv"
+
+require "luascript/sitelist/dmzj"
 require "luascript/customadd"
 --require "your site parse script"
 
@@ -130,6 +132,12 @@ function getTaskAttribute ( str_url, str_tmpfile ,str_servername, pDlg)
 	then
 		return getTaskAttribute_letv(str_url, str_tmpfile, pDlg);
 	end
+
+	--[[comic dl]]
+	--if string.find(str_url, "dmzj.com", 1,true)~=nil
+	--then
+	--	return getTaskAttribute_dmzj(str_url, str_tmpfile, pDlg);
+	--end
 	--if ..add more site parser here
 	return getTaskAttribute_Custom(str_url, str_tmpfile, str_servername, pDlg);
 

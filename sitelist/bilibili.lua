@@ -35,6 +35,7 @@
 ---[[edit 20130701 for bilibili cid: tag]]
 ---[[edit 20130812 for bilibili batch 503 fast]]
 ---[[edit 20130909 for bilibili no embed or iframe]]
+---[[edit 20131018 for bilibili change for qqvideo]]
 
 require "luascript/lib/lalib"
 require "luascript/lib/login"
@@ -247,7 +248,7 @@ function getTaskAttribute_bilibili ( str_url, str_tmpfile, pDlg, isNeedLogin)
 			int_foreignlinksite = fls["6cn"];
 		elseif string.find(str_embed, "cid=", 1,true)~=nil then
 			int_foreignlinksite = fls["bili"];
-
+			--dbgMessage("bilibili");
 		elseif string.find(str_embed, "iqiyi.com", 1,true)~=nil or string.find(str_embed, "iqiyi.swf", 1,true)~=nil then
 			int_foreignlinksite = fls["iqiyi"];
 		elseif string.find(str_embed, "sohu.com", 1,true)~=nil then
@@ -260,8 +261,11 @@ function getTaskAttribute_bilibili ( str_url, str_tmpfile, pDlg, isNeedLogin)
 	if  string.find(str_embed, "cid:'",1,true)~=nil  then
 		str_cid = getMedText2end(str_embed, "cid:'", "'", ",");
 	end
+	if  string.find(str_embed, "cid=",1,true)~=nil  then
+		str_cid = getMedText2end(str_embed, "cid=", "&", "\"");
+	end
 
-
+	--dbgMessage(str_cid);
 
 	--read id ok.close file
 	io.close(file);
@@ -322,7 +326,9 @@ function getTaskAttribute_bilibili ( str_url, str_tmpfile, pDlg, isNeedLogin)
 		int_realurlnum, tbl_readurls = getRealUrls_6cn(str_id_tmp, str_tmpfile, pDlg);
 	elseif int_foreignlinksite == fls["bili"]
 	then
-		int_realurlnum, tbl_readurls = getRealUrls_bili(str_id, str_tmpfile, pDlg);
+		--dbgMessage(str_id);
+		--int_realurlnum, tbl_readurls = getRealUrls_bili(str_id, str_tmpfile, pDlg);
+		int_realurlnum, tbl_readurls = getRealUrls_bili(str_cid, str_tmpfile, pDlg);
 	elseif int_foreignlinksite == fls["iqiyi"]
 	then
 		int_realurlnum, tbl_readurls = getRealUrls_iqiyi(str_id, str_tmpfile, pDlg);
