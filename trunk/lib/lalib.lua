@@ -38,6 +38,7 @@
 --[[edit 20130924 for tudou]]
 --[[edit 20131016 for suspend dl iqiyi video]]
 --[[edit 20131017 for bilibili qq source video]]
+--[[edit 20131109 add for pps parse for acfun]]
 
 require "luascript/lib/bit"
 
@@ -363,6 +364,7 @@ fls["6cn"]=5;
 fls["bili"]=6;
 fls["iqiyi"]=7;
 fls["sohu"]=8;
+fls["pps"]=9;
 
 
 --BOOLEAN
@@ -1107,6 +1109,8 @@ function getAcVideo_CommentID(str_acid, str_tmpfile, pDlg)
 			int_foreignlinksite = fls["qq"];
 		elseif string.find(str_line, "\"vtype\":\"tudou\"", 1, true)~=nil then
 			int_foreignlinksite = fls["tudou"];
+		elseif string.find(str_line, "\"vtype\":\"pps\"", 1, true)~=nil then
+			int_foreignlinksite = fls["pps"];
 		end--[[may be there are other types for adding]]
 
 		str_id = getMedText(str_line, "\"vid\":\"", "\"");
@@ -1119,6 +1123,68 @@ function getAcVideo_CommentID(str_acid, str_tmpfile, pDlg)
 
 
 
+
+end
+
+--[[read real urls from pps through vid]]
+function getRealUrls_pps (str_id, str_tmpfile, pDlg)
+	local tbl_urls = {};
+	local index = 0;
+
+	local str_dynurl = "http://dp.ppstv.com/get_play_url_cdn.php?flash_type=1&sid=" .. str_id;
+
+	--dbgMessage(str_dynurl);
+
+	if pDlg~=nil then
+		sShowMessage(pDlg, '正在读取转接页面..');
+	end
+
+	local re = dlFile(str_tmpfile, str_dynurl);
+	if re~=0
+	then
+		if pDlg~=nil then
+			sShowMessage(pDlg, '转接页面读取错误。');
+		end
+		return index, tbl_urls;
+	else
+		if pDlg~=nil then
+			sShowMessage(pDlg, '读取转接页面成功，正在分析..');
+		end
+	end
+
+	local file = io.open(str_tmpfile, "r");
+	if file==nil
+	then
+		if pDlg~=nil then
+			sShowMessage(pDlg, '转接页面读取错误。');
+		end
+		return;
+	end
+
+	local str_line = readUntil(file, "http://");
+	str_line = utf8_to_lua(str_line);
+	--dbgMessage(str_line);
+
+	--local str_Name = getMedText(str_line, " Name=\"", "\"");
+
+	--local str_line = readUntil(file, "<parts playurl");
+	--while str_line ~= nil do
+	--	str_line = utf8_to_lua(str_line);
+
+	--	local str_realurl = getMedText(str_line, "<parts playurl=\"", "\"");
+
+	local str_index = string.format("%d",index);
+	tbl_urls[str_index] = str_line;
+	index = index+1;
+
+	--	str_line = readUntil(file, "<parts playurl");
+	--end
+	--dbgMessage(str_Name);
+
+	io.close(file);
+
+
+	return index, tbl_urls, str_Name;
 
 end
 

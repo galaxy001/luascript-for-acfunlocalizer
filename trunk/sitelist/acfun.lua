@@ -26,6 +26,7 @@
 ---[[edit 20121127 for acfun video <embed> parse ]]
 ---[[edit 20130117 for acfun batch]]
 ---[[edit 20131002 for acfun.com no response]]
+---[[edit 20131109 for acfun pps]]
 
 require "luascript/lib/lalib"
 
@@ -272,6 +273,9 @@ function getTaskAttribute_acfun ( str_url, str_tmpfile ,str_servername, pDlg)
 	elseif int_foreignlinksite == fls["tudou"]
 	then
 		int_realurlnum, tbl_readurls = getRealUrls_tudou(str_id, str_tmpfile, pdlg);
+	elseif int_foreignlinksite == fls["pps"]
+	then
+		int_realurlnum, tbl_readurls = getRealUrls_pps(str_id, str_tmpfile, pdlg);
 	else
 		int_realurlnum = 1;
 		tbl_readurls = {};

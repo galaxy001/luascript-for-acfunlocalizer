@@ -27,12 +27,18 @@ function getTaskAttribute_Custom(str_url, str_tmpfile, str_servername, pDlg)
 
 		dbgMessage(str_descriptor);
 		local tbl_realurls = {};
-		tbl_realurls["0"] = str_url;
+		tbl_realurls["0"] = str_url;--"http://ww2.sinaimg.cn/bmiddle/bd19d62ejw1e9tu2dp8gxj20go0dc3yu.jpg";--
+		--tbl_realurls["1"] = "http://imgfast.dmzj.com/w/%E4%BC%AA%E6%81%8B/%E7%AC%AC95%E8%AF%9D/0%20%282%29.jpg";
+		--dbgMessage(tbl_realurls["1"]);
+		--sShowMessage(pDlg, tbl_realurls["1"]);
+
+		local tbl_subxmlurls = {};
+		--tbl_subxmlurls["0"] = "http://www.baidu.com/index.php";
 
 		local tbl_ta = {};
-		tbl_ta["acfpv"] = 65535;
+		tbl_ta["acfpv"] = 1;
 		tbl_ta["descriptor"] = str_descriptor;
-		tbl_ta["subxmlurl"] = "";
+		tbl_ta["subxmlurl"] = tbl_subxmlurls;
 		tbl_ta["realurlnum"] = 1;
 		tbl_ta["realurls"] = tbl_realurls;
 		tbl_ta["oriurl"] = str_url;
