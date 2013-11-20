@@ -39,6 +39,7 @@
 --[[edit 20131016 for suspend dl iqiyi video]]
 --[[edit 20131017 for bilibili qq source video]]
 --[[edit 20131109 add for pps parse for acfun]]
+--[[edit 20131120 for sinaflv parse, temp with 2dland.sinapp]]
 
 require "luascript/lib/bit"
 
@@ -381,7 +382,8 @@ function getRealUrls (str_id, str_tmpfile, pDlg)
 	local index = 0;
 
 	--local str_dynurl = "http://v.iask.com/v_play.php?vid="..str_id;
-	local str_dynurl = "http://sex.acfun.tv/Home/Sina?app_key=1917945218&vid=".. str_id .. "&dtime=1374599847484"
+	--local str_dynurl = "http://sex.acfun.tv/Home/Sina?app_key=1917945218&vid=".. str_id .. "&dtime=1374599847484"
+	local str_dynurl = "http://2dland.sinaapp.com/video.php?action=xml&type=xina&vid=".. str_id .. "&key=a5d0b4fe05f3827d608c5a1a09e9313d";
 	if pDlg~=nil then
 		sShowMessage(pDlg, '正在读取转接页面..');
 	end
