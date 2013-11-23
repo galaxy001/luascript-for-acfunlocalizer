@@ -40,8 +40,10 @@
 --[[edit 20131017 for bilibili qq source video]]
 --[[edit 20131109 add for pps parse for acfun]]
 --[[edit 20131120 for sinaflv parse, temp with 2dland.sinapp]]
+--[[edit 20131123 for 2dland.sinapp key gen]]
 
 require "luascript/lib/bit"
+require "luascript/lib/md5calc"
 
 function getACFPV ( str_url, str_servername)
 	if str_servername == nil then
@@ -383,7 +385,9 @@ function getRealUrls (str_id, str_tmpfile, pDlg)
 
 	--local str_dynurl = "http://v.iask.com/v_play.php?vid="..str_id;
 	--local str_dynurl = "http://sex.acfun.tv/Home/Sina?app_key=1917945218&vid=".. str_id .. "&dtime=1374599847484"
-	local str_dynurl = "http://2dland.sinaapp.com/video.php?action=xml&type=xina&vid=".. str_id .. "&key=a5d0b4fe05f3827d608c5a1a09e9313d";
+	--dbgMessage(str_id);
+	--dbgMessage(md5.Calc(str_id.."footstone"));
+	local str_dynurl = "http://2dland.sinaapp.com/video.php?action=xml&type=xina&vid=".. str_id .. "&key=" .. md5.Calc(str_id .. "footstone");
 	if pDlg~=nil then
 		sShowMessage(pDlg, '正在读取转接页面..');
 	end
