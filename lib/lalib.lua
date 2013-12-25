@@ -41,6 +41,7 @@
 --[[edit 20131109 add for pps parse for acfun]]
 --[[edit 20131120 for sinaflv parse, temp with 2dland.sinapp]]
 --[[edit 20131123 for 2dland.sinapp key gen]]
+--[[edit 20131225 for 2dland.sinapp to acfun.tv]]
 
 require "luascript/lib/bit"
 require "luascript/lib/md5calc"
@@ -387,7 +388,7 @@ function getRealUrls (str_id, str_tmpfile, pDlg)
 	--local str_dynurl = "http://sex.acfun.tv/Home/Sina?app_key=1917945218&vid=".. str_id .. "&dtime=1374599847484"
 	--dbgMessage(str_id);
 	--dbgMessage(md5.Calc(str_id.."footstone"));
-	local str_dynurl = "http://2dland.sinaapp.com/video.php?action=xml&type=xina&vid=".. str_id .. "&key=" .. md5.Calc(str_id .. "footstone");
+	local str_dynurl = "http://2dland.acfun.tv/video.php?action=xml&type=xina&vid=".. str_id .. "&key=" .. md5.Calc(str_id .. "footstone") .. "&ti=3";
 	if pDlg~=nil then
 		sShowMessage(pDlg, '正在读取转接页面..');
 	end

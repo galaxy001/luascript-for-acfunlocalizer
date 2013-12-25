@@ -1,4 +1,4 @@
-[[created by lostangel 20131123]]
+--[[created by lostangel 20131123]]
 
 -- An MD5 mplementation in Lua, requires bitlib (hacked to use LuaBit from above, ugh)
 -- 10/02/2001 jcw@equi4.com
