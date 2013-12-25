@@ -27,6 +27,7 @@
 ---[[edit 20130117 for acfun batch]]
 ---[[edit 20131002 for acfun.com no response]]
 ---[[edit 20131109 for acfun pps]]
+---[[edit 20131225 for acfun new tag]]
 
 require "luascript/lib/lalib"
 
@@ -75,7 +76,8 @@ function getTaskAttribute_acfun ( str_url, str_tmpfile ,str_servername, pDlg)
 	--readin vice descriptor
 	--readUntil(file, "ึ๗าณ</a>");
 	--readUntilFromUTF8(file, "</div><!--Tool -->");
-	readUntilFromUTF8(file, "</div><!--Title -->");
+	--readUntilFromUTF8(file, "</div><!--Title -->");
+	readUntilFromUTF8(file ,"<div id=\"area-pager\" class=\"area-pager\">");
 	str_line = "";
 	local str_tmp_vd = "";
 	--while str_line~=nil and string.find(str_line, "</tr>")==nil
@@ -365,7 +367,8 @@ function getTaskAttributeBatch_acfun ( str_url, str_tmpfile ,str_servername, pDl
 	--readin vice descriptor
 	--readUntil(file, "ึ๗าณ</a>");
 	--readUntilFromUTF8(file, "</div><!--Tool -->");
-	readUntilFromUTF8(file, "</div><!--Title -->");
+	--readUntilFromUTF8(file, "</div><!--Title -->");
+	readUntilFromUTF8(file ,"<div id=\"area-pager\" class=\"area-pager\">");
 
 	str_line = "";
 	local tbl_descriptors = {};
