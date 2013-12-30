@@ -42,6 +42,7 @@
 --[[edit 20131120 for sinaflv parse, temp with 2dland.sinapp]]
 --[[edit 20131123 for 2dland.sinapp key gen]]
 --[[edit 20131225 for 2dland.sinapp to acfun.tv]]
+--[[edit 20131230 for acfun new api http://www.acfun.tv/video/getVideo.aspx?id=]]
 
 require "luascript/lib/bit"
 require "luascript/lib/md5calc"
@@ -1068,7 +1069,8 @@ function getRealUrls_bili(str_id, str_tmpfile, pDlg)
 end
 
 function getAcVideo_CommentID(str_acid, str_tmpfile, pDlg)
-	local str_apiurl = "http://www.acfun.tv/api/getVideoByID.aspx?vid="..str_acid;
+	--local str_apiurl = "http://www.acfun.tv/api/getVideoByID.aspx?vid="..str_acid;
+	local str_apiurl = "http://www.acfun.tv/video/getVideo.aspx?id=" .. str_acid;
 
 	--dbgMessage(str_apiurl);
 
@@ -1107,21 +1109,22 @@ function getAcVideo_CommentID(str_acid, str_tmpfile, pDlg)
 	local int_foreignlinksite = fls["realurl"];
 	local str_id = "";
 	local str_subid = str_id;
+	--[[change tag 20131230]]
 	if string.find(str_line, "\"success\":true", 1, true)~=nil then
-		if string.find(str_line, "\"vtype\":\"sina\"", 1, true)~=nil then
+		if string.find(str_line, "\"sourceType\":\"sina\"", 1, true)~=nil then
 			int_foreignlinksite = fls["sina"];
-		elseif string.find(str_line, "\"vtype\":\"youku\"", 1, true)~=nil then
+		elseif string.find(str_line, "\"sourceType\":\"youku\"", 1, true)~=nil then
 			int_foreignlinksite = fls["youku"];
-		elseif string.find(str_line, "\"vtype\":\"qq\"", 1, true)~=nil then
+		elseif string.find(str_line, "\"sourceType\":\"qq\"", 1, true)~=nil then
 			int_foreignlinksite = fls["qq"];
-		elseif string.find(str_line, "\"vtype\":\"tudou\"", 1, true)~=nil then
+		elseif string.find(str_line, "\"sourceType\":\"tudou\"", 1, true)~=nil then
 			int_foreignlinksite = fls["tudou"];
-		elseif string.find(str_line, "\"vtype\":\"pps\"", 1, true)~=nil then
+		elseif string.find(str_line, "\"sourceType\":\"pps\"", 1, true)~=nil then
 			int_foreignlinksite = fls["pps"];
 		end--[[may be there are other types for adding]]
 
-		str_id = getMedText(str_line, "\"vid\":\"", "\"");
-		str_subid = getMedText(str_line, "\"cid\":\"", "\"");
+		str_id = getMedText(str_line, "\"sourceId\":\"", "\"");
+		str_subid = getMedText(str_line, "\"danmakuId\":\"", "\"");
 		return int_foreignlinksite, str_id, str_subid;
 	else
 		return nil;

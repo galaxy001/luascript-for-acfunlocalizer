@@ -28,6 +28,7 @@
 ---[[edit 20131002 for acfun.com no response]]
 ---[[edit 20131109 for acfun pps]]
 ---[[edit 20131225 for acfun new tag]]
+---[[edit 20131230 for acfun new ui]]
 
 require "luascript/lib/lalib"
 
@@ -66,6 +67,12 @@ function getTaskAttribute_acfun ( str_url, str_tmpfile ,str_servername, pDlg)
 		return;
 	end
 
+	local int_foreignlinksite = fls["realurl"];
+
+	local str_id = "";
+
+	local str_subid = str_id;
+
 	--readin descriptor
 	local str_line = readUntilFromUTF8(file, "<title>");
 	--dbgMessage(str_line);
@@ -77,7 +84,8 @@ function getTaskAttribute_acfun ( str_url, str_tmpfile ,str_servername, pDlg)
 	--readUntil(file, "主页</a>");
 	--readUntilFromUTF8(file, "</div><!--Tool -->");
 	--readUntilFromUTF8(file, "</div><!--Title -->");
-	readUntilFromUTF8(file ,"<div id=\"area-pager\" class=\"area-pager\">");
+	--readUntilFromUTF8(file ,"<div id=\"area-pager\" class=\"area-pager\">");
+	readUntilFromUTF8(file , "<div id=\"area-part-view\"");
 	str_line = "";
 	local str_tmp_vd = "";
 	--while str_line~=nil and string.find(str_line, "</tr>")==nil
@@ -92,11 +100,19 @@ function getTaskAttribute_acfun ( str_url, str_tmpfile ,str_servername, pDlg)
 		then
 			--dbgMessage("pager article");
 			--if str_tmp_vd=="" or string.find(str_line, "selected>")~=nil
-			if str_tmp_vd=="" or string.find(str_line, "pager active")~=nil
+			--if str_tmp_vd=="" or string.find(str_line, "pager active")~=nil
+			if str_tmp_vd=="" or string.find(str_line, "success active")~=nil
 			then
 				--dbgMessage("pager active");
 				--str_tmp_vd = getMedText(str_line, ">", "</option>");
 				str_tmp_vd = getMedText(str_line, "/i>", "</a>");
+
+				local str_acinternalID = getMedText(str_line, "data-vid=\"", "\"");
+
+				--dbgMessage(str_acinternalID);
+
+				int_foreignlinksite, str_id, str_subid = getAcVideo_CommentID(str_acinternalID, str_tmpfile..".tmpac", pDlg);
+
 			end
 		end
 	end
@@ -113,113 +129,113 @@ function getTaskAttribute_acfun ( str_url, str_tmpfile ,str_servername, pDlg)
 	--dbgMessage(str_tmp_vd);
 	--dbgMessage(str_descriptor);
 
-	--find embed flash
-	--str_line = readUntilFromUTF8(file, "<embed ");
-	str_line = readUntilFromUTF8(file, "<div id=\"area-player\"");
-	local str_embed = readIntoUntilFromUTF8(file, str_line, "<script>");--edit 20121127 </div>");--"</td>");--"</embed>");
-	print(str_embed);
-	--dbgMessage(str_embed);
-	if str_embed==nil then
-		if pDlg~=nil then
-			sShowMessage(pDlg, "没有找到嵌入的flash播放器");
-		end
-		io.close(file);
-		return;
-	end
+--~ 	--find embed flash
+--~ 	--str_line = readUntilFromUTF8(file, "<embed ");
+--~ 	str_line = readUntilFromUTF8(file, "<div id=\"area-player\"");
+--~ 	local str_embed = readIntoUntilFromUTF8(file, str_line, "<script>");--edit 20121127 </div>");--"</td>");--"</embed>");
+--~ 	print(str_embed);
+--~ 	--dbgMessage(str_embed);
+--~ 	if str_embed==nil then
+--~ 		if pDlg~=nil then
+--~ 			sShowMessage(pDlg, "没有找到嵌入的flash播放器");
+--~ 		end
+--~ 		io.close(file);
+--~ 		return;
+--~ 	end
 
-	local b_isArtemis = 0;
-	if string.find(str_embed, "Artemis",1,true)~=nil or string.find(str_embed, "[Video]",1,true)~=nil  or string.find(str_embed, "[video]",1,true)~=nil then
-		b_isArtemis = 1;
-		--dbgMessage("artemis");
-	end
+--~ 	local b_isArtemis = 0;
+--~ 	if string.find(str_embed, "Artemis",1,true)~=nil or string.find(str_embed, "[Video]",1,true)~=nil  or string.find(str_embed, "[video]",1,true)~=nil then
+--~ 		b_isArtemis = 1;
+--~ 		--dbgMessage("artemis");
+--~ 	end
 
-	local int_foreignlinksite = fls["realurl"];
-	local str_id = "";
-	local str_subid = str_id;
-	if b_isArtemis==0 then
-		--dbgMessage("old");
-		--read foreign file
-		local str_notsinaurl = "";
-		if string.find(str_embed, "flashvars=\"file=", 1, true)~=nil
-		then
-			str_notsinaurl = getMedText2end(str_embed, "flashvars=\"file=", "\"", "&amp;");
-		elseif string.find(str_embed, "playerf.swf?file=")~=nil
-		then
-			str_notsinaurl = getMedText2end(str_embed, "playerf.swf?file=", "\"", "&amp;");
-		elseif string.find(str_embed, "file=")~=nil
-		then
-			str_notsinaurl = getMedText2end(str_embed, "file=", "\"", "&amp;");
-		end
+--~ 	local int_foreignlinksite = fls["realurl"];
+--~ 	local str_id = "";
+--~ 	local str_subid = str_id;
+--~ 	if b_isArtemis==0 then
+--~ 		--dbgMessage("old");
+--~ 		--read foreign file
+--~ 		local str_notsinaurl = "";
+--~ 		if string.find(str_embed, "flashvars=\"file=", 1, true)~=nil
+--~ 		then
+--~ 			str_notsinaurl = getMedText2end(str_embed, "flashvars=\"file=", "\"", "&amp;");
+--~ 		elseif string.find(str_embed, "playerf.swf?file=")~=nil
+--~ 		then
+--~ 			str_notsinaurl = getMedText2end(str_embed, "playerf.swf?file=", "\"", "&amp;");
+--~ 		elseif string.find(str_embed, "file=")~=nil
+--~ 		then
+--~ 			str_notsinaurl = getMedText2end(str_embed, "file=", "\"", "&amp;");
+--~ 		end
 
-		--certain foreign sitelink
-		if str_notsinaurl=="" then
-			if string.find(str_embed, "type2=qq", 1,true)~=nil then
-				int_foreignlinksite = fls["qq"];
-			elseif string.find(str_embed, "type2=youku", 1,true)~=nil then
-				int_foreignlinksite = fls["youku"];
-			elseif string.find(str_embed, "type2=tudou", 1,true)~=nil then
-				int_foreignlinksite = fls["tudou"];
-			else
-				int_foreignlinksite = fls["sina"];
-			end
-		end
+--~ 		--certain foreign sitelink
+--~ 		if str_notsinaurl=="" then
+--~ 			if string.find(str_embed, "type2=qq", 1,true)~=nil then
+--~ 				int_foreignlinksite = fls["qq"];
+--~ 			elseif string.find(str_embed, "type2=youku", 1,true)~=nil then
+--~ 				int_foreignlinksite = fls["youku"];
+--~ 			elseif string.find(str_embed, "type2=tudou", 1,true)~=nil then
+--~ 				int_foreignlinksite = fls["tudou"];
+--~ 			else
+--~ 				int_foreignlinksite = fls["sina"];
+--~ 			end
+--~ 		end
 
-		--certain acfpv
-		if string.find(str_embed, "flvplayer/acplayer.swf")~=nil or string.find(str_embed, "flvplayer/acplayert.swf")~=nil
-		then
-			int_acfpv = 0; -- ACFPV_ORI
-		end
+--~ 		--certain acfpv
+--~ 		if string.find(str_embed, "flvplayer/acplayer.swf")~=nil or string.find(str_embed, "flvplayer/acplayert.swf")~=nil
+--~ 		then
+--~ 			int_acfpv = 0; -- ACFPV_ORI
+--~ 		end
 
-		--read id
+--~ 		--read id
 
-		if string.find(str_embed, "flashvars=\"id=")~=nil
-		then
-			str_id = getMedText2end(str_embed, "flashvars=\"id=", "\"", "&amp;");
-		elseif string.find(str_embed, "flashvars=\"avid=")~=nil
-		then
-			str_id = getMedText2end(str_embed, "flashvars=\"avid=", "\"", "&amp;");
-		elseif string.find(str_embed, "?id=")~=nil
-		then
-			str_id = getMedText2end(str_embed, "?id=", "\"", "&amp;");
-		elseif string.find(str_embed, "id=")~=nil
-		then
-			str_embed_tmp = getAfterText(str_embed, "flashvars=");
-			if str_embed_tmp==nil
-			then
-				str_embed_tmp = getAfterText(str_embed, "src=");
-			end
-			str_id = getMedText2end(str_embed_tmp, "id=", "\"", "&amp;");
-		--elseif string.find(str_embed, "[Video]")~=nil
-		--then
-		--	str_id = getMedText(str_embed, "[Video]", "[/Video]");
-		--	int_foreignlinksite,str_id, str_subid, = getAcVideo_CommentID(str_id,
-		--	str_subid="";--not com
-		--	str_id="";--
-		end
+--~ 		if string.find(str_embed, "flashvars=\"id=")~=nil
+--~ 		then
+--~ 			str_id = getMedText2end(str_embed, "flashvars=\"id=", "\"", "&amp;");
+--~ 		elseif string.find(str_embed, "flashvars=\"avid=")~=nil
+--~ 		then
+--~ 			str_id = getMedText2end(str_embed, "flashvars=\"avid=", "\"", "&amp;");
+--~ 		elseif string.find(str_embed, "?id=")~=nil
+--~ 		then
+--~ 			str_id = getMedText2end(str_embed, "?id=", "\"", "&amp;");
+--~ 		elseif string.find(str_embed, "id=")~=nil
+--~ 		then
+--~ 			str_embed_tmp = getAfterText(str_embed, "flashvars=");
+--~ 			if str_embed_tmp==nil
+--~ 			then
+--~ 				str_embed_tmp = getAfterText(str_embed, "src=");
+--~ 			end
+--~ 			str_id = getMedText2end(str_embed_tmp, "id=", "\"", "&amp;");
+--~ 		--elseif string.find(str_embed, "[Video]")~=nil
+--~ 		--then
+--~ 		--	str_id = getMedText(str_embed, "[Video]", "[/Video]");
+--~ 		--	int_foreignlinksite,str_id, str_subid, = getAcVideo_CommentID(str_id,
+--~ 		--	str_subid="";--not com
+--~ 		--	str_id="";--
+--~ 		end
 
-		--dbgMessage(str_id);
-		--if there is a seperate subid
-		if string.find(str_embed, "mid=")~= nil then
-			str_subid = getMedText2end(str_embed, "mid=", "\"", "&amp;");
-		elseif string.find(str_embed, "cid=")~= nil then
-			str_subid = getMedText2end(str_embed, "cid=", "\"", "&amp;");
-		end
-	elseif b_isArtemis==1 then
-		int_acfpv = 1; -- ACFPV_NEW
-		local str_acinternalID = getMedText(str_embed, "{'id':'", "','system'");
-		if str_acinternalID == nil then
-			str_acinternalID = getMedText(str_embed, "[Video]", "[/Video]");
-		end
-		if str_acinternalID == nil then
-			str_acinternalID = getMedText(str_embed, "[video]", "[/video]");
-		end
-		--dbgMessage(str_acinternalID);
+--~ 		--dbgMessage(str_id);
+--~ 		--if there is a seperate subid
+--~ 		if string.find(str_embed, "mid=")~= nil then
+--~ 			str_subid = getMedText2end(str_embed, "mid=", "\"", "&amp;");
+--~ 		elseif string.find(str_embed, "cid=")~= nil then
+--~ 			str_subid = getMedText2end(str_embed, "cid=", "\"", "&amp;");
+--~ 		end
+--~ 	elseif b_isArtemis==1 then
+--~ 		int_acfpv = 1; -- ACFPV_NEW
+--~ 		local str_acinternalID = getMedText(str_embed, "{'id':'", "','system'");
+--~ 		if str_acinternalID == nil then
+--~ 			str_acinternalID = getMedText(str_embed, "[Video]", "[/Video]");
+--~ 		end
+--~ 		if str_acinternalID == nil then
+--~ 			str_acinternalID = getMedText(str_embed, "[video]", "[/video]");
+--~ 		end
+--~ 		--dbgMessage(str_acinternalID);
 
-		int_foreignlinksite, str_id, str_subid = getAcVideo_CommentID(str_acinternalID, str_tmpfile..".tmpac", pDlg);
+--~ 		int_foreignlinksite, str_id, str_subid = getAcVideo_CommentID(str_acinternalID, str_tmpfile..".tmpac", pDlg);
 
-		--dbgMessage(str_id);
-		--dbgMessage(str_subid);
-	end
+--~ 		--dbgMessage(str_id);
+--~ 		--dbgMessage(str_subid);
+--~ 	end
 
 	--dbgMessage(str_id);
 
@@ -368,7 +384,8 @@ function getTaskAttributeBatch_acfun ( str_url, str_tmpfile ,str_servername, pDl
 	--readUntil(file, "主页</a>");
 	--readUntilFromUTF8(file, "</div><!--Tool -->");
 	--readUntilFromUTF8(file, "</div><!--Title -->");
-	readUntilFromUTF8(file ,"<div id=\"area-pager\" class=\"area-pager\">");
+	--readUntilFromUTF8(file ,"<div id=\"area-pager\" class=\"area-pager\">");
+	readUntilFromUTF8(file , "<div id=\"area-part-view\"");
 
 	str_line = "";
 	local tbl_descriptors = {};
@@ -385,6 +402,9 @@ function getTaskAttributeBatch_acfun ( str_url, str_tmpfile ,str_servername, pDl
 		then
 			--dbgMessage("page article");
 			local str_tmp_vd = getMedText(str_line, "/i>", "</a>");
+			if str_tmp_vd == nil then
+				str_tmp_vd = getMedText(str_line, "\">", "</a>");
+			end
 			local str_tmp_url = getMedText(str_line, "href=\"", "\"");
 			local str_index = string.format("%d", index);
 			tbl_descriptors[str_index] = --[[str_title.."-"..]]str_tmp_vd;
