@@ -44,6 +44,7 @@
 --[[edit 20131225 for 2dland.sinapp to acfun.tv]]
 --[[edit 20131230 for acfun new api http://www.acfun.tv/video/getVideo.aspx?id=]]
 --[[edit 20140107 for acfun 2dland.sinaapp]]
+--[[add 20140122 for acfun iqiyi, getAcVideo_Vid_Cid_Titles]]
 
 require "luascript/lib/bit"
 require "luascript/lib/md5calc"
@@ -1070,6 +1071,73 @@ function getRealUrls_bili(str_id, str_tmpfile, pDlg)
 
 	return index, tbl_urls;
 end
+
+function getAcVideo_Vid_Cid_Titles(str_transid, str_tmpfile, pDlg)
+	local str_apiurl = "http://hengyang.acfun.tv/api/content.aspx?query=" .. str_transid;
+
+	if pDlg~=nil then
+		sShowMessage(pDlg, '正在读取转接页面..');
+	end
+	local re = dlFile(str_tmpfile, str_apiurl);
+	if re~=0
+	then
+		if pDlg~=nil then
+			sShowMessage(pDlg, '转接页面读取错误。');
+		end
+		return index, tbl_urls;
+	else
+		if pDlg~=nil then
+			sShowMessage(pDlg, '读取转接页面成功，正在分析..');
+		end
+	end
+
+	local file = io.open(str_tmpfile, "r");
+	if file==nil
+	then
+		if pDlg~=nil then
+			sShowMessage(pDlg, '转接页面读取错误。');
+		end
+		return;
+	end
+
+	local str_line = file:read("*l");
+	str_line = utf8_to_lua(str_line);
+	io.close(file);
+
+	--dbgMessage(str_line);
+	local be =1;
+	local en =1;
+	be, en = string.find(str_line, "%\\r%\\n<p>[^<>]+;<%\\/p>", be);
+	--"%\r%\n<p>([^<>])+;<%\/p>"
+	tbl_re = {};
+	index =1;
+	while be~=nil do
+		--dbgMessage(string.sub(str_line, be, en));
+		local str_tmp = string.sub(str_line, be, en);
+		--local iter_b, iter_e = string.find(str_tmp, ">(.+)%s(%d+)/(%x+);");
+		--dbgMessage(string.sub(str_tmp, iter_b, iter_e));
+		--dbgMessage(str_tmp);
+		local _,_,str_desp, str_cid, str_vid = string.find(str_tmp, ">(.+)%s(%d+)/(%x+);");
+		--if str_desp==nil or str_cid==nil or str_vid==nil then
+		--dbgMessage(str_desp);
+		local tmp_tbl_subframe = {}
+		tmp_tbl_subframe["desp"]=str_desp;
+		tmp_tbl_subframe["cid"]=str_cid;
+		tmp_tbl_subframe["vid"]=str_vid;
+		tbl_re[string.format("%d",index)]=tmp_tbl_subframe;
+		--tbl_re[string.format("%d",index)]["cid"]= str_cid;
+		--tbl_re[string.format("%d",index)]["vid"]= str_vid;
+		--end
+		index = index+1;
+		--dbgMessage(iter[1]);
+		--dbgMessage(iter[2]);
+		--dbgMessage(iter[3]);
+		be, en = string.find(str_line, "%\\r%\\n<p>[^<>]+;<%\\/p>", en);
+	end
+	--dbgMessage(tbl_re["1"]["desp"]);
+	return tbl_re;
+end
+
 
 function getAcVideo_CommentID(str_acid, str_tmpfile, pDlg)
 	--local str_apiurl = "http://www.acfun.tv/api/getVideoByID.aspx?vid="..str_acid;
