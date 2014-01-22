@@ -29,6 +29,7 @@
 ---[[edit 20131109 for acfun pps]]
 ---[[edit 20131225 for acfun new tag]]
 ---[[edit 20131230 for acfun new ui]]
+---[[edit 20140122 for acfun iqiyi source video.]]
 
 require "luascript/lib/lalib"
 
@@ -71,53 +72,105 @@ function getTaskAttribute_acfun ( str_url, str_tmpfile ,str_servername, pDlg)
 
 	local str_id = "";
 
+	local str_aid = "";
+
 	local str_subid = str_id;
 
-	--readin descriptor
-	local str_line = readUntilFromUTF8(file, "<title>");
-	--dbgMessage(str_line);
-	local str_title_line = readIntoUntilFromUTF8(file, str_line, "</title>");
-	local str_title = getMedText(str_title_line, "<title>", "</title>");
+	local str_descriptor = "";
 
-	--dbgMessage(str_title);
-	--readin vice descriptor
-	--readUntil(file, "主页</a>");
-	--readUntilFromUTF8(file, "</div><!--Tool -->");
-	--readUntilFromUTF8(file, "</div><!--Title -->");
-	--readUntilFromUTF8(file ,"<div id=\"area-pager\" class=\"area-pager\">");
-	readUntilFromUTF8(file , "<div id=\"area-part-view\"");
-	str_line = "";
 	local str_tmp_vd = "";
-	--while str_line~=nil and string.find(str_line, "</tr>")==nil
-	while str_line~=nil and string.find(str_line, "</div>")==nil
-	--while str_line~=nil and string.find(str_line, "结束")==nil
-	do
-		str_line = file:read("*l");
-		str_line = utf8_to_lua(str_line);
+
+	local str_title = "";
+
+	--isFramework?
+	local isFramework = 0;
+	local str_line = readUntilFromUTF8(file, "<html>");
+	local str_meta_line = readIntoUntilFromUTF8(file, str_line, "<!--title-->");
+	--dbgMessage(str_meta_line);
+	--dbgMessage(string.find(str_meta_line, "<!--meta-->",1 ,true));
+	if string.find(str_meta_line, "<!--meta-->", 1, true)~=nil then
+		--is Framework
+		isFramework = 1;
+		--dbgMessage("framework");
+
+		--readin descriptor
+		str_line = readUntilFromUTF8(file, "<title>");
 		--dbgMessage(str_line);
-		--if str_line~=nil and string.find(str_line, "<option value='")~=nil
-		if str_line~=nil and string.find(str_line, "<a class=\"")~=nil
-		then
-			--dbgMessage("pager article");
-			--if str_tmp_vd=="" or string.find(str_line, "selected>")~=nil
-			--if str_tmp_vd=="" or string.find(str_line, "pager active")~=nil
-			if str_tmp_vd=="" or string.find(str_line, "success active")~=nil
+		local str_title_line = readIntoUntilFromUTF8(file, str_line, "</title>");
+		str_title = getMedText(str_title_line, "<title>", "</title>");
+
+		--dbgMessage(str_title);
+
+		str_line = readUntilFromUTF8(file, "system.aid");
+		local transid = getMedText(str_line, "system.aid = ", ";");
+		--dbgMessage(transid);
+
+		local tbl_id_titles = getAcVideo_Vid_Cid_Titles(transid, str_tmpfile .. ".tmpacapi", pDlg);
+
+		--dbgMessage(tbl_id_titles["1"]["desp"]);
+		--dbgMessage(str_url);
+		local _, _, str_vindex = string.find(str_url, "ep=(%d+)");
+
+		if str_vindex==nil then
+			str_vindex = "1";
+		end
+		--dbgMessage(str_vindex);
+
+		str_id = tbl_id_titles[str_vindex]["vid"];
+		str_aid = tbl_id_titles[str_vindex]["cid"];
+		str_subid = tbl_id_titles[str_vindex]["vid"];
+		int_foreignlinksite = fls["iqiyi"];
+		str_tmp_vd = tbl_id_titles[str_vindex]["desp"];
+
+	else
+
+		--readin descriptor
+		str_line = readUntilFromUTF8(file, "<title>");
+		--dbgMessage(str_line);
+		local str_title_line = readIntoUntilFromUTF8(file, str_line, "</title>");
+		str_title = getMedText(str_title_line, "<title>", "</title>");
+
+		--dbgMessage(str_title);
+		--readin vice descriptor
+		--readUntil(file, "主页</a>");
+		--readUntilFromUTF8(file, "</div><!--Tool -->");
+		--readUntilFromUTF8(file, "</div><!--Title -->");
+		--readUntilFromUTF8(file ,"<div id=\"area-pager\" class=\"area-pager\">");
+		readUntilFromUTF8(file , "<div id=\"area-part-view\"");
+		str_line = "";
+
+		--while str_line~=nil and string.find(str_line, "</tr>")==nil
+		while str_line~=nil and string.find(str_line, "</div>")==nil
+		--while str_line~=nil and string.find(str_line, "结束")==nil
+		do
+			str_line = file:read("*l");
+			str_line = utf8_to_lua(str_line);
+			--dbgMessage(str_line);
+			--if str_line~=nil and string.find(str_line, "<option value='")~=nil
+			if str_line~=nil and string.find(str_line, "<a class=\"")~=nil
 			then
-				--dbgMessage("pager active");
-				--str_tmp_vd = getMedText(str_line, ">", "</option>");
-				str_tmp_vd = getMedText(str_line, "/i>", "</a>");
+				--dbgMessage("pager article");
+				--if str_tmp_vd=="" or string.find(str_line, "selected>")~=nil
+				--if str_tmp_vd=="" or string.find(str_line, "pager active")~=nil
+				if str_tmp_vd=="" or string.find(str_line, "success active")~=nil
+				then
+					--dbgMessage("pager active");
+					--str_tmp_vd = getMedText(str_line, ">", "</option>");
+					str_tmp_vd = getMedText(str_line, "/i>", "</a>");
 
-				local str_acinternalID = getMedText(str_line, "data-vid=\"", "\"");
+					local str_acinternalID = getMedText(str_line, "data-vid=\"", "\"");
 
-				--dbgMessage(str_acinternalID);
+					--dbgMessage(str_acinternalID);
 
-				int_foreignlinksite, str_id, str_subid = getAcVideo_CommentID(str_acinternalID, str_tmpfile..".tmpac", pDlg);
+					int_foreignlinksite, str_id, str_subid = getAcVideo_CommentID(str_acinternalID, str_tmpfile..".tmpac", pDlg);
 
+				end
 			end
 		end
+
 	end
 	--save descriptor
-	local str_descriptor = "";
+
 	if str_tmp_vd ~= ""
 	then
 		str_descriptor = str_title.."-"..str_tmp_vd;
@@ -294,6 +347,9 @@ function getTaskAttribute_acfun ( str_url, str_tmpfile ,str_servername, pDlg)
 	elseif int_foreignlinksite == fls["pps"]
 	then
 		int_realurlnum, tbl_readurls = getRealUrls_pps(str_id, str_tmpfile, pdlg);
+	elseif int_foreignlinksite == fls["iqiyi"]
+	then
+		int_realurlnum, tbl_readurls = getRealUrls_iqiyi(str_id, str_tmpfile, pDlg);
 	else
 		int_realurlnum = 1;
 		tbl_readurls = {};
@@ -330,6 +386,17 @@ function getTaskAttribute_acfun ( str_url, str_tmpfile ,str_servername, pDlg)
 		_,_,str_acfid_subfix = string.find(str_url, "pageno=([%d]+)");
 		if str_acfid_subfix ~= nil then
 			str_acfid = str_acfid .. str_acfid_subfix;
+		end
+	end
+
+	--for http://hengyang.acfun.tv/sp/aqgy/?ep=2
+	if str_acfid == nil
+	then
+		_, _, str_acfid_subfix = string.find(str_url, "ep=(%d+)");
+		if str_acfid_subfix ~= nil then
+			str_acfid = str_aid .. str_acfid_subfix;
+		else
+			str_acfid = str_aid;
 		end
 	end
 

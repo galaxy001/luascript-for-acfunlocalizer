@@ -1,6 +1,7 @@
 
 ---[[by lostangel 20130714]]
 ---[[edit 20130714 add letv batch mode, and multi-P ]]
+---[[edit 20140112 add letv multiple pagebox]]
 
 require "luascript/lib/lalib"
 
@@ -58,13 +59,23 @@ function getTaskAttribute_letv ( str_url, str_tmpfile , pDlg)
 	--dbgMessage(str_id);
 	local str_pname = nil;
 	if pid~=1 then
-		str_line = readUntilFromUTF8(file, "<div class=\"page_box\">");
 		local index = 1;
 		local search_index = 1;
-		while index <= pid do
-			_, search_index, str_id, str_xmlid, str_pname = string.find(str_line, "vid=\"(%d+)\" bili%-cid=\"(%d+)\">([^<>]+)</a>", search_index);
-			index = index+1;
+		str_line = readUntilFromUTF8(file, "<div class=\"page_box\">");
+
+		while str_line~=nil and string.find(str_line, "page_box", 1, true)~=nil do
+			while index <= pid do
+				_, search_index, str_id, str_xmlid, str_pname = string.find(str_line, "vid=\"(%d+)\" bili%-cid=\"(%d+)\">([^<>]+)</a>", search_index);
+				if str_id == nil then
+					break;
+				end
+				index = index+1;
+			end
+			--if index ==
+			str_line = readUntilFromUTF8(file, "<div class=\"page_box\">");
 		end
+
+
 	end
 
 	--dbgMessage(str_xmlid);
