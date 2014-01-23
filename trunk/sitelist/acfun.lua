@@ -84,7 +84,7 @@ function getTaskAttribute_acfun ( str_url, str_tmpfile ,str_servername, pDlg)
 
 	--isFramework?
 	local isFramework = 0;
-	local str_line = readUntilFromUTF8(file, "<html>");
+	local str_line = readUntilFromUTF8(file, "<html");
 	local str_meta_line = readIntoUntilFromUTF8(file, str_line, "<!--title-->");
 	--dbgMessage(str_meta_line);
 	--dbgMessage(string.find(str_meta_line, "<!--meta-->",1 ,true));
