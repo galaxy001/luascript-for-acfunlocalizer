@@ -45,6 +45,8 @@
 --[[edit 20131230 for acfun new api http://www.acfun.tv/video/getVideo.aspx?id=]]
 --[[edit 20140107 for acfun 2dland.sinaapp]]
 --[[add 20140122 for acfun iqiyi, getAcVideo_Vid_Cid_Titles]]
+--[[edit 20140225 for bili qq src video parse , adding channel para]]
+--[[edit 20140317 for acfun tudou, adding getOnepiece_tudou]]
 
 require "luascript/lib/bit"
 require "luascript/lib/md5calc"
@@ -542,7 +544,7 @@ function getRealUrls_QQ (str_id, str_tmpfile, pDlg)
 	end
 ]] --comment 20101120
 	local str_dynurl = "http://vv.video.qq.com/geturl?vid=".. str_id.."&otype=xml&platform=1&ran=0%2E9652906153351068";
-
+	--dbgMessage(str_id);
 	if pDlg~=nil then
 		sShowMessage(pDlg, '正在读取转接页面..');
 	end
@@ -741,60 +743,8 @@ function getRealUrls_youku (str_id, str_tmpfile, pDlg)
 end
 
 
---[[read real urls from tudou through vid]]
-function getRealUrls_tudou (str_id, str_tmpfile, pDlg)
-	local index = 0;
-	local tbl_urls= {};
-
-	--dbgMessage(str_id);
-
-	--local str_oriurl = "http://www.tudou.com/programs/view/" .. str_id .. "/";
-	local str_oriurl = "http://www.tudou.com/outplay/goto/getItemSegs.action?iid=" .. str_id ;
-
-	if pDlg~=nil then
-		sShowMessage(pDlg, '正在读取转接页面..');
-	end
-	local re = dlFile(str_tmpfile, str_oriurl);
-	if re~=0
-	then
-		if pDlg~=nil then
-			sShowMessage(pDlg, '转接页面读取错误。');
-		end
-		return index, tbl_urls;
-	else
-		if pDlg~=nil then
-			sShowMessage(pDlg, '读取转接页面成功，正在分析..');
-		end
-	end
-
-	local file = io.open(str_tmpfile, "r");
-	if file==nil
-	then
-		if pDlg~=nil then
-			sShowMessage(pDlg, '转接页面读取错误。');
-		end
-		return;
-	end
-
-	--local str_line = readUntil(file, "document.domain");
-	local str_line = readUntil(file, "\"k\":");
-	--local str_line_end = readIntoUntil(file , str_line, "</script>");
-	local str_line_end = readIntoUntil(file , str_line, "\"k\":");
-	--dbgMessage(str_line_end);
-	--local iid = getMedText(str_line_end, "iid: ", ",");
-	local k = getMedText(str_line_end, "\"k\":", ",");
-
-	--read iid ok closefile
-	io.close(file);
-
-	--dbgMessage(k);
-	--if iid==nil then
-	--	iid=str_id;
-	--end
-
-	--dbgMessage(iid);
-	--local str_preurl = "http://v2.tudou.com/v?st=1%2C2%2C3%2C4%2C99&it=" .. iid;
-	local str_preurl = "http://v2.tudou.com/f?sj=1&sid=10000&hd=2&r=4485&id=" .. k ; --hd=2&
+function getOnepiece_tudou ( str_k, str_tmpfile, pDlg)
+	local str_preurl = "http://v2.tudou.com/f?sj=1&sid=10000&hd=2&r=4485&id=" .. str_k ; --hd=2&
 	--local str_preurl = "http://v2.tudou.com/f?hd=2&id=" .. k ; --hd=2&
 	--dbgMessage(str_preurl)
 
@@ -854,10 +804,135 @@ function getRealUrls_tudou (str_id, str_tmpfile, pDlg)
 	--read urlok close file
 	io.close(file);
 
+	return str_v_realurl;
+end
 
-	local str_index = string.format("%d",index);
-	tbl_urls[str_index] = str_v_realurl;
-	index = index+1;
+--[[read real urls from tudou through vid]]
+function getRealUrls_tudou (str_id, str_tmpfile, pDlg)
+	local index = 0;
+	local tbl_urls= {};
+
+	--dbgMessage(str_id);
+
+	--local str_oriurl = "http://www.tudou.com/programs/view/" .. str_id .. "/";
+	local str_oriurl = "http://www.tudou.com/outplay/goto/getItemSegs.action?iid=" .. str_id ;
+
+	if pDlg~=nil then
+		sShowMessage(pDlg, '正在读取转接页面..');
+	end
+	local re = dlFile(str_tmpfile, str_oriurl);
+	if re~=0
+	then
+		if pDlg~=nil then
+			sShowMessage(pDlg, '转接页面读取错误。');
+		end
+		return index, tbl_urls;
+	else
+		if pDlg~=nil then
+			sShowMessage(pDlg, '读取转接页面成功，正在分析..');
+		end
+	end
+
+	local file = io.open(str_tmpfile, "r");
+	if file==nil
+	then
+		if pDlg~=nil then
+			sShowMessage(pDlg, '转接页面读取错误。');
+		end
+		return;
+	end
+
+	--local str_line = readUntil(file, "document.domain");
+	local str_line = readUntil(file, "\"k\":");
+	--local str_line_end = readIntoUntil(file , str_line, "</script>");
+	local str_line_end = readIntoUntil(file , str_line, "\"k\":");
+	--dbgMessage(str_line_end);
+	--local iid = getMedText(str_line_end, "iid: ", ",");
+	local k = getMedText(str_line_end, "\"k\":", ",");
+
+	while k~=nil do
+		local str_v_realurl = getOnepiece_tudou(k, str_tmpfile..k..".tmp", pDlg);
+		local str_index = string.format("%d",index);
+		tbl_urls[str_index] = str_v_realurl;
+		index = index+1;
+		str_line_end = string.sub(str_line_end, string.find(str_line_end, "\"k\":")+1);
+		k = getMedText(str_line_end, "\"k\":", ",");
+    end
+
+	--read iid ok closefile
+	io.close(file);
+
+	--dbgMessage(k);
+	--if iid==nil then
+	--	iid=str_id;
+	--end
+
+--~ 	--dbgMessage(iid);
+--~ 	--local str_preurl = "http://v2.tudou.com/v?st=1%2C2%2C3%2C4%2C99&it=" .. iid;
+--~ 	local str_preurl = "http://v2.tudou.com/f?sj=1&sid=10000&hd=2&r=4485&id=" .. k ; --hd=2&
+--~ 	--local str_preurl = "http://v2.tudou.com/f?hd=2&id=" .. k ; --hd=2&
+--~ 	--dbgMessage(str_preurl)
+
+--~ 	re = dlFile(str_tmpfile, str_preurl);
+--~ 	if re~=0
+--~ 	then
+--~ 		if pDlg~=nil then
+--~ 			sShowMessage(pDlg, '转接页面读取错误。');
+--~ 		end
+--~ 		return index, tbl_urls;
+--~ 	else
+--~ 		if pDlg~=nil then
+--~ 			sShowMessage(pDlg, '读取转接页面成功，正在分析..');
+--~ 		end
+--~ 	end
+
+--~ 	local file = io.open(str_tmpfile, "r");
+--~ 	if file==nil
+--~ 	then
+--~ 		if pDlg~=nil then
+--~ 			sShowMessage(pDlg, '转接页面读取错误。');
+--~ 		end
+--~ 		return;
+--~ 	end
+
+
+--~ 	str_line = file:read("*l");
+--~ 	--local _, _, str_v_realurl= string.find(str_line,
+--~ 	--		"<[ab]><f [^>]+>([^<]+)</f>.*</[ab]>");
+--~ 	--	--dbgMessage(str_v_realurl);
+--~ 	--dbgMessage(str_line);
+
+--~ 	local str_v_realurl = nil;
+--~ 	local brt = 0;
+--~ 	while str_line ~= nil
+--~ 	do
+--~ 		local _, _, str_v_realurl_tmp = string.find(str_line,
+--~ 			"<f [^>]+>([^<]+)</f>");
+--~ 		local _, _, str_brt = string.find(str_line,
+--~ 			'<f [^>]+brt="(%d+)"[^>]*>[^<]+</f>');
+--~ 		if str_brt==nil then
+--~ 			str_brt="2";
+--~ 		end
+--~ 		--dbgMessage(str_v_realurl_tmp);
+--~ 		--dbgMessage(str_brt);
+--~ 		if str_brt~=nil and str_v_realurl_tmp ~=nil then
+--~ 			local int_brt = tonumber(str_brt);
+--~ 			if int_brt > brt then
+--~ 				brt = int_brt;
+--~ 				str_v_realurl = str_v_realurl_tmp;
+--~ 			end
+--~ 		end
+--~ 		str_line = getAfterText(str_line, '</f>');
+--~ 		--dbgMessage(str_line);
+--~ 	end
+--~ 	--dbgMessage(str_v_realurl);
+--~ 	--read urlok close file
+--~ 	io.close(file);
+
+
+--~ 	local str_index = string.format("%d",index);
+--~ 	tbl_urls[str_index] = str_v_realurl;
+--~ 	index = index+1;
 
 
 
@@ -1049,7 +1124,7 @@ function getRealUrls_bili(str_id, str_tmpfile, pDlg)
 			--dbgMessage(str_posfix);
 			--dbgMessage(str_quote);
 
-			str_v_realurl = 'http://vsrc.store.qq.com/' .. str_posfix .. '?' .. str_quote;--'?channel=' .. str_channel .. '&' .. str_quote;--sdtfrom=v2&r=256&rfc=v10
+			str_v_realurl = 'http://vsrc.store.qq.com/' .. str_posfix .. '?' .. str_quote .. '&channel=' .. str_channel;--'?channel=' .. str_channel .. '&' .. str_quote;--sdtfrom=v2&r=256&rfc=v10
 		end
 
 
