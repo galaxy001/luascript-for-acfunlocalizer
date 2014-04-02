@@ -36,6 +36,7 @@
 ---[[edit 20130812 for bilibili batch 503 fast]]
 ---[[edit 20130909 for bilibili no embed or iframe]]
 ---[[edit 20131018 for bilibili change for qqvideo]]
+---[[edit 20130402 for bilibili change ui for iqiyi]]
 
 require "luascript/lib/lalib"
 require "luascript/lib/login"
@@ -90,7 +91,7 @@ function getTaskAttribute_bilibili ( str_url, str_tmpfile, pDlg, isNeedLogin)
 
 	--dbgMessage(str_title);
 
-	if str_title == "信息提示." then
+	if str_title == "哔哩哔哩 - ( ゜- ゜)つロ  乾杯~  - bilibili.tv" then
 		dbgMessage("该视频需要您先使用IE登录bilibili，或开启使用acfunlocalizer的自动登录功能，否则可能出现错误。");
 	end
 
@@ -195,31 +196,42 @@ function getTaskAttribute_bilibili ( str_url, str_tmpfile, pDlg, isNeedLogin)
 	end
 
 --dbgMessage(str_embed);
-
+--dbgMessage(string.format("%d", string.find(str_embed, "vid\":\"", 1,true)));
+--dbgMessage(getMedText2end(str_embed, "vid\":\"", "\"", ","));
 	--read id
 	local str_id = "";
 	if string.find(str_embed, "flashvars=\"id=")~=nil
 	then
+		--dbgMessage("1");
 		str_id = getMedText2end(str_embed, "flashvars=\"id=", "\"", "&amp;");
 	elseif string.find(str_embed, "flashvars=\"avid=")~=nil
 	then
+		--dbgMessage("2");
 		str_id = getMedText2end(str_embed, "flashvars=\"avid=", "\"", "&amp;");
 	--elseif string.find(str_embed, "?id=")~=nil
 	--then
 	--	str_id = getMedText2end(str_embed, "?id=", "\"", "&amp;");
 	elseif string.find(str_embed, "vid=")~=nil
 	then
+		--dbgMessage("3");
 		--str_id = getMedText2end(str_embed, "id=", "\"", "&amp;");
 		str_id = getMedText2end(str_embed, "vid=", "\"", "&");
 	elseif string.find(str_embed, "vid:'")~=nil
 	then
+		--dbgMessage("4");
 		--str_id = getMedText2end(str_embed, "id=", "\"", "&amp;");
 		str_id = getMedText2end(str_embed, "vid:'", "'", ",");
+	elseif string.find(str_embed, "vid\":", 1, true)~=nil
+	then
+		--dbgMessage("6");
+		str_id = getMedText2end(str_embed, "vid\":\"", "\"", ",");
 	elseif string.find(str_embed, "id=")~=nil
 	then
+		--dbgMessage("5");
 		--str_id = getMedText2end(str_embed, "id=", "\"", "&amp;");
 		str_id = getMedText2end(str_embed, "id=", "\"", "&");
 	end
+	--dbgMessage(str_id);
 
 	if string.find(str_embed, "sohu.com", 1,true)~=nil then
 		str_id = getMedText2end(str_embed, "sohu.com/", "/", "/v.swf");
@@ -263,6 +275,9 @@ function getTaskAttribute_bilibili ( str_url, str_tmpfile, pDlg, isNeedLogin)
 	end
 	if  string.find(str_embed, "cid=",1,true)~=nil  then
 		str_cid = getMedText2end(str_embed, "cid=", "&", "\"");
+	end
+	if  string.find(str_embed, "cid\":",1,true)~=nil  then
+		str_cid = getMedText2end(str_embed, "cid\":\"", "\"", ",");
 	end
 
 	--dbgMessage(str_cid);

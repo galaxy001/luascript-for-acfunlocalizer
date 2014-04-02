@@ -1,4 +1,4 @@
-----[[version: 20140323.00]]
+----[[version: 20140402.00]]
 ---[[by lostangel 20100528]]
 ---[[edit 20101117]]
 ---[[edit 20110402 for new return struct]]
@@ -14,6 +14,7 @@
 ---[[edit 20130512 for sohu]]
 ---[[edit 20130714 for letv]]
 ---[[edit 20130714 for letv multi-P]]
+---[[edit 20140402 for acfun.com]]
 
 
 require "luascript/sitelist/acfun"
@@ -68,7 +69,7 @@ function getTaskAttribute ( str_url, str_tmpfile ,str_servername, pDlg)
 	--tmpstr = decrypt(tmpstr);
 	--dbgMessage(tmpstr);
 
-	if string.find(str_url, "acfun.tv", 1, true)~=nil or string.find(str_url, "acfun.cn", 1, true)~=nil or string.find(str_url, --[["220.170.79.109"]]"124.228.254.229", 1, true)~=nil or string.find(str_url, str_servername, 1, true)~=nil
+	if string.find(str_url, "acfun.tv", 1, true)~=nil or string.find(str_url, "acfun.cn", 1, true)~=nil or string.find(str_url, --[["220.170.79.109"]]"124.228.254.229", 1, true)~=nil or string.find(str_url, str_servername, 1, true)~=nil or string.find(str_url, "acfun.com", 1, true)~=nil
 	then
 		return getTaskAttribute_acfun(str_url, str_tmpfile, str_servername, pDlg);
 	end
@@ -148,7 +149,7 @@ end
 
 function getTaskAttributeBatch ( str_url, str_tmpfile, str_servername, pDlg)
 	local tbl_re = {};
-	if string.find(str_url, "acfun.tv", 1, true)~=nil or string.find(str_url, "acfun.cn", 1, true)~=nil or string.find(str_url, "124.228.254.229", 1, true)~=nil or string.find(str_url, str_servername, 1, true)~=nil
+	if string.find(str_url, "acfun.tv", 1, true)~=nil or string.find(str_url, "acfun.cn", 1, true)~=nil or string.find(str_url, "124.228.254.229", 1, true)~=nil or string.find(str_url, str_servername, 1, true)~=nil or string.find(str_url, "acfun.com", 1, true)~=nil
 	then
 		return getTaskAttributeBatch_acfun(str_url, str_tmpfile, str_servername, pDlg);
 	end
