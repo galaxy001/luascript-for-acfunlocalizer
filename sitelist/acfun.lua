@@ -30,6 +30,7 @@
 ---[[edit 20131225 for acfun new tag]]
 ---[[edit 20131230 for acfun new ui]]
 ---[[edit 20140122 for acfun iqiyi source video.]]
+---[[edit 20140402 for acfun new ui]]
 
 require "luascript/lib/lalib"
 
@@ -85,7 +86,10 @@ function getTaskAttribute_acfun ( str_url, str_tmpfile ,str_servername, pDlg)
 	--isFramework?
 	local isFramework = 0;
 	local str_line = readUntilFromUTF8(file, "<html");
-	local str_meta_line = readIntoUntilFromUTF8(file, str_line, "<!--title-->");
+	local str_meta_line = str_line;
+	if string.find(str_meta_line, "</title>", 1, true)==nil then
+		str_meta_line = readIntoUntilFromUTF8(file, str_line, "<!--title-->");
+	end
 	--dbgMessage(str_meta_line);
 	--dbgMessage(string.find(str_meta_line, "<!--meta-->",1 ,true));
 	if string.find(str_meta_line, "<!--meta-->", 1, true)~=nil then
@@ -125,9 +129,15 @@ function getTaskAttribute_acfun ( str_url, str_tmpfile ,str_servername, pDlg)
 	else
 
 		--readin descriptor
-		str_line = readUntilFromUTF8(file, "<title>");
+		str_line = str_meta_line;
+		if string.find(str_line, "<title>", 1,true)==nil then
+			str_line = readUntilFromUTF8(file, "<title>");
+		end
 		--dbgMessage(str_line);
-		local str_title_line = readIntoUntilFromUTF8(file, str_line, "</title>");
+		local str_title_line = str_line;
+		if string.find(str_title_line, "</title>", 1, true)==nil then
+			str_title_line = readIntoUntilFromUTF8(file, str_line, "</title>");
+		end
 		str_title = getMedText(str_title_line, "<title>", "</title>");
 
 		--dbgMessage(str_title);
@@ -147,12 +157,16 @@ function getTaskAttribute_acfun ( str_url, str_tmpfile ,str_servername, pDlg)
 			str_line = utf8_to_lua(str_line);
 			--dbgMessage(str_line);
 			--if str_line~=nil and string.find(str_line, "<option value='")~=nil
-			if str_line~=nil and string.find(str_line, "<a class=\"")~=nil
+			--if str_line~=nil and string.find(str_line, "<a class=\"")~=nil
+			--local t_t = string.find(str_line, "<a data-vid=\"", 1, true);
+			--dbgMessage(string.format("%d", t_t));
+
+			if str_line~=nil and string.find(str_line, "<a data-vid=\"", 1, true)~=nil
 			then
 				--dbgMessage("pager article");
 				--if str_tmp_vd=="" or string.find(str_line, "selected>")~=nil
 				--if str_tmp_vd=="" or string.find(str_line, "pager active")~=nil
-				if str_tmp_vd=="" or string.find(str_line, "success active")~=nil
+				if str_tmp_vd=="" or string.find(str_line, "success active", 1, true)~=nil
 				then
 					--dbgMessage("pager active");
 					--str_tmp_vd = getMedText(str_line, ">", "</option>");
@@ -465,7 +479,8 @@ function getTaskAttributeBatch_acfun ( str_url, str_tmpfile ,str_servername, pDl
 		str_line = utf8_to_lua(str_line);
 		--dbgMessage(str_line);
 		--if str_line~=nil and string.find(str_line, "<option value='")~=nil
-		if str_line~=nil and string.find(str_line, "<a class")~=nil
+		--if str_line~=nil and string.find(str_line, "<a class")~=nil
+		if str_line~=nil and string.find(str_line, "<a data-vid=\"", 1, true)~=nil
 		then
 			--dbgMessage("page article");
 			local str_tmp_vd = getMedText(str_line, "/i>", "</a>");
@@ -501,7 +516,8 @@ function getTaskAttributeBatch_acfun ( str_url, str_tmpfile ,str_servername, pDl
 	--local bg,ed = string.find(string.reverse(str_url),"/",1,true);
 	--ed = string.len(str_url)+1-ed;
 	--local urlprefix = string.sub(str_url, 1, ed);
-	local urlprefix = "http://www.acfun.tv"
+	--local urlprefix = "http://www.acfun.tv"
+	local urlprefix = "http://www.acfun.com"
 
 	local tbl_re = {};
 	local index2= 0;
