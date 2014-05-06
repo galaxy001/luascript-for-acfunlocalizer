@@ -47,6 +47,8 @@
 --[[add 20140122 for acfun iqiyi, getAcVideo_Vid_Cid_Titles]]
 --[[edit 20140225 for bili qq src video parse , adding channel para]]
 --[[edit 20140317 for acfun tudou, adding getOnepiece_tudou]]
+--[[edit 20140404 for youku parse with 2dland.sinapp]]
+--[[edit 20140428 for suspend dl letv video]]
 
 require "luascript/lib/bit"
 require "luascript/lib/md5calc"
@@ -603,8 +605,70 @@ function getRealUrls_QQ (str_id, str_tmpfile, pDlg)
 
 end
 
+
 --[[read real urls from youku through vid]]
 function getRealUrls_youku (str_id, str_tmpfile, pDlg)
+	local tbl_urls = {};
+	local index = 0;
+
+	--local str_dynurl = "http://v.iask.com/v_play.php?vid="..str_id;
+	--local str_dynurl = "http://sex.acfun.tv/Home/Sina?app_key=1917945218&vid=".. str_id .. "&dtime=1374599847484"
+	--dbgMessage(str_id);
+	--dbgMessage(md5.Calc(str_id.."footstone"));
+	--local str_dynurl = "http://2dland.acfun.tv/video.php?action=xml&type=xina&vid=".. str_id .. "&key=" .. md5.Calc(str_id .. "footstone") .. "&ti=3";
+	local str_dynurl = "http://2dland.sinaapp.com/video.php?action=xml&type=acfun_youku&vid=".. str_id;
+	--dbgMessage(str_dynurl);
+	if pDlg~=nil then
+		sShowMessage(pDlg, '正在读取转接页面..');
+	end
+	--str_tmpfile = "C:\\tempacfun.html";
+	--dbgMessage(str_tmpfile);
+	--dbgMessage(str_dynurl);
+	local re = dlFile(str_tmpfile, str_dynurl);
+	--dbgMessage("dl dynurl end.");
+	if re~=0
+	then
+		if pDlg~=nil then
+			sShowMessage(pDlg, '转接页面读取错误。');
+		end
+		return index, tbl_urls;
+	else
+		if pDlg~=nil then
+			sShowMessage(pDlg, '读取转接页面成功，正在分析..');
+		end
+	end
+
+	local file = io.open(str_tmpfile, "r");
+	if file==nil
+	then
+		if pDlg~=nil then
+			sShowMessage(pDlg, '转接页面读取错误。');
+		end
+		return;
+	end
+
+	local str_line = "";
+	while str_line~=nil
+	do
+		str_line = readUntil(file, "<url>");
+		str_line = readIntoUntil(file, str_line, "</url>");
+		--dbgMessage(str_line);
+		if str_line~=nil and string.find(str_line, "<url>")~=nil
+		then
+			local str_index = string.format("%d",index);
+			tbl_urls[str_index] = getMedText(str_line, "<url><!\[CDATA\[", "\]\]></url>");
+			tbl_urls[str_index] = encodeUrl(tbl_urls[str_index]);
+			print(tbl_urls[str_index]);
+			index = index+1;
+		end
+	end
+	io.close(file);
+	return index, tbl_urls;
+end
+
+
+--[[read real urls from youku through vid]]
+function getRealUrls_youku_old (str_id, str_tmpfile, pDlg)
 	local tbl_urls = {};
 	local index = 0;
 
@@ -1742,6 +1806,18 @@ end
 function getRealUrls_letv (str_id, str_tmpfile, pDlg)
 	local tbl_urls = {};
 	local index = 0;
+
+
+	--[[if letv ok, comment this block]]
+	dbgMessage('当前版本不能解析乐视网源视频，请选择其它下载工具下载视频。弹幕将正常下载。');
+	local str_index = string.format("%d", index);
+	tbl_urls[str_index] = 'http://static.hdslb.com/error/404.png';
+	index = index+1;
+	if true then
+		return index, tbl_urls;
+	end
+	--[[block ends]]
+
 
 	local str_dynurl = "http://www.letv.com/v_xml/" .. str_id .. ".xml";
 

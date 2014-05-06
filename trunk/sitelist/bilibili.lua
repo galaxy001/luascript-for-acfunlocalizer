@@ -37,12 +37,15 @@
 ---[[edit 20130909 for bilibili no embed or iframe]]
 ---[[edit 20131018 for bilibili change for qqvideo]]
 ---[[edit 20130402 for bilibili change ui for iqiyi]]
+---[[edit 20130406 for bilibili repeat get playurl]]
+---[[edit 20130409 for bilibili bug for batch]]
+---[[edit 20130505 for bilibili sohu.swf]]
 
 require "luascript/lib/lalib"
 require "luascript/lib/login"
 
 --[[parse single bilibili url]]
-function getTaskAttribute_bilibili ( str_url, str_tmpfile, pDlg, isNeedLogin)
+function getTaskAttribute_bilibili ( str_url, str_tmpfile, pDlg, isNeedLogin, isFromBatch)
 	--dbgMessage("bilibili parse begin!");
 	if pDlg~=nil then
 		sShowMessage(pDlg, '开始解析..');
@@ -52,6 +55,11 @@ function getTaskAttribute_bilibili ( str_url, str_tmpfile, pDlg, isNeedLogin)
 	if isNeedLogin == nil then
 		isNeedLogin = true;
 	end
+
+	if isFromBatch == nil then
+		isFromBatch = false;
+	end
+
 	--[[check login]]
 	if IsAutoLogin == SUCCESS and isNeedLogin==true then
 		local loginstate = Login_Bilibili ( str_tmpfile );
@@ -237,6 +245,10 @@ function getTaskAttribute_bilibili ( str_url, str_tmpfile, pDlg, isNeedLogin)
 		str_id = getMedText2end(str_embed, "sohu.com/", "/", "/v.swf");
 	end
 
+	if string.find(str_embed, "sohu.swf", 1, true)~=nil then
+		str_id = getMedText2end(str_embed, "vid=", "\"", "&");
+	end
+
 	--dbgMessage(str_id);
 
 	local str_cid = nil;
@@ -258,13 +270,13 @@ function getTaskAttribute_bilibili ( str_url, str_tmpfile, pDlg, isNeedLogin)
 			int_foreignlinksite = fls["tudou"];
 		elseif string.find(str_embed, "rid=", 1, true)~=nil then
 			int_foreignlinksite = fls["6cn"];
+		elseif string.find(str_embed, "iqiyi.com", 1,true)~=nil or string.find(str_embed, "iqiyi.swf", 1,true)~=nil then
+			int_foreignlinksite = fls["iqiyi"];
+		elseif string.find(str_embed, "sohu.com", 1,true)~=nil or string.find(str_embed, "sohu.swf", 1,true)~=nil then
+			int_foreignlinksite = fls["sohu"];
 		elseif string.find(str_embed, "cid=", 1,true)~=nil then
 			int_foreignlinksite = fls["bili"];
 			--dbgMessage("bilibili");
-		elseif string.find(str_embed, "iqiyi.com", 1,true)~=nil or string.find(str_embed, "iqiyi.swf", 1,true)~=nil then
-			int_foreignlinksite = fls["iqiyi"];
-		elseif string.find(str_embed, "sohu.com", 1,true)~=nil then
-			int_foreignlinksite = fls["sohu"];
 		else
 			int_foreignlinksite = fls["sina"];
 		end
@@ -343,12 +355,25 @@ function getTaskAttribute_bilibili ( str_url, str_tmpfile, pDlg, isNeedLogin)
 	then
 		--dbgMessage(str_id);
 		--int_realurlnum, tbl_readurls = getRealUrls_bili(str_id, str_tmpfile, pDlg);
-		int_realurlnum, tbl_readurls = getRealUrls_bili(str_cid, str_tmpfile, pDlg);
+		local repeat_num = 0;
+		--dbgMessage("get real");
+		repeat
+			--dbgMessage("before");
+			int_realurlnum, tbl_readurls = getRealUrls_bili(str_cid, str_tmpfile, pDlg);
+			--dbgMessage("after");
+			repeat_num = repeat_num + 1;
+			if isFromBatch==false then
+				sShowMessage(pDlg, string.format("正在准备重新读取转接页面,重试第%d次..", repeat_num));
+			end
+			time_sleep(1000,500);
+		until int_realurlnum~=0 or repeat_num>=50
+		--dbgMessage("get real ok");
 	elseif int_foreignlinksite == fls["iqiyi"]
 	then
 		int_realurlnum, tbl_readurls = getRealUrls_iqiyi(str_id, str_tmpfile, pDlg);
 	elseif int_foreignlinksite == fls["sohu"]
 	then
+		--dbgMessage("sohu");
 		int_realurlnum, tbl_readurls = getRealUrls_sohu(str_id, str_tmpfile, pDlg);
 	else
 		int_realurlnum = 1;
@@ -518,7 +543,8 @@ function getTaskAttributeBatch_bilibili ( str_url, str_tmpfile , pDlg)
 		for tj = 0, maxretry, 1 do
 			local str_son_url = urlprefix..tbl_shorturls[str_index];
 			--dbgMessage(str_son_url);
-			local tbl_sig = getTaskAttribute_bilibili(str_son_url, str_tmpfile, str_servername, false);
+			local tbl_sig = getTaskAttribute_bilibili(str_son_url, str_tmpfile, str_servername, false, true);
+			--dbgMessage("ok");
 			if (tbl_sig~=nil and tbl_sig["0"]["realurlnum"]~=0) or tj+1 == maxretry then
 				--tbl_sig["0"]["descriptor"] = --[[str_title]]tbl_sig["0"]["descriptor"].."-"..tbl_descriptors[str_index];
 				local str_index2 = string.format("%d",index2);
