@@ -49,6 +49,9 @@
 --[[edit 20140317 for acfun tudou, adding getOnepiece_tudou]]
 --[[edit 20140404 for youku parse with 2dland.sinapp]]
 --[[edit 20140428 for suspend dl letv video]]
+--[[edit 20140507 fuck bili close service to acfunlocalizer]]
+--[[edit 20140524 for acfun singleline 2dland.sinapp]]
+--[[edit 20140524 for new acfun getAcVideo_Vid_Cid_Titles result form]]
 
 require "luascript/lib/bit"
 require "luascript/lib/md5calc"
@@ -430,9 +433,24 @@ function getRealUrls (str_id, str_tmpfile, pDlg)
 	local str_line = "";
 	while str_line~=nil
 	do
-		str_line = readUntil(file, "<url>");
-		str_line = readIntoUntil(file, str_line, "</url>");
-		--dbgMessage(str_line);
+--~ 		str_line = readUntil(file, "<url>");
+--~ 		str_line = readIntoUntil(file, str_line, "</url>");
+--~ 		--dbgMessage(str_line);
+--~ 		if str_line~=nil and string.find(str_line, "<url>")~=nil
+--~ 		then
+--~ 			local str_index = string.format("%d",index);
+--~ 			tbl_urls[str_index] = getMedText(str_line, "<url><!\[CDATA\[", "\]\]></url>");
+--~ 			tbl_urls[str_index] = encodeUrl(tbl_urls[str_index]);
+--~ 			print(tbl_urls[str_index]);
+--~ 			index = index+1;
+--~ 		end
+		if str_line==nil or string.find(str_line, "<url>")==nil
+		then
+			str_line = readUntil(file, "<url>");
+			str_line = readIntoUntil(file, str_line, "</url>");
+			--dbgMessage(str_line);
+		end
+
 		if str_line~=nil and string.find(str_line, "<url>")~=nil
 		then
 			local str_index = string.format("%d",index);
@@ -441,6 +459,8 @@ function getRealUrls (str_id, str_tmpfile, pDlg)
 			print(tbl_urls[str_index]);
 			index = index+1;
 		end
+
+		str_line  = getAfterText(str_line, "</url>", 1);
 	end
 	io.close(file);
 	return index, tbl_urls;
@@ -650,9 +670,13 @@ function getRealUrls_youku (str_id, str_tmpfile, pDlg)
 	local str_line = "";
 	while str_line~=nil
 	do
-		str_line = readUntil(file, "<url>");
-		str_line = readIntoUntil(file, str_line, "</url>");
-		--dbgMessage(str_line);
+		if str_line==nil or string.find(str_line, "<url>")==nil
+		then
+			str_line = readUntil(file, "<url>");
+			str_line = readIntoUntil(file, str_line, "</url>");
+			--dbgMessage(str_line);
+		end
+
 		if str_line~=nil and string.find(str_line, "<url>")~=nil
 		then
 			local str_index = string.format("%d",index);
@@ -661,6 +685,9 @@ function getRealUrls_youku (str_id, str_tmpfile, pDlg)
 			print(tbl_urls[str_index]);
 			index = index+1;
 		end
+
+		str_line  = getAfterText(str_line, "</url>", 1);
+
 	end
 	io.close(file);
 	return index, tbl_urls;
@@ -1090,12 +1117,14 @@ function getRealUrls_bili(str_id, str_tmpfile, pDlg)
 
 	--dbgMessage(str_id);
 
-	local str_oriurl = "http://interface.bilibili.tv/playurl?cid=" .. str_id;
+	local str_oriurl = "http://interface.bilibili.cn/playurl?cid=" .. str_id;
 
+	--dbgMessage(str_oriurl);
 	if pDlg~=nil then
 		sShowMessage(pDlg, '正在读取转接页面..');
 	end
-	local re = dlFile(str_tmpfile, str_oriurl);
+	--local re = dlFile(str_tmpfile, str_oriurl);
+	local re = postdlFile(str_tmpfile, str_oriurl, "", "User-Agent: Mozilla/5.0");
 	if re~=0
 	then
 		if pDlg~=nil then
@@ -1246,7 +1275,8 @@ function getAcVideo_Vid_Cid_Titles(str_transid, str_tmpfile, pDlg)
 	--dbgMessage(str_line);
 	local be =1;
 	local en =1;
-	be, en = string.find(str_line, "%\\r%\\n<p>[^<>]+;<%\\/p>", be);
+	--be, en = string.find(str_line, "%\\r%\\n<p>[^<>]+;<%\\/p>", be);
+	be, en = string.find(str_line, "{\"startTime\":[^}]+\"}", be);
 	--"%\r%\n<p>([^<>])+;<%\/p>"
 	tbl_re = {};
 	index =1;
@@ -1256,10 +1286,12 @@ function getAcVideo_Vid_Cid_Titles(str_transid, str_tmpfile, pDlg)
 		--local iter_b, iter_e = string.find(str_tmp, ">(.+)%s(%d+)/(%x+);");
 		--dbgMessage(string.sub(str_tmp, iter_b, iter_e));
 		--dbgMessage(str_tmp);
-		local _,_,str_desp, str_cid, str_vid = string.find(str_tmp, ">(.+)%s(%d+)/(%x+);");
+		--local _,_,str_desp, str_cid, str_vid = string.find(str_tmp, ">(.+)%s(%d+)/(%x+);");
+		local _,_,str_type,str_desp, str_cid, str_vid = string.find(str_tmp, "\"sourceType\":\"(.+)\",\"title\":\"(.+)\",\"danmakuId\":\"(.+)\",\"videoId\":.+\"sourceId\":\"(.+)\"");
 		--if str_desp==nil or str_cid==nil or str_vid==nil then
 		--dbgMessage(str_desp);
 		local tmp_tbl_subframe = {}
+		tmp_tbl_subframe["type"]=str_type;
 		tmp_tbl_subframe["desp"]=str_desp;
 		tmp_tbl_subframe["cid"]=str_cid;
 		tmp_tbl_subframe["vid"]=str_vid;
@@ -1271,7 +1303,8 @@ function getAcVideo_Vid_Cid_Titles(str_transid, str_tmpfile, pDlg)
 		--dbgMessage(iter[1]);
 		--dbgMessage(iter[2]);
 		--dbgMessage(iter[3]);
-		be, en = string.find(str_line, "%\\r%\\n<p>[^<>]+;<%\\/p>", en);
+		--be, en = string.find(str_line, "%\\r%\\n<p>[^<>]+;<%\\/p>", en);
+		be, en = string.find(str_line, "{\"startTime\":[^}]+\"}", en);
 	end
 	--dbgMessage(tbl_re["1"]["desp"]);
 	return tbl_re;

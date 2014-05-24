@@ -31,11 +31,12 @@
 ---[[edit 20131230 for acfun new ui]]
 ---[[edit 20140122 for acfun iqiyi source video.]]
 ---[[edit 20140402 for acfun new ui]]
+---[[edit 20140524 for acfun new ui]]
 
 require "luascript/lib/lalib"
 
 acfun_xml_servername = 'www.acfun.tv'; --'124.228.254.234';--'www.sjfan.com.cn';
-acfun_comment_servername = 'comment.acfun.tv';--'122.224.11.162';--
+acfun_comment_servername = 'comment.acfun.com';--'comment.acfun.tv';--'122.224.11.162';--
 
 --[[parse single acfun url]]
 function getTaskAttribute_acfun ( str_url, str_tmpfile ,str_servername, pDlg)
@@ -88,11 +89,44 @@ function getTaskAttribute_acfun ( str_url, str_tmpfile ,str_servername, pDlg)
 	local str_line = readUntilFromUTF8(file, "<html");
 	local str_meta_line = str_line;
 	if string.find(str_meta_line, "</title>", 1, true)==nil then
-		str_meta_line = readIntoUntilFromUTF8(file, str_line, "<!--title-->");
+		--str_meta_line = readIntoUntilFromUTF8(file, str_line, "<!--title-->");
+		str_meta_line = readIntoUntilFromUTF8(file, str_line, "</head>");
 	end
 	--dbgMessage(str_meta_line);
 	--dbgMessage(string.find(str_meta_line, "<!--meta-->",1 ,true));
-	if string.find(str_meta_line, "<!--meta-->", 1, true)~=nil then
+	if string.find(str_meta_line, "</title>", 1, true)~=nil then
+		local str_title_line = str_meta_line;
+		str_title = getMedText(str_title_line, "<title>", "</title>");
+
+		if str_title == "会员登录 - AcFun弹幕视频网 - 中国宅文化基地" then
+			dbgMessage("该视频需要您先使用IE登录Acfun，或开启使用acfunlocalizer的自动登录功能，否则可能出现错误。");
+			return;
+		end
+		--dbgMessage(str_title);
+
+		str_line = readUntilFromUTF8(file, "system.aid =");
+		local transid = getMedText(str_line, "system.aid = '", "';");
+		--dbgMessage(transid);
+
+		local tbl_id_titles = getAcVideo_Vid_Cid_Titles(transid, str_tmpfile .. ".tmpacapi", pDlg);
+
+		--dbgMessage(tbl_id_titles["1"]["desp"]);
+		--dbgMessage(str_url);
+		local _, _, str_vindex = string.find(str_url, "ep=(%d+)");
+
+		if str_vindex==nil then
+			str_vindex = "1";
+		end
+		--dbgMessage(str_vindex);
+
+		str_id = tbl_id_titles[str_vindex]["vid"];
+		str_aid = tbl_id_titles[str_vindex]["cid"];
+		str_subid = tbl_id_titles[str_vindex]["cid"];
+		dbgMessage(tbl_id_titles[str_vindex]["type"]);
+		int_foreignlinksite = fls[tbl_id_titles[str_vindex]["type"]];
+		str_tmp_vd = tbl_id_titles[str_vindex]["desp"];
+
+	elseif string.find(str_meta_line, "<!--meta-->", 1, true)~=nil then
 		--is Framework
 		isFramework = 1;
 		--dbgMessage("framework");
@@ -380,7 +414,14 @@ function getTaskAttribute_acfun ( str_url, str_tmpfile ,str_servername, pDlg)
 		tbl_subxmlurls["1"] = str_subxmlurl_lock;
 		tbl_subxmlurls["2"] = str_subxmlurl_super;
 		tbl_subxmlurls["3"] = str_subxmlurl_20111106;
-		tbl_subxmlurls["4"] = str_subxmlurl_lock_20111106;
+		--dlFile(str_tmpfile.."testsubxml.xml", str_subxmlurl_20111106);
+ 		tbl_subxmlurls["4"] = str_subxmlurl_lock_20111106;
+
+		--tbl_subxmlurls["0"] = str_subxmlurl_20111106;
+		--dlFile(str_tmpfile.."testsubxml.xml", str_subxmlurl_20111106);
+		--tbl_subxmlurls["1"] = str_subxmlurl_lock_20111106;
+	else
+		tbl_subxmlurls["0"] = str_subxmlurl;
 	end
 
 	local _, _, str_acfid = string.find(str_url, "/([%d_]+).html");
