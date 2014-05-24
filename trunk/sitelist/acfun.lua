@@ -122,7 +122,7 @@ function getTaskAttribute_acfun ( str_url, str_tmpfile ,str_servername, pDlg)
 		str_id = tbl_id_titles[str_vindex]["vid"];
 		str_aid = tbl_id_titles[str_vindex]["cid"];
 		str_subid = tbl_id_titles[str_vindex]["cid"];
-		dbgMessage(tbl_id_titles[str_vindex]["type"]);
+		--dbgMessage(tbl_id_titles[str_vindex]["type"]);
 		int_foreignlinksite = fls[tbl_id_titles[str_vindex]["type"]];
 		str_tmp_vd = tbl_id_titles[str_vindex]["desp"];
 
