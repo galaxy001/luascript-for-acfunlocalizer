@@ -32,6 +32,7 @@
 ---[[edit 20140122 for acfun iqiyi source video.]]
 ---[[edit 20140402 for acfun new ui]]
 ---[[edit 20140524 for acfun new ui]]
+---[[edit 20140528 for acfun new ui bug]]
 
 require "luascript/lib/lalib"
 
@@ -94,73 +95,76 @@ function getTaskAttribute_acfun ( str_url, str_tmpfile ,str_servername, pDlg)
 	end
 	--dbgMessage(str_meta_line);
 	--dbgMessage(string.find(str_meta_line, "<!--meta-->",1 ,true));
-	if string.find(str_meta_line, "</title>", 1, true)~=nil then
-		local str_title_line = str_meta_line;
-		str_title = getMedText(str_title_line, "<title>", "</title>");
+--~ 	if string.find(str_meta_line, "</title>", 1, true)~=nil then
+--~ 		local str_title_line = str_meta_line;
+--~ 		str_title = getMedText(str_title_line, "<title>", "</title>");
 
-		if str_title == "会员登录 - AcFun弹幕视频网 - 中国宅文化基地" then
-			dbgMessage("该视频需要您先使用IE登录Acfun，或开启使用acfunlocalizer的自动登录功能，否则可能出现错误。");
-			return;
-		end
-		--dbgMessage(str_title);
+--~ 		if str_title == "会员登录 - AcFun弹幕视频网 - 中国宅文化基地" then
+--~ 			dbgMessage("该视频需要您先使用IE登录Acfun，或开启使用acfunlocalizer的自动登录功能，否则可能出现错误。");
+--~ 			return;
+--~ 		end
+--~ 		--dbgMessage(str_title);
 
-		str_line = readUntilFromUTF8(file, "system.aid =");
-		local transid = getMedText(str_line, "system.aid = '", "';");
-		--dbgMessage(transid);
+--~ 		str_line = readUntilFromUTF8(file, "system.aid =");
+--~ 		local transid = getMedText(str_line, "system.aid = '", "';");
+--~ 		--dbgMessage(transid);
 
-		local tbl_id_titles = getAcVideo_Vid_Cid_Titles(transid, str_tmpfile .. ".tmpacapi", pDlg);
+--~ 		local tbl_id_titles = getAcVideo_Vid_Cid_Titles(transid, str_tmpfile .. ".tmpacapi", pDlg);
 
-		--dbgMessage(tbl_id_titles["1"]["desp"]);
-		--dbgMessage(str_url);
-		local _, _, str_vindex = string.find(str_url, "ep=(%d+)");
+--~ 		--dbgMessage(tbl_id_titles["1"]["desp"]);
+--~ 		--dbgMessage(str_url);
+--~ 		local _, _, str_vindex = string.find(str_url, "ep=(%d+)");
 
-		if str_vindex==nil then
-			str_vindex = "1";
-		end
-		--dbgMessage(str_vindex);
+--~ 		if str_vindex==nil then
+--~ 			str_vindex = "1";
+--~ 		end
+--~ 		--dbgMessage(str_vindex);
 
-		str_id = tbl_id_titles[str_vindex]["vid"];
-		str_aid = tbl_id_titles[str_vindex]["cid"];
-		str_subid = tbl_id_titles[str_vindex]["cid"];
-		--dbgMessage(tbl_id_titles[str_vindex]["type"]);
-		int_foreignlinksite = fls[tbl_id_titles[str_vindex]["type"]];
-		str_tmp_vd = tbl_id_titles[str_vindex]["desp"];
+--~ 		str_id = tbl_id_titles[str_vindex]["vid"];
+--~ 		str_aid = tbl_id_titles[str_vindex]["cid"];
+--~ 		str_subid = tbl_id_titles[str_vindex]["cid"];
+--~ 		--dbgMessage(tbl_id_titles[str_vindex]["type"]);
+--~ 		int_foreignlinksite = fls[tbl_id_titles[str_vindex]["type"]];
+--~ 		str_tmp_vd = tbl_id_titles[str_vindex]["desp"];
 
-	elseif string.find(str_meta_line, "<!--meta-->", 1, true)~=nil then
-		--is Framework
-		isFramework = 1;
-		--dbgMessage("framework");
+--~ 	else
 
-		--readin descriptor
-		str_line = readUntilFromUTF8(file, "<title>");
-		--dbgMessage(str_line);
-		local str_title_line = readIntoUntilFromUTF8(file, str_line, "</title>");
-		str_title = getMedText(str_title_line, "<title>", "</title>");
 
-		--dbgMessage(str_title);
+--~ 	if string.find(str_meta_line, "<!--meta-->", 1, true)~=nil then
+--~ 		--is Framework
+--~ 		isFramework = 1;
+--~ 		--dbgMessage("framework");
 
-		str_line = readUntilFromUTF8(file, "system.aid");
-		local transid = getMedText(str_line, "system.aid = ", ";");
-		--dbgMessage(transid);
+--~ 		--readin descriptor
+--~ 		str_line = readUntilFromUTF8(file, "<title>");
+--~ 		--dbgMessage(str_line);
+--~ 		local str_title_line = readIntoUntilFromUTF8(file, str_line, "</title>");
+--~ 		str_title = getMedText(str_title_line, "<title>", "</title>");
 
-		local tbl_id_titles = getAcVideo_Vid_Cid_Titles(transid, str_tmpfile .. ".tmpacapi", pDlg);
+--~ 		--dbgMessage(str_title);
 
-		--dbgMessage(tbl_id_titles["1"]["desp"]);
-		--dbgMessage(str_url);
-		local _, _, str_vindex = string.find(str_url, "ep=(%d+)");
+--~ 		str_line = readUntilFromUTF8(file, "system.aid");
+--~ 		local transid = getMedText(str_line, "system.aid = ", ";");
+--~ 		--dbgMessage(transid);
 
-		if str_vindex==nil then
-			str_vindex = "1";
-		end
-		--dbgMessage(str_vindex);
+--~ 		local tbl_id_titles = getAcVideo_Vid_Cid_Titles(transid, str_tmpfile .. ".tmpacapi", pDlg);
 
-		str_id = tbl_id_titles[str_vindex]["vid"];
-		str_aid = tbl_id_titles[str_vindex]["cid"];
-		str_subid = tbl_id_titles[str_vindex]["vid"];
-		int_foreignlinksite = fls["iqiyi"];
-		str_tmp_vd = tbl_id_titles[str_vindex]["desp"];
+--~ 		--dbgMessage(tbl_id_titles["1"]["desp"]);
+--~ 		--dbgMessage(str_url);
+--~ 		local _, _, str_vindex = string.find(str_url, "ep=(%d+)");
 
-	else
+--~ 		if str_vindex==nil then
+--~ 			str_vindex = "1";
+--~ 		end
+--~ 		--dbgMessage(str_vindex);
+
+--~ 		str_id = tbl_id_titles[str_vindex]["vid"];
+--~ 		str_aid = tbl_id_titles[str_vindex]["cid"];
+--~ 		str_subid = tbl_id_titles[str_vindex]["vid"];
+--~ 		int_foreignlinksite = fls["iqiyi"];
+--~ 		str_tmp_vd = tbl_id_titles[str_vindex]["desp"];
+
+--~ 	else
 
 		--readin descriptor
 		str_line = str_meta_line;
@@ -175,6 +179,12 @@ function getTaskAttribute_acfun ( str_url, str_tmpfile ,str_servername, pDlg)
 		str_title = getMedText(str_title_line, "<title>", "</title>");
 
 		--dbgMessage(str_title);
+
+		if str_title == "会员登录 - AcFun弹幕视频网 - 中国宅文化基地" then
+			dbgMessage("该视频需要您先使用IE登录Acfun，或开启使用acfunlocalizer的自动登录功能，否则可能出现错误。");
+			return;
+		end
+
 		--readin vice descriptor
 		--readUntil(file, "主页</a>");
 		--readUntilFromUTF8(file, "</div><!--Tool -->");
@@ -200,7 +210,7 @@ function getTaskAttribute_acfun ( str_url, str_tmpfile ,str_servername, pDlg)
 				--dbgMessage("pager article");
 				--if str_tmp_vd=="" or string.find(str_line, "selected>")~=nil
 				--if str_tmp_vd=="" or string.find(str_line, "pager active")~=nil
-				if str_tmp_vd=="" or string.find(str_line, "success active", 1, true)~=nil
+				if (str_tmp_vd=="" and str_line~="" ) or string.find(str_line, "success active", 1, true)~=nil
 				then
 					--dbgMessage("pager active");
 					--str_tmp_vd = getMedText(str_line, ">", "</option>");
@@ -216,7 +226,7 @@ function getTaskAttribute_acfun ( str_url, str_tmpfile ,str_servername, pDlg)
 			end
 		end
 
-	end
+--~ 	end
 	--save descriptor
 
 	if str_tmp_vd ~= ""
