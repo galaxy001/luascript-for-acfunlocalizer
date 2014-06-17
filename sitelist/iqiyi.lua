@@ -1,5 +1,6 @@
 
 ---[[by lostangel 20130423]]
+---[[edit 20140605 for title vid parse]]
 
 require "luascript/lib/lalib"
 
@@ -35,22 +36,32 @@ function getTaskAttribute_iqiyi ( str_url, str_tmpfile , pDlg)
 		return;
 	end
 
+	local str_line = readUntilFromUTF8(file, "<title>");
+	--dbgMessage(str_line);
+
+	local _, _, str_Name = string.find(str_line, "<title>(.+)</title>");--"/id_([^\.]+)\./");
+	--dbgMessage(str_Name);
+	if str_Name==nil then
+		return;
+	end
+
 	--readin descriptor
-	local str_line = readUntilFromUTF8(file, "\"videoId\"");
+	--local str_line = readUntilFromUTF8(file, "\"videoId\"");
+	str_line = readUntilFromUTF8(file, "data-player-videoid=\"");
+	--dbgMessage(str_line);
 
 	io.close(file);
 
-	local _, _, str_id = string.find(str_line, "\"videoId\":\"([^\"]+)\"");--"/id_([^\.]+)\./");
+	local _, _, str_id = string.find(str_line, "data%-player%-videoid=\"([^\"]+)\"");--"/id_([^\.]+)\./");
+	--dbgMessage(str_id);
 	if str_id==nil then
 		return;
 	end
-	local _, _, str_Name = string.find(str_line, "\"title\":\"([^\"]+)\"");--"/id_([^\.]+)\./");
-	if str_id==nil then
-		return;
-	end
+
 	local str_descriptor = str_Name;
 
 	--dbgMessage(str_id);
+	--dbgMessage(str_Name);
 
 	local int_realurlnum, tbl_realurls = getRealUrls_iqiyi(str_id, str_tmpfile, pDlg);
 
