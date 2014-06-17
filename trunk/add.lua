@@ -155,7 +155,7 @@ function getTaskAttributeBatch ( str_url, str_tmpfile, str_servername, pDlg)
 		return getTaskAttributeBatch_acfun(str_url, str_tmpfile, str_servername, pDlg);
 	end
 
-	if string.find(str_url, "bilibili.smgbb.cn", 1, true)~=nil or string.find(str_url, "bilibili.kankanews.com", 1, true)~=nil or string.find(str_url, "bilibili.tv", 1, true)~=nil or string.find(str_url, "bilibili.us", 1, true)~=nil
+	if string.find(str_url, "bilibili.smgbb.cn", 1, true)~=nil or string.find(str_url, "bilibili.kankanews.com", 1, true)~=nil or string.find(str_url, "bilibili.tv", 1, true)~=nil or string.find(str_url, "bilibili.us", 1, true)~=nil or string.find(str_url, "bilibili.com", 1, true)~=nil
 	then
 		return getTaskAttributeBatch_bilibili(str_url, str_tmpfile, pDlg);
 	end
