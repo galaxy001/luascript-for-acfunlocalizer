@@ -1,4 +1,4 @@
-----[[version: 20140528.00]]
+----[[version: 201406017.00]]
 ---[[by lostangel 20100528]]
 ---[[edit 20101117]]
 ---[[edit 20110402 for new return struct]]
@@ -15,6 +15,7 @@
 ---[[edit 20130714 for letv]]
 ---[[edit 20130714 for letv multi-P]]
 ---[[edit 20140402 for acfun.com]]
+---[[edit 20140616 for bilibili.com]]
 
 
 require "luascript/sitelist/acfun"
@@ -74,7 +75,7 @@ function getTaskAttribute ( str_url, str_tmpfile ,str_servername, pDlg)
 		return getTaskAttribute_acfun(str_url, str_tmpfile, str_servername, pDlg);
 	end
 
-	if string.find(str_url, "bilibili.smgbb.cn", 1, true)~=nil or string.find(str_url, "bilibili.kankanews.com", 1, true)~=nil or string.find(str_url, "bilibili.tv", 1, true)~=nil or string.find(str_url, "bilibili.us", 1, true)~=nil
+	if string.find(str_url, "bilibili.smgbb.cn", 1, true)~=nil or string.find(str_url, "bilibili.kankanews.com", 1, true)~=nil or string.find(str_url, "bilibili.tv", 1, true)~=nil or string.find(str_url, "bilibili.us", 1, true)~=nil or string.find(str_url, "bilibili.com", 1, true)~=nil
 	then
 		return getTaskAttribute_bilibili(str_url, str_tmpfile, pDlg);
 	end

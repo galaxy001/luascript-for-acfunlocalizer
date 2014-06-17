@@ -52,6 +52,10 @@
 --[[edit 20140507 fuck bili close service to acfunlocalizer]]
 --[[edit 20140524 for acfun singleline 2dland.sinapp]]
 --[[edit 20140524 for new acfun getAcVideo_Vid_Cid_Titles result form]]
+--[[edit 20140605 for suspend dl youku video]]
+--[[edit 20140605 for resume dl youku video]]
+--[[edit 20140609 for automately dl youku highest video]]
+--[[edit 20140612 for tudou parse bug repeat dl videoseg]]
 
 require "luascript/lib/bit"
 require "luascript/lib/md5calc"
@@ -625,11 +629,139 @@ function getRealUrls_QQ (str_id, str_tmpfile, pDlg)
 
 end
 
-
 --[[read real urls from youku through vid]]
 function getRealUrls_youku (str_id, str_tmpfile, pDlg)
 	local tbl_urls = {};
 	local index = 0;
+
+	--[[get highreso]]
+	local str_resourl = "http://v.youku.com/player/getPlayList/VideoIDS/"..str_id.."...ezone/+08/version/5/source/video?password=&ran=1527&n=3";
+	--local str_resourl = "http://www.acfun.com/player/getPlayList/VideoIDS/"..str_id.."/timezone/+08/version/5/source/out?password=&ctype=10&ran=4588&n=3&ev=1";
+	--dbgMessage(str_dynurl);
+	if pDlg~=nil then
+		sShowMessage(pDlg, '正在读取转接页面..');
+	end
+
+	local re = dlFile(str_tmpfile, str_resourl);
+	if re~=0
+	then
+		if pDlg~=nil then
+			sShowMessage(pDlg, '转接页面读取错误。');
+		end
+		return index, tbl_urls;
+	else
+		if pDlg~=nil then
+			sShowMessage(pDlg, '读取转接页面成功，正在分析..');
+		end
+	end
+
+	local file_reso = io.open(str_tmpfile, "r");
+	if file_reso==nil
+	then
+		if pDlg~=nil then
+			sShowMessage(pDlg, '转接页面读取错误。');
+		end
+		return;
+	end
+
+	local str_line_reso = file_reso:read("*l");
+	--str_line = '{"data":[{"tt":"0","ct":"c","cs":"2043|2053","logo":"http:\/\/g1.ykimg.com\/11270F1F464B2FB3A0C63F0051AE550CE7D610-8E8B-4C0D-58CB-D44E6653E344","seed":5564,"tags":["\u5927\u72ec\u88c1\u8005","\u6b27\u7f8e\u7535\u5f71","\u5353\u522b\u6797"],"categories":"96","videoid":"4579646","username":"pk\u6b27\u7f8e\u7535\u5f71","userid":"5353045","title":"\u5927\u72ec\u88c1\u8005","key1":"b341af1d","key2":"fbd05fdf2515d7b7","seconds":"9272.31","streamfileids":{"flv":"59*60*59*59*59*52*15*57*59*59*37*58*52*32*58*60*51*59*52*58*32*18*59*59*62*15*51*18*62*62*56*18*62*58*59*52*57*33*63*60*56*59*37*63*52*33*58*32*63*60*34*32*1*63*49*56*34*15*49*51*58*33*59*18*33*52*"},"segs":{"flv":[{"no":"0","size":"11053775","seconds":"392"},{"no":"1","size":"11020457","seconds":"391"},{"no":"2","size":"11073594","seconds":"393"},{"no":"3","size":"11033395","seconds":"391"},{"no":"4","size":"11036282","seconds":"394"},{"no":"5","size":"11096501","seconds":"395"},{"no":"6","size":"11120825","seconds":"395"},{"no":"7","size":"11068181","seconds":"393"},{"no":"8","size":"11095678","seconds":"393"},{"no":"9","size":"11122456","seconds":"394"},{"no":"10","size":"11104042","seconds":"396"},{"no":"11","size":"11076731","seconds":"393"},{"no":"12","size":"11089666","seconds":"394"},{"no":"13","size":"11138935","seconds":"394"},{"no":"14","size":"11115464","seconds":"394"},{"no":"15","size":"11106212","seconds":"395"},{"no":"16","size":"11075559","seconds":"393"},{"no":"17","size":"10971026","seconds":"394"},{"no":"18","size":"10994588","seconds":"390"},{"no":"19","size":"11031881","seconds":"390"},{"no":"20","size":"10974867","seconds":"393"},{"no":"21","size":"10997277","seconds":"392"},{"no":"22","size":"11068274","seconds":"392"},{"no":"23","size":"6505963","seconds":"230"}]},"streamsizes":{"flv":"260971629"},"streamtypes":["flvhd"],"streamtypes_o":["flvhd"]}],"user":{"id":"55862138"},"controller":{"search_count":true,"mp4_restrict":1,"stream_mode":1,"share_disabled":false,"download_disabled":false}}';
+	--dbgMessage(str_line_reso);
+
+	--local _, _, seed, key1,key2,fileID, flv_no= string.find(str_line,
+	--	'"seed":(%d+),.+"key1":"(%w+)","key2":"(%w+)",.+"streamfileids":{"flv":"([0-9%*]+)"},.+{"no":"(%d+)",');
+	local _, _, str_types_line= string.find(str_line_reso,
+		'"streamtypes":%[([^%]]+)%],');
+	--dbgMessage(str_types_line);
+		--'"seed":(%d+),.+"key1":"(%w+)","key2":"(%w+)",.+"streamfileids":{"(%w+)":"([0-9%*]+)".+"%4":%[[^%]]*{"no":');
+	--local _, _, fileposfix, fileID, flv_no = string.find(str_line,
+	--	'"streamfileids":{"(%w+)":"([0-9%*]+)".+"%1":%[{"no":"(%d+)"');
+
+	io.close(file_reso);
+	local _, _, str_type_highreso = string.find(str_types_line, ',"([^"]+)"$');
+	--dbgMessage(str_type_highreso);
+	if str_type_highreso == "hd3" then
+		str_type_highreso = "hd2";
+	end
+
+	--[[end get highreso]]
+
+	--local str_dynurl = "http://v.iask.com/v_play.php?vid="..str_id;
+	--local str_dynurl = "http://sex.acfun.tv/Home/Sina?app_key=1917945218&vid=".. str_id .. "&dtime=1374599847484"
+	--dbgMessage(str_id);
+	--dbgMessage(md5.Calc(str_id.."footstone"));
+	--local str_dynurl = "http://2dland.acfun.tv/video.php?action=xml&type=xina&vid=".. str_id .. "&key=" .. md5.Calc(str_id .. "footstone") .. "&ti=3";
+	local str_dynurl = "http://www.youku.com/player/getM3U8/vid/"..str_id.."/type/"..str_type_highreso.."/";
+	--dbgMessage(str_dynurl);
+	if pDlg~=nil then
+		sShowMessage(pDlg, '正在读取转接页面..');
+	end
+	--str_tmpfile = "C:\\tempacfun.html";
+	--dbgMessage(str_tmpfile);
+	--dbgMessage(str_dynurl);
+	local re = dlFile(str_tmpfile, str_dynurl);
+	--dbgMessage("dl dynurl end.");
+	if re~=0
+	then
+		if pDlg~=nil then
+			sShowMessage(pDlg, '转接页面读取错误。');
+		end
+		return index, tbl_urls;
+	else
+		if pDlg~=nil then
+			sShowMessage(pDlg, '读取转接页面成功，正在分析..');
+		end
+	end
+
+	local file = io.open(str_tmpfile, "r");
+	if file==nil
+	then
+		if pDlg~=nil then
+			sShowMessage(pDlg, '转接页面读取错误。');
+		end
+		return;
+	end
+
+	local str_line = "";
+	str_line = readUntil(file, "#EXTINF:");
+	while str_line~=nil
+	do
+		str_line = readUntil(file, "http://");
+		--dbgMessage(str_line);
+		if str_line~=nil then
+			local _, _, tmp_url = string.find(str_line, "(http://.+%.ts)%?");
+			--dbgMessage(tmp_url);
+
+
+			local str_index = string.format("%d",index);
+			tbl_urls[str_index] = encodeUrl(tmp_url);
+			print(tbl_urls[str_index]);
+			index = index+1;
+		end
+
+
+		str_line  = readUntil(file, "#EXT-X-DISCONTINUITY");
+		str_line = readUntil(file, "#EXTINF:");
+
+	end
+	io.close(file);
+	return index, tbl_urls;
+end
+
+--[[read real urls from youku through vid]]
+function getRealUrls_youku_old_ac (str_id, str_tmpfile, pDlg)
+	local tbl_urls = {};
+	local index = 0;
+
+	--[[if youku ok, comment this block]]
+	dbgMessage('当前版本不能解析优酷视频，请选择其它下载工具下载视频。弹幕将正常下载。');
+	local str_index = string.format("%d", index);
+	tbl_urls[str_index] = 'http://static.hdslb.com/error/404.png';
+	index = index+1;
+	if true then
+		return index, tbl_urls;
+	end
+	--[[block ends]]
 
 	--local str_dynurl = "http://v.iask.com/v_play.php?vid="..str_id;
 	--local str_dynurl = "http://sex.acfun.tv/Home/Sina?app_key=1917945218&vid=".. str_id .. "&dtime=1374599847484"
@@ -700,6 +832,7 @@ function getRealUrls_youku_old (str_id, str_tmpfile, pDlg)
 	local index = 0;
 
 	local str_dynurl = "http://v.youku.com/player/getPlayList/VideoIDS/"..str_id.."...ezone/+08/version/5/source/video?password=&ran=1527&n=3";
+	--local str_dynurl = "http://www.acfun.com/player/getPlayList/VideoIDS/"..str_id.."/timezone/+08/version/5/source/out?password=&ctype=10&ran=4588&n=3&ev=1";
 	--dbgMessage(str_dynurl);
 	if pDlg~=nil then
 		sShowMessage(pDlg, '正在读取转接页面..');
@@ -729,7 +862,7 @@ function getRealUrls_youku_old (str_id, str_tmpfile, pDlg)
 
 	local str_line = file:read("*l");
 	--str_line = '{"data":[{"tt":"0","ct":"c","cs":"2043|2053","logo":"http:\/\/g1.ykimg.com\/11270F1F464B2FB3A0C63F0051AE550CE7D610-8E8B-4C0D-58CB-D44E6653E344","seed":5564,"tags":["\u5927\u72ec\u88c1\u8005","\u6b27\u7f8e\u7535\u5f71","\u5353\u522b\u6797"],"categories":"96","videoid":"4579646","username":"pk\u6b27\u7f8e\u7535\u5f71","userid":"5353045","title":"\u5927\u72ec\u88c1\u8005","key1":"b341af1d","key2":"fbd05fdf2515d7b7","seconds":"9272.31","streamfileids":{"flv":"59*60*59*59*59*52*15*57*59*59*37*58*52*32*58*60*51*59*52*58*32*18*59*59*62*15*51*18*62*62*56*18*62*58*59*52*57*33*63*60*56*59*37*63*52*33*58*32*63*60*34*32*1*63*49*56*34*15*49*51*58*33*59*18*33*52*"},"segs":{"flv":[{"no":"0","size":"11053775","seconds":"392"},{"no":"1","size":"11020457","seconds":"391"},{"no":"2","size":"11073594","seconds":"393"},{"no":"3","size":"11033395","seconds":"391"},{"no":"4","size":"11036282","seconds":"394"},{"no":"5","size":"11096501","seconds":"395"},{"no":"6","size":"11120825","seconds":"395"},{"no":"7","size":"11068181","seconds":"393"},{"no":"8","size":"11095678","seconds":"393"},{"no":"9","size":"11122456","seconds":"394"},{"no":"10","size":"11104042","seconds":"396"},{"no":"11","size":"11076731","seconds":"393"},{"no":"12","size":"11089666","seconds":"394"},{"no":"13","size":"11138935","seconds":"394"},{"no":"14","size":"11115464","seconds":"394"},{"no":"15","size":"11106212","seconds":"395"},{"no":"16","size":"11075559","seconds":"393"},{"no":"17","size":"10971026","seconds":"394"},{"no":"18","size":"10994588","seconds":"390"},{"no":"19","size":"11031881","seconds":"390"},{"no":"20","size":"10974867","seconds":"393"},{"no":"21","size":"10997277","seconds":"392"},{"no":"22","size":"11068274","seconds":"392"},{"no":"23","size":"6505963","seconds":"230"}]},"streamsizes":{"flv":"260971629"},"streamtypes":["flvhd"],"streamtypes_o":["flvhd"]}],"user":{"id":"55862138"},"controller":{"search_count":true,"mp4_restrict":1,"stream_mode":1,"share_disabled":false,"download_disabled":false}}';
-	--dbgMessage(str_line);
+	dbgMessage(str_line);
 
 	--local _, _, seed, key1,key2,fileID, flv_no= string.find(str_line,
 	--	'"seed":(%d+),.+"key1":"(%w+)","key2":"(%w+)",.+"streamfileids":{"flv":"([0-9%*]+)"},.+{"no":"(%d+)",');
@@ -937,6 +1070,9 @@ function getRealUrls_tudou (str_id, str_tmpfile, pDlg)
 	local str_line = readUntil(file, "\"k\":");
 	--local str_line_end = readIntoUntil(file , str_line, "</script>");
 	local str_line_end = readIntoUntil(file , str_line, "\"k\":");
+	--dbgMessage(str_line_end);
+
+	_, _, str_line_end = string.find(str_line_end, '"[^"]+":%[([^%]]+)%]}');
 	--dbgMessage(str_line_end);
 	--local iid = getMedText(str_line_end, "iid: ", ",");
 	local k = getMedText(str_line_end, "\"k\":", ",");
@@ -1608,7 +1744,8 @@ function getRealUrls_iqiyi (str_id, str_tmpfile, pDlg)
 		sShowMessage(pDlg, '正在读取转接页面..');
 	end
 
-	local re = dlFile(str_tmpfile, str_dynurl);
+	local re = postdlFile(str_tmpfile, str_dynurl, "", "Referer: http://www.iqiyi.com");
+	--dlFile(str_tmpfile, str_dynurl);
 	if re~=0
 	then
 		if pDlg~=nil then
@@ -1631,6 +1768,7 @@ function getRealUrls_iqiyi (str_id, str_tmpfile, pDlg)
 	end
 
 	local str_line = readUntil(file, "<fileUrl>");
+	dbgMessage(str_line);
 
 	io.close(file);
 
