@@ -33,11 +33,16 @@
 ---[[edit 20140402 for acfun new ui]]
 ---[[edit 20140524 for acfun new ui]]
 ---[[edit 20140528 for acfun new ui bug]]
+---[[edit 20140621 for acfun.tv->acfun.com]]
+---[[edit 20140627 for acfun/letv]]
+---[[edit 20140727 for acfun comment url change to https]]
+---[[edit 20140729 for acfun.com->acfun.tv]]
 
 require "luascript/lib/lalib"
 
-acfun_xml_servername = 'www.acfun.tv'; --'124.228.254.234';--'www.sjfan.com.cn';
-acfun_comment_servername = 'comment.acfun.com';--'comment.acfun.tv';--'122.224.11.162';--
+acfun_xml_servername = 'www.acfun.com';--'www.acfun.tv'; --'124.228.254.234';--'www.sjfan.com.cn';
+acfun_comment_servername = 'comment.acfun.tv';--'comment.acfun.tv';--'122.224.11.162';--
+acfun_comment_ssl_servername = 'ssl.acfun.tv'
 
 --[[parse single acfun url]]
 function getTaskAttribute_acfun ( str_url, str_tmpfile ,str_servername, pDlg)
@@ -221,6 +226,8 @@ function getTaskAttribute_acfun ( str_url, str_tmpfile ,str_servername, pDlg)
 					--dbgMessage(str_acinternalID);
 
 					int_foreignlinksite, str_id, str_subid = getAcVideo_CommentID(str_acinternalID, str_tmpfile..".tmpac", pDlg);
+					--dbgMessage(str_id);
+					--dbgMessage(str_subid);
 
 				end
 			end
@@ -372,15 +379,18 @@ function getTaskAttribute_acfun ( str_url, str_tmpfile ,str_servername, pDlg)
 	local str_subxmlurl = "";
 	local str_subxmlurl_lock = "";
 	local str_subxmlurl_super = "";
+	local str_subxmlurl_20140727 = "";
 	if int_acfpv==1 --ACFPV_NEW
 	then
-		str_subxmlurl = "http://"..acfun_xml_servername.."/newflvplayer/xmldata/"..str_subid.."/comment_on.xml?r=1";
-		str_subxmlurl_lock = "http://"..acfun_xml_servername.."/newflvplayer/xmldata/"..str_subid.."/comment_lock.xml?r=1";
-		str_subxmlurl_super = "http://"..acfun_xml_servername.."/newflvplayer/xmldata/"..str_subid.."/comment_super.xml";
-		str_subxmlurl_20111106 = "http://"..acfun_comment_servername.."/".. str_subid ..".json?clientID=0.9264421034604311";
-		str_subxmlurl_lock_20111106 = "http://"..acfun_comment_servername.."/".. str_subid .."_lock.json?clientID=0.4721592585556209";
+		--str_subxmlurl = "http://"..acfun_xml_servername.."/newflvplayer/xmldata/"..str_subid.."/comment_on.xml?r=1";
+		--str_subxmlurl_lock = "http://"..acfun_xml_servername.."/newflvplayer/xmldata/"..str_subid.."/comment_lock.xml?r=1";
+		--str_subxmlurl_super = "http://"..acfun_xml_servername.."/newflvplayer/xmldata/"..str_subid.."/comment_super.xml";
+		--str_subxmlurl_20111106 = "http://"..acfun_comment_servername.."/".. str_subid ..".json?clientID=0.9264421034604311";
+		--str_subxmlurl_lock_20111106 = "http://"..acfun_comment_servername.."/".. str_subid .."_lock.json?clientID=0.4721592585556209";
+
 		--str_subxmlurl_20111106 = "http://"..acfun_comment_servername.."/".. str_subid ..".json";
 		--str_subxmlurl_lock_20111106 = "http://"..acfun_comment_servername.."/".. str_subid .."_lock.json";
+		str_subxmlurl_20140727 = "https://"..acfun_comment_ssl_servername.."//danmaku/"..str_subid;
 	else --ACFPV_ORI
 		str_subxmlurl = "http://"..acfun_xml_servername.."/flvplayer/xmldata/"..str_subid.."/comment_on.xml?a=1";
 	end
@@ -408,6 +418,9 @@ function getTaskAttribute_acfun ( str_url, str_tmpfile ,str_servername, pDlg)
 	elseif int_foreignlinksite == fls["iqiyi"]
 	then
 		int_realurlnum, tbl_readurls = getRealUrls_iqiyi(str_id, str_tmpfile, pDlg);
+	elseif int_foreignlinksite == fls["letv"]
+	then
+		int_realurlnum, tbl_readurls = getRealUrls_letv(str_id, str_tmpfile, pDlg);
 	else
 		int_realurlnum = 1;
 		tbl_readurls = {};
@@ -419,20 +432,27 @@ function getTaskAttribute_acfun ( str_url, str_tmpfile ,str_servername, pDlg)
 	end
 
 	local tbl_subxmlurls={};
-	tbl_subxmlurls["0"] = str_subxmlurl;
-	if str_subxmlurl_lock ~= "" then
-		tbl_subxmlurls["1"] = str_subxmlurl_lock;
-		tbl_subxmlurls["2"] = str_subxmlurl_super;
-		tbl_subxmlurls["3"] = str_subxmlurl_20111106;
-		--dlFile(str_tmpfile.."testsubxml.xml", str_subxmlurl_20111106);
- 		tbl_subxmlurls["4"] = str_subxmlurl_lock_20111106;
+--~ 	tbl_subxmlurls["0"] = str_subxmlurl;
+--~ 	if str_subxmlurl_lock ~= "" then
+--~ 		tbl_subxmlurls["1"] = str_subxmlurl_lock;
+--~ 		tbl_subxmlurls["2"] = str_subxmlurl_super;
+--~ 		tbl_subxmlurls["3"] = str_subxmlurl_20111106;
+--~ 		--dlFile(str_tmpfile.."testsubxml.xml", str_subxmlurl_20111106);
+--~  		tbl_subxmlurls["4"] = str_subxmlurl_lock_20111106;
+--~ 		tbl_subxmlurls["5"] = str_subxmlurl_20140727;
 
-		--tbl_subxmlurls["0"] = str_subxmlurl_20111106;
-		--dlFile(str_tmpfile.."testsubxml.xml", str_subxmlurl_20111106);
-		--tbl_subxmlurls["1"] = str_subxmlurl_lock_20111106;
+--~ 		--tbl_subxmlurls["0"] = str_subxmlurl_20111106;
+--~ 		--dlFile(str_tmpfile.."testsubxml.xml", str_subxmlurl_20111106);
+--~ 		--tbl_subxmlurls["1"] = str_subxmlurl_lock_20111106;
+--~ 	else
+--~ 		tbl_subxmlurls["0"] = str_subxmlurl;
+--~ 	end
+	if str_subxmlurl_20140727 ~= "" then
+		tbl_subxmlurls["0"] = str_subxmlurl_20140727;
 	else
 		tbl_subxmlurls["0"] = str_subxmlurl;
-	end
+ 	end
+
 
 	local _, _, str_acfid = string.find(str_url, "/([%d_]+).html");
 	local str_acfid_subfix = nil;
@@ -567,8 +587,8 @@ function getTaskAttributeBatch_acfun ( str_url, str_tmpfile ,str_servername, pDl
 	--local bg,ed = string.find(string.reverse(str_url),"/",1,true);
 	--ed = string.len(str_url)+1-ed;
 	--local urlprefix = string.sub(str_url, 1, ed);
-	--local urlprefix = "http://www.acfun.tv"
-	local urlprefix = "http://www.acfun.com"
+	local urlprefix = "http://www.acfun.tv"
+	--local urlprefix = "http://www.acfun.com"
 
 	local tbl_re = {};
 	local index2= 0;

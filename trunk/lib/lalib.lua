@@ -56,15 +56,21 @@
 --[[edit 20140605 for resume dl youku video]]
 --[[edit 20140609 for automately dl youku highest video]]
 --[[edit 20140612 for tudou parse bug repeat dl videoseg]]
+--[[edit 20140621 for acfun.tv->acfun.com]]
+--[[edit 20140623 for youku "flv"]]
+--[[edit 20140627 for acfun/letv]]
+--[[edit 20140713 for qqvideo, not change domain]]
+--[[edit 20140727 for acfun.tv->acfun.com and danmakuID->id]]
+--[[edit 20140729 for sina video parse]]
 
 require "luascript/lib/bit"
 require "luascript/lib/md5calc"
 
 function getACFPV ( str_url, str_servername)
 	if str_servername == nil then
-		str_servername = "acfun.tv";
+		str_servername = "acfun.com";
 	end
-	if string.find(str_url, "acfun.cn",1,true)~=nil or string.find(str_url, "124.228.254.229")~=nil or string.find(str_url, str_servername, 1, true)~=nil or string.find(str_url, "acfun.tv",1,true)~=nil
+	if string.find(str_url, "acfun.cn",1,true)~=nil or string.find(str_url, "124.228.254.229")~=nil or string.find(str_url, str_servername, 1, true)~=nil or string.find(str_url, "acfun.tv",1,true)~=nil or string.find(str_url, "acfun.com",1,true)~=nil
 	then
 		return 1;--ACFPV_NEW
 		--return 65535;
@@ -403,7 +409,8 @@ function getRealUrls (str_id, str_tmpfile, pDlg)
 	--dbgMessage(str_id);
 	--dbgMessage(md5.Calc(str_id.."footstone"));
 	--local str_dynurl = "http://2dland.acfun.tv/video.php?action=xml&type=xina&vid=".. str_id .. "&key=" .. md5.Calc(str_id .. "footstone") .. "&ti=3";
-	local str_dynurl = "http://2dland.sinaapp.com/video.php?action=xml&type=xina&vid=".. str_id .. "&key=" .. md5.Calc(str_id .. "footstone") .. "&ti=3";
+	--local str_dynurl = "http://2dland.sinaapp.com/video.php?action=xml&type=xina&vid=".. str_id .. "&key=" .. md5.Calc(str_id .. "footstone") .. "&ti=3";
+	local str_dynurl = "http://2dland.vipsinaapp.com/video.php?action=xml&type=xina&vid=".. str_id .. "&key=" .. md5.Calc(str_id .. "footstone") .. "&ti=3";
 	--dbgMessage(str_dynurl);
 	if pDlg~=nil then
 		sShowMessage(pDlg, '正在读取转接页面..');
@@ -615,9 +622,9 @@ function getRealUrls_QQ (str_id, str_tmpfile, pDlg)
 	--dbgMessage(str_realurl);
 
 	--[[videoctfs.tc.qq.com cannot be resolved]]
-	if str_realurl ~=nil then
-		str_realurl = string.gsub(str_realurl, "videoctfs.tc", "vsrc.store");
-	end
+	--if str_realurl ~=nil then
+	--	str_realurl = string.gsub(str_realurl, "videoctfs.tc", "vsrc.store");
+	--end
 
 	if index==0 then
 		local str_index = string.format("%d",index);
@@ -680,6 +687,9 @@ function getRealUrls_youku (str_id, str_tmpfile, pDlg)
 	io.close(file_reso);
 	local _, _, str_type_highreso = string.find(str_types_line, ',"([^"]+)"$');
 	--dbgMessage(str_type_highreso);
+	if str_type_highreso == nil then
+		str_type_highreso = "flv";
+	end
 	if str_type_highreso == "hd3" then
 		str_type_highreso = "hd2";
 	end
@@ -1377,7 +1387,8 @@ function getRealUrls_bili(str_id, str_tmpfile, pDlg)
 end
 
 function getAcVideo_Vid_Cid_Titles(str_transid, str_tmpfile, pDlg)
-	local str_apiurl = "http://hengyang.acfun.tv/api/content.aspx?query=" .. str_transid;
+	--local str_apiurl = "http://hengyang.acfun.tv/api/content.aspx?query=" .. str_transid;
+	local str_apiurl = "http://hengyang.acfun.com/api/content.aspx?query=" .. str_transid;--20140621edit not sure
 
 	if pDlg~=nil then
 		sShowMessage(pDlg, '正在读取转接页面..');
@@ -1450,6 +1461,7 @@ end
 function getAcVideo_CommentID(str_acid, str_tmpfile, pDlg)
 	--local str_apiurl = "http://www.acfun.tv/api/getVideoByID.aspx?vid="..str_acid;
 	local str_apiurl = "http://www.acfun.tv/video/getVideo.aspx?id=" .. str_acid;
+	--local str_apiurl = "http://www.acfun.com/video/getVideo.aspx?id=" .. str_acid;
 
 	--dbgMessage(str_apiurl);
 
@@ -1500,10 +1512,13 @@ function getAcVideo_CommentID(str_acid, str_tmpfile, pDlg)
 			int_foreignlinksite = fls["tudou"];
 		elseif string.find(str_line, "\"sourceType\":\"pps\"", 1, true)~=nil then
 			int_foreignlinksite = fls["pps"];
+		elseif string.find(str_line, "\"sourceType\":\"letv\"", 1, true)~=nil then
+			int_foreignlinksite = fls["letv"];
 		end--[[may be there are other types for adding]]
 
 		str_id = getMedText(str_line, "\"sourceId\":\"", "\"");
-		str_subid = getMedText(str_line, "\"danmakuId\":\"", "\"");
+		--str_subid = getMedText(str_line, "\"danmakuId\":\"", "\"");
+		str_subid = getMedText(str_line, "\"id\":", ",");
 		return int_foreignlinksite, str_id, str_subid;
 	else
 		return nil;
