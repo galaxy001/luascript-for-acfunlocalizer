@@ -62,9 +62,13 @@
 --[[edit 20140713 for qqvideo, not change domain]]
 --[[edit 20140727 for acfun.tv->acfun.com and danmakuID->id]]
 --[[edit 20140729 for sina video parse]]
+--[[edit 20140730 for bilibili sign]]
+--[[edit 20140810 for youku realM3U8]]
+--[[add 20140817 for getRealUrls_from_acID youkum3u8 cannot work]]
 
 require "luascript/lib/bit"
 require "luascript/lib/md5calc"
+require "luascript/lib/base64"
 
 function getACFPV ( str_url, str_servername)
 	if str_servername == nil then
@@ -641,10 +645,12 @@ function getRealUrls_youku (str_id, str_tmpfile, pDlg)
 	local tbl_urls = {};
 	local index = 0;
 
+	--dbgMessage(str_id);
 	--[[get highreso]]
-	local str_resourl = "http://v.youku.com/player/getPlayList/VideoIDS/"..str_id.."...ezone/+08/version/5/source/video?password=&ran=1527&n=3";
+	--local str_resourl = "http://v.youku.com/player/getPlayList/VideoIDS/"..str_id.."...ezone/+08/version/5/source/video?password=&ran=1527&n=3";
+	local str_resourl = "http://v.youku.com/player/getPlayList/VideoIDS/"..str_id.."/Pf/4/ctype/12/ev/1"
 	--local str_resourl = "http://www.acfun.com/player/getPlayList/VideoIDS/"..str_id.."/timezone/+08/version/5/source/out?password=&ctype=10&ran=4588&n=3&ev=1";
-	--dbgMessage(str_dynurl);
+	--dbgMessage(str_resourl);
 	if pDlg~=nil then
 		sShowMessage(pDlg, '正在读取转接页面..');
 	end
@@ -679,7 +685,14 @@ function getRealUrls_youku (str_id, str_tmpfile, pDlg)
 	--	'"seed":(%d+),.+"key1":"(%w+)","key2":"(%w+)",.+"streamfileids":{"flv":"([0-9%*]+)"},.+{"no":"(%d+)",');
 	local _, _, str_types_line= string.find(str_line_reso,
 		'"streamtypes":%[([^%]]+)%],');
+
+	local _, _, str_meta_ip= string.find(str_line_reso,
+		'"ip":([^,]+),');
+	local _, _, str_meta_ep= string.find(str_line_reso,
+		'"ep":"([^"]+)",');
 	--dbgMessage(str_types_line);
+	--dbgMessage(str_meta_ip);
+	--dbgMessage(str_meta_ep);
 		--'"seed":(%d+),.+"key1":"(%w+)","key2":"(%w+)",.+"streamfileids":{"(%w+)":"([0-9%*]+)".+"%4":%[[^%]]*{"no":');
 	--local _, _, fileposfix, fileID, flv_no = string.find(str_line,
 	--	'"streamfileids":{"(%w+)":"([0-9%*]+)".+"%1":%[{"no":"(%d+)"');
@@ -696,12 +709,64 @@ function getRealUrls_youku (str_id, str_tmpfile, pDlg)
 
 	--[[end get highreso]]
 
+--~ 	function generate_ep(vid, ep)
+--~ 		local f_code_1 = 'becaf9be';--"b4eto0b4";--'becaf9be';
+--~ 		local f_code_2 = 'bf7e5f01';
+
+--~ 		function trans_e(a, c)
+--~ 			local f=0;
+--~ 			local h=0;
+--~ 			local b={};
+--~ 			for i=0,256,1 do
+--~ 				b[i+1]=i;
+--~ 			end
+
+--~ 			local result='';
+--~ 			--dbgMessage(a);
+--~ 			--dbgMessage(a[0]);
+--~ 			--dbgMessage(a[1]);
+--~ 			--dbgMessage(a[string.len(a)-1]);
+--~ 			--dbgMessage(a[string.len(a)]);
+--~ 			while h<256 do
+--~ 				f= (f+b[h+1]+string.byte(a,h%string.len(a) +1))%256;
+--~ 				b[h+1], b[f+1] = b[f+1], b[h+1];
+--~ 				h = h+1;
+--~ 			end
+
+--~ 			local q=0;
+--~ 			f=0;
+--~ 			h=0;
+--~ 			while q<string.len(c) do
+--~ 				h = (h+1)%256
+--~ 				f = (f+b[h+1])%256
+--~ 				b[h+1], b[f+1] = b[f+1], b[h+1]
+--~ 				if string.byte(c, q+1)>=48 and string.byte(c, q+1)<58 then
+--~ 					dbgMessage(string.format("%s",
+--~ 						bit.bxor(tonumber(string.sub(c,q+1,1)), b[(b[h+1]+b[f+1])%256])
+--~ 						));
+--~ 					result = result .. string.char(bit.bxor(tonumber(string.sub(c,q+1,1)), b[(b[h+1]+b[f+1])%256]));
+--~ 				else
+--~ 					result = result .. string.char(bit.bxor(string.byte(c,q+1), b[(b[h+1]+b[f+1])%256]));
+--~ 				end
+--~ 				dbgMessage(result);
+--~ 				q = q+1;
+--~ 			end
+--~ 			return result;
+--~ 		end
+
+--~ 		local e_code = trans_e(f_code_1, base64.b64decode(ep));
+--~ 		dbgMessage(e_code);
+--~ 	end
+
+--~ 	local new_ep, sid, token = generate_ep(str_id, str_meta_ep);
+
 	--local str_dynurl = "http://v.iask.com/v_play.php?vid="..str_id;
 	--local str_dynurl = "http://sex.acfun.tv/Home/Sina?app_key=1917945218&vid=".. str_id .. "&dtime=1374599847484"
 	--dbgMessage(str_id);
 	--dbgMessage(md5.Calc(str_id.."footstone"));
 	--local str_dynurl = "http://2dland.acfun.tv/video.php?action=xml&type=xina&vid=".. str_id .. "&key=" .. md5.Calc(str_id .. "footstone") .. "&ti=3";
 	local str_dynurl = "http://www.youku.com/player/getM3U8/vid/"..str_id.."/type/"..str_type_highreso.."/";
+	--local str_dynurl = "http://www.youku.com/player/getrealM3U8/vid/"..str_id.."/type/"..str_type_highreso.."/";
 	--dbgMessage(str_dynurl);
 	if pDlg~=nil then
 		sShowMessage(pDlg, '正在读取转接页面..');
@@ -1263,7 +1328,7 @@ function getRealUrls_bili(str_id, str_tmpfile, pDlg)
 
 	--dbgMessage(str_id);
 
-	local str_oriurl = "http://interface.bilibili.cn/playurl?cid=" .. str_id;
+	local str_oriurl = "http://interface.bilibili.cn/playurl?cid=" .. str_id .. "&sign=0c053bd85409e1ee200bd1e2989e353e";
 
 	--dbgMessage(str_oriurl);
 	if pDlg~=nil then
@@ -1527,6 +1592,87 @@ function getAcVideo_CommentID(str_acid, str_tmpfile, pDlg)
 
 
 
+
+end
+
+function getRealUrls_from_acID( str_id, str_tmpfile, pDlg)
+
+	local tbl_urls = {};
+	local index = 0;
+
+	local str_dynurl = "http://acfnic2.aliapp.com/index.php?vid=" .. str_id;
+
+	--dbgMessage(str_dynurl);
+
+	if pDlg~=nil then
+		sShowMessage(pDlg, '正在读取转接页面..');
+	end
+
+	local re = dlFile(str_tmpfile, str_dynurl);
+	if re~=0
+	then
+		if pDlg~=nil then
+			sShowMessage(pDlg, '转接页面读取错误。');
+		end
+		return index, tbl_urls;
+	else
+		if pDlg~=nil then
+			sShowMessage(pDlg, '读取转接页面成功，正在分析..');
+		end
+	end
+
+	local file = io.open(str_tmpfile, "r");
+	if file==nil
+	then
+		if pDlg~=nil then
+			sShowMessage(pDlg, '转接页面读取错误。');
+		end
+		return;
+	end
+
+	local str_line = file:read("*l");
+	str_line = utf8_to_lua(str_line);
+	io.close(file);
+
+	local str_tag = "";
+	--dbgMessage(str_line);
+	if string.find(str_line, '{"type":"hd3",')~=nil then
+		str_tag = '{"type":"hd3",';
+	elseif string.find(str_line, '{"type":"hd2",')~=nil then
+		str_tag = '{"type":"hd2",';
+	elseif string.find(str_line, '{"type":"mp4",')~=nil then
+		str_tag = '{"type":"mp4",';
+	elseif string.find(str_line, '{"type":"flvhd",')~=nil then
+		str_tag = '{"type":"flvhd",';
+	else
+		str_tag = '{"type":"flv",';
+	end
+	--dbgMessage(str_tag);
+
+	local index_be = string.find(str_line, str_tag);
+	local index_en = index_be;
+	while index_be~=nil do
+		index_en = string.find(str_line, '}', index_be);
+		--dbgMessage(string.format('%i %i', index_en, index_be));
+		if index_en~=nil then
+			local str_url_line = string.sub(str_line, index_be, index_en);
+			--dbgMessage(str_url_line);
+			local _, _, str_url = string.find(str_url_line, '"url":"([^"]+)","no"');
+			str_url = string.gsub(str_url, '\\/', '/');
+			--dbgMessage(str_url);
+
+			local str_index = string.format("%d",index);
+			tbl_urls[str_index] = str_url;
+			index = index+1;
+
+			index_be = string.find(str_line , str_tag, index_en);
+		else
+			break;
+		end
+	end
+
+
+	return index, tbl_urls;
 
 end
 
