@@ -37,6 +37,7 @@
 ---[[edit 20140627 for acfun/letv]]
 ---[[edit 20140727 for acfun comment url change to https]]
 ---[[edit 20140729 for acfun.com->acfun.tv]]
+---[[edit 20140817 for acfun youkusrc parse as getRealUrls_from_acID]]
 
 require "luascript/lib/lalib"
 
@@ -81,6 +82,8 @@ function getTaskAttribute_acfun ( str_url, str_tmpfile ,str_servername, pDlg)
 	local str_id = "";
 
 	local str_aid = "";
+
+	local str_acinternalID = "";
 
 	local str_subid = str_id;
 
@@ -221,7 +224,7 @@ function getTaskAttribute_acfun ( str_url, str_tmpfile ,str_servername, pDlg)
 					--str_tmp_vd = getMedText(str_line, ">", "</option>");
 					str_tmp_vd = getMedText(str_line, "/i>", "</a>");
 
-					local str_acinternalID = getMedText(str_line, "data-vid=\"", "\"");
+					str_acinternalID = getMedText(str_line, "data-vid=\"", "\"");
 
 					--dbgMessage(str_acinternalID);
 
@@ -408,7 +411,8 @@ function getTaskAttribute_acfun ( str_url, str_tmpfile ,str_servername, pDlg)
 		int_realurlnum, tbl_readurls = getRealUrls_QQ(str_id, str_tmpfile, pDlg);
 	elseif int_foreignlinksite == fls["youku"]
 	then
-		int_realurlnum, tbl_readurls = getRealUrls_youku(str_id, str_tmpfile, pDlg);
+		--int_realurlnum, tbl_readurls = getRealUrls_youku(str_id, str_tmpfile, pDlg);
+		int_realurlnum, tbl_readurls = getRealUrls_from_acID(str_acinternalID, str_tmpfile, pDlg);
 	elseif int_foreignlinksite == fls["tudou"]
 	then
 		int_realurlnum, tbl_readurls = getRealUrls_tudou(str_id, str_tmpfile, pdlg);

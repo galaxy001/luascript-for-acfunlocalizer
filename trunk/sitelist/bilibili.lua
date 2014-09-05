@@ -40,6 +40,8 @@
 ---[[edit 20130406 for bilibili repeat get playurl]]
 ---[[edit 20130409 for bilibili bug for batch]]
 ---[[edit 20130505 for bilibili sohu.swf]]
+---[[edit 20140810 for bilibili &iqiyi&]]
+---[[edit 20140905 for bilibili new ui]]
 
 require "luascript/lib/lalib"
 require "luascript/lib/login"
@@ -172,7 +174,7 @@ function getTaskAttribute_bilibili ( str_url, str_tmpfile, pDlg, isNeedLogin, is
 	--local str_embed_end = "</div><!-- /content -->";
 	--local str_embed_end = "</div>";
 	--local str_embed_end = {"</embed>","</iframe>"};
-	local str_embed_end = {"<div class=\"s_center\">","</iframe>"};
+	local str_embed_end = {"<div class=\"s_center\">","</iframe>", "</embed>"};
 	str_line = readUntilFromUTF8(file, str_embed_start, str_line);--"<embed ");
 	--str_line = readNextLineFromUTF8(file);
 --dbgMessage(str_line);
@@ -270,8 +272,9 @@ function getTaskAttribute_bilibili ( str_url, str_tmpfile, pDlg, isNeedLogin, is
 			int_foreignlinksite = fls["tudou"];
 		elseif string.find(str_embed, "rid=", 1, true)~=nil then
 			int_foreignlinksite = fls["6cn"];
-		elseif string.find(str_embed, "iqiyi.com", 1,true)~=nil or string.find(str_embed, "iqiyi.swf", 1,true)~=nil then
+		elseif string.find(str_embed, "iqiyi.com", 1,true)~=nil or string.find(str_embed, "iqiyi.swf", 1,true)~=nil or string.find(str_embed, "iqiyi", 1,true)~=nil then
 			int_foreignlinksite = fls["iqiyi"];
+			--dbgMessage("iqiyi");
 		elseif string.find(str_embed, "sohu.com", 1,true)~=nil or string.find(str_embed, "sohu.swf", 1,true)~=nil then
 			int_foreignlinksite = fls["sohu"];
 		elseif string.find(str_embed, "cid=", 1,true)~=nil then
