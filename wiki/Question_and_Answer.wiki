@@ -1,0 +1,330 @@
+#labels Featured,Phase-QA
+#软件使用中的常见问题解答.
+
+=问与答=
+
+ * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#下载 下载]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:最简单暴力地下载acfun视频的方法？ 最简单暴力地下载acfun视频的方法？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:我能否仅下载字幕，因为我觉得这个下载器下�� 我能否仅下载字幕，因为我觉得这个下载器下载视频太慢，我想用其它方法下载视频？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:我能否从浏览器的缓存中直接复制视频？ 我能否从浏览器的缓存中直接复制视频？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:_的地址老变，有时候就下载不下来了，怎么办� AcFun的地址老变，有时候就下载不下来了，怎么办？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:下载总是不成功,怎么办? 下载总是不成功,怎么办?]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:多part的视频是否可以批量添加下载任务？ 多part的视频是否可以批量添加下载任务？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:添加任务时总是出现解析FLV_ID失败，这是怎么�� 添加任务时总是出现解析FLV ID失败，这是怎么回事？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:如何改变缓存目录的位置？ 如何改变缓存目录的位置？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:下载时出现“句柄无效”，是怎么回事？ 下载时出现“句柄无效”，是怎么回事？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:添加任务时总是出现“未读取到有效的视频原�� 添加任务时总是出现“未读取到有效的视频原始地址”，是怎么回事？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:除了支持acfun,bilibili,mikufans的下载之外，还能否 除了支持acfun,bilibili,mikufans的下载之外，还能否支持其它网站内容的下载？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:下载nico系视频的时候总是显示解析失败,_为什�� 下载nico系视频的时候总是显示解析失败, 为什么?]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:下载多段视频合并时总是得不到最终文件或者�� 下载多段视频合并时总是得不到最终文件或者最终只得到0kb的flv是怎么回事？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:为什么有部分bilibili视频无法解析？ 为什么有部分bilibili视频无法解析？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:为什么明明IE浏览器已经缓冲好了，但是下载器 为什么明明IE浏览器已经缓冲好了，但是下载器就是不能直接从缓存中抓取视频？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:为什么有时候下载完视频后并没有出现视频，�� 为什么有时候下载完视频后并没有出现视频，而是弹出一个脚本运行的窗口？并且有时会被360提示有安全问题？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:为什么有时候会出现内存不足的错误? 为什么有时候下载视频时会出现“内存不足”的错误？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:我如何快速调整正在下载列表中的任务顺序？ 我如何快速调整正在下载列表中的任务顺序？ ]
+ ** [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#字幕转换 字幕转换]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:我以前用过其它一些下载弹幕的工具，我不需�� 我以前用过其它一些下载弹幕的工具，我不需要从网络上再次下载弹幕，有没有办法转换本地的弹幕成SSA格式的字幕？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:以前_网站的弹幕格式与现在的不同，可以转换� 以前AcFun网站的弹幕格式与现在的不同，可以转换吗？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:如何打开/关闭滚动字幕在追上其它字幕时自动� 如何打开/关闭滚动字幕在追上其它字幕时自动换行的功能?]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:所谓的更新是什么意思？如何进行？ 所谓的更新是什么意思？如何进行？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:有些视频在acfun上被分割成了part1,part2这样的,如 有些视频在acfun上被分割成了part1,part2这样的,如何下载并合并成同一个文件?]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:我转换出来的字幕有些会有错位,这是怎么回事? 我转换出来的字幕有些会有错位,这是怎么回事?]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:转换的字幕里有很多没用的评论，我该如何去�� 转换的字幕里有很多没用的评论，我该如何去掉它们？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:如何进行多个字幕的合并？ 如何进行多个字幕的合并？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:为什么在手动转换字幕的时候跳出程序崩溃的�� 为什么在手动转换字幕的时候跳出程序崩溃的窗口？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:我是否可以在下载自动转换弹幕时只保留神弹�� 我是否可以在下载自动转换弹幕时只保留神弹幕？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:如何关闭分层弹幕渲染？ 如何关闭分层弹幕渲染？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:为什么下载转换的弹幕比网站上的少了很多？ 为什么下载转换的弹幕比网站上的少了很多？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:为什么手动转换的弹幕比自动下载时转换的少�� 为什么手动转换的弹幕比自动下载时转换的少了很多？]
+ ** [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#任务列表 任务列表]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:如何重新下载历史任务列表中的任务？ 如何重新下载历史任务列表中的任务？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:如何快速打开已下载完的任务？ 如何快速打开已下载完的任务？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:任务列表中的↓√×T表示什么意思？ 任务列表中的↓√×T表示什么意思？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:任务列表中的↓√×T表示什么意思？ 如何调整下载任务的顺序？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:为什么有些任务无法删除？ 为什么有些任务无法删除？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:在长期下载过程中，列表越来越长，很难找到�� 在长期下载过程中，列表越来越长，很难找到以前下载到的视频，怎么办？] 
+ ** [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#视频字幕播放 视频字幕播放]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:为什么转换后的字幕在播放本地视频的时候没�� 为什么转换后的字幕在播放本地视频的时候没有出现弹幕？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:为什么字幕在播放时比较卡？ 为什么字幕在播放时比较卡？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:为什么播放时没有声音？ 为什么播放时没有声音？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:为什么播放时没有图像只有声音？ 为什么播放时没有图像只有声音？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:KMP无法像AC那样让字幕滚动飘过，就是普通外挂 KMP无法像AC那样让字幕滚动飘过，就是普通外挂电影字幕那样,集中显示在下方，KMP上还需要设置一下什么吗?]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:完美解码的KMP中出现了2个字幕,一个正常的,一�� 完美解码的KMP中出现了2个字幕,一个正常的,一个很卡,这是怎么回事?]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:为什么下下来的视频播放不出来,一秒一分钟的� 为什么下下来的视频播放不出来,一秒一分钟的快进黑屏?]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:为什么下下来的视频修复时显示不必修复，但�� 为什么下下来的视频修复时显示不必修复，但是又不能播放?]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:为什么下下来的视频播放时像幻灯片一样，特�� 为什么下下来的视频播放时像幻灯片一样，特别的卡？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:为什么我装了klite_mega_codec_pack，使用wmp或mpc仍�� 为什么我装了klite mega codec pack，使用wmp或mpc仍然无法观看到流畅的弹幕?]
+ ** [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#其它 其它]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:有时在下载时会出现C++Runtime错误，这是为什么� 有时在下载时会出现C++Runtime错误，这是为什么？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:清除缓存.bat这个是干什么用的? 清除缓存.bat这个是干什么用的?]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:如何修改默认关闭的动作？ 如何修改默认关闭的动作？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:为什么运行程序时报找不到xxxx.dll等类似错误？ 运行时出现找不到xxxx.dll是怎么回事？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:英文系统出现乱码怎么办？ 英文系统出现乱码怎么办？]
+  * [http://code.google.com/p/luascript-for-acfunlocalizer/wiki/Question_and_Answer#Q:如何添加IE右键下载菜单？ 如何为IE添加右键使用Acfunlocalizer下载的菜单？]
+
+=下载=
+ 
+==Q:最简单暴力地下载acfun视频的方法？==
+A:运行AcFunSubTransDLoader.exe,将包含要下载视频的网页地址拷贝后，点击“添加”，选定保存名称后，点击“开始下载”，然后泡杯茶等一会儿。 
+
+==Q:我能否仅下载字幕，因为我觉得这个下载器下载视频太慢，我想用其它方法下载视频？==
+A:可以，你可以点击“配置”，并在下载设置面板中将“下载视频”的勾去掉，然后点击OK。 
+
+==Q:我能否从浏览器的缓存中直接复制视频？==
+A:可以，只要你在设置中将下载设置面板中的“可以从IE缓存中获取”，程序就会自动寻找是否有缓冲，如果没有，则直接从互联网下载。但是程序目前不支持从其它浏览器缓存中获取视频。 
+
+==Q:AcFun的地址老变，有时候就下载不下来了，怎么办？==
+A:在设置里修改acfun的IP地址，在2.203版以后的下载器中，这个设置可以填写IP，也可以填写域名。注意，之前因为IP设置不正确导致无法下载的任务需要在修改好正确IP后删除原任务再次添加才可以下载。 
+
+==Q:下载总是不成功,怎么办?==
+A:如果下载视频总是出错,有可能是程序的原因,请联系我.如果仅为下载视频,您可以试用:AcDown动漫下载器2.X,这是一款小巧的多任务AcFun视频字幕下载器,感谢坏天气Dash的支持.您可以使用该下载器下载完成后,再利用本软件的转换功能转换本地弹幕即可.如果您更喜欢diy,当然自己用IE或者迅雷之类的下载也是一样的..呃.. 
+
+==Q:多part的视频是否可以批量添加下载任务？==
+A:2.100之后的版本提供了批量添加多part视频下载任务，具体操作为点击主页->添加下的下拉菜单，并选择批量添加。在弹出窗口的下载地址中填入多part视频任一part的地址后，下载器将自动解析所有part的地址，解析完毕后会把所有可下载与不可下载的信息以列表形式显示在下方列表中，默认所有可下载任务会选中以表示将被添加，不可下载任务即使手动选中也不会被添加。一般来说不可下载任务不可下载的原因是acfun网站大姨妈了，或者原视频被新浪等视频宿主删除，或者是下载器当地的网络问题。 
+
+==Q:添加任务时总是出现解析FLV ID失败，这是怎么回事？==
+A:原因有如下几个，请注意排查：
+
+ # URL本身拼写出错；
+ # URL上本来就没有视频，请确认用网页可以播放再添加试试；
+ # 如果上述原因都不是，请你按照如下步骤进行问题反馈：
+ 首先将“调试配置”－〉“是否开启地址解析调试”的选项勾上，然后再次进行添加任务操作，出错   flv id无法解析的错误后，关闭程序（注意是关闭，不要用任务管理器结束进程）。最后把程序同目录下的debug.txt发送至chunqing286@gmail.com反映问题。 
+
+==Q:如何改变缓存目录的位置？==
+A:缓存目录默认为系统的TEMP文件夹，如果要改变缓存目录至其它文件夹，比如“C:\MyTemp”，则可以通过以下两条途径达到：
+  * 在“我的电脑（vista/win7为计算机）”上右键，选择“属性”，在高级选项卡里，点击“环境变量”，在当前用户变量中新建，变量名为"ACLTEMP"(不包含左右的引号），变量值为你要设置为缓存的目录，这里例子中为”C:\MyTemp“（不包含左右引号）。新建完成后确定，然后注销当前帐号再次登入或者重启计算机即可。
+  * 在命令行下使用程序自带的"install.bat"，参数填入欲设为缓存目录的路径名，在本例中即为：install.bat "C:\MyTemp", 引号在路径中出现空格时一定要有，否则可以省略。运行完成后，注销当前帐号再次登入或者重启计算机即可。
+
+如果想恢复默认的缓存目录设置，则只需运行uninstall.bat即可。
+
+
+==Q:下载时出现“句柄无效”，是怎么回事？==
+A:这是由于网络不流畅导致长时间下不到东西超时, 你可以先用IE缓冲好再下,或者是你在用迅雷之类的东西下载别的东西把带宽都占满了,可以先关了其它的下载器.或者是在网络比较好的时候下载. 
+
+==Q:添加任务时总是出现“未读取到有效的视频原始地址”，是怎么回事？==
+A:一般有两种原因：
+ # 本地到新浪视频服务器的网络不通畅，导致读取外链新浪的视频信息失败；
+ # 新浪视频已被删除。
+如果能在IE上播放该视频，那么请多试几次；如果IE也是无限缓冲，基本上是原视频已被删除，请等待UP主修复后再下载。
+
+
+==Q:除了支持acfun,bilibili,mikufans的下载之外，还能否支持其它网站内容的下载？==
+A:2.2及以前的版本除了支持这三个网站的视频弹幕下载之外，不支持其它网站，但是从2.3版本开始，系统将解析网址的逻辑使用lua脚本实现在程序逻辑外，可以简单的使用lua编写解析规则即可实现对新网站的支持。
+
+程序开放的编程接口请参考/luascript/add.lua文件中的说明。关于lua语言的介绍可以从其官方网站或中文官方站了解更多信息。
+
+目前本程序支持下载视频及弹幕的网站包括：acfun, bilibili, mikufans, nicovideo(jp/tw).支持下载视频的网站包括：youku, qqvideo,tudou.
+
+==Q:下载nico系视频的时候总是显示解析失败, 为什么?==
+A:首先, 你需要有自己的nico帐号, 并且在解析和下载的时候都需要打开一个IE窗口,连接到nicovideo网站并登录. 在下载过程中请保持这个窗口的打开状态,并且不要退出登录. 注意, 一定要是用IE系的浏览器, 其它核心的浏览器无效.
+
+其次, 中国大陆的网友有可能因为某种原因连接tw.nico存在问题,请在解析及下载前设置acfunlocalizer的代理设置, 一般可以设置为与IE相同.在这种状态下,容易出现过多连接受限的情况, 如果出现此种情况, 请在IE中重新登录一次再行尝试, 或者使用其它的下载器下载视频与弹幕后再使用本软件进行转换.
+
+
+==Q:下载多段视频合并时总是得不到最终文件或者最终只得到0kb的flv是怎么回事？==
+A:这种情况多发生于vista或win7的系统下，且当多段视频格式为非flv时常见，解决办法是关掉UAC。
+在控制面板中输入uac搜索，然后将其设置为关闭即可正常使用.
+
+
+==Q:为什么有部分bilibili视频无法解析？==
+A：有部分bilibili视频是需要会员权限才能观看的，对于这种视频，下载方式与nico相同，先要使用一个IE窗口（ 注意必须是IE，其它浏览器诸如FF,Chrome,Opera等都不可以）打开bilibili并用自己的帐号登录，然后再用acfunlocalizer添加任务下载即可。 
+
+另外从2.502版本以后，引入了一种新的自动登录方法，通过 网络配置-帐号设置中的“设置”选项来设置各网站的帐号，勾选其中的自动登录即可在解析及下载时自动登录。
+
+在设置弹出的对话框中，注意无论是新添新站点还是修改以前的帐号，记得在修改完之后点“+”，然后再保存，否则无法保存。
+
+点“X”可以删除当前站点，注意对于bilibili和nico两个默认站点是无法删除的
+
+
+==Q:为什么明明IE浏览器已经缓冲好了，但是下载器就是不能直接从缓存中抓取视频？==
+A:目前出现的原因一般有两个：
+ # 使用了类似pp加速器一类的东西，它们会截获ie加载视频节目的消息，并将视频缓存到其它位置去，装有这类软件的机器上acfunlocalizer是无法直接抓取缓存的。
+ # IE的缓冲区设置过小，有些看似已缓冲好的视频可能在下一个视频开始缓冲的时候就已经被系统自动删掉了，请检查IE中缓存文件夹容量的设置,确保其不要太小。
+
+
+==Q:为什么有时候下载完视频后并没有出现视频，而是弹出一个脚本运行的窗口？并且有时会被360提示有安全问题？==
+A:一般出现脚本运行窗口是因为下载的视频为分段的mp4视频，程序正在使用ffmpeg对其进行合并压缩，出现脚本运行窗口是正常的，请不要关闭，如果有其它杀毒或安全软件提示，请允许它运行，没有任何安全隐患。如果不让它运行，将得不到最终的视频文件。
+
+根据分段的多少、视频大小以及机器的快慢不同，脚本可能运行数分钟至数小时，在运行过程中请不要中止，并确保系统缓存有足够的空间，直至脚本窗口提示按任意键结束时，视频文件才会被正确创建。
+
+也有些情况会因下载分段视频过程中出现网络传输错误造成文件损坏而得不到最终的视频文件，遇到这种情况，您可以重新启动acfunlocalizer再下载一次，或联系作者解决。
+
+
+==Q:为什么有时候会出现内存不足的错误?==
+A:一般原因为下载某视频出错，再次重新下载时出现这种问题。您可以将原来下载的任务残存文件删除后，再次添加该任务。或者在再次添加该任务时，指定另一个下载目录，可以避免出现该问题。
+还有一个原因是保存名称中出现了系统文件名非法字符，比如“？”这种，请注意检查保存的文件名。
+
+
+==Q:我如何快速调整正在下载列表中的任务顺序？==
+A:选择欲上移或下移的任务（可多选），然后从右键菜单中选择“向上”或“向下”，此外，还可以用Ctrl+方向键（向上/向下）的快捷键调整。暂不支持拖拽。
+
+
+
+=字幕转换=
+==Q:我以前用过其它一些下载弹幕的工具，我不需要从网络上再次下载弹幕，有没有办法转换本地的弹幕成SSA格式的字幕？==
+A:可以，你可以点击“转换本地字幕”，并选择需要转换的文件,一次可以选择多个弹幕批量转换。 
+
+==Q:以前AcFun网站的弹幕格式与现在的不同，可以转换吗？==
+A:本程序拥有下载老版acfun网站的视频与弹幕的功能，下载转换时可以自动识别老版与新版，但是在转换本地时，需要要“配置”中载入相应的设置,。 
+
+==Q:如何打开/关闭滚动字幕在追上其它字幕时自动换行的功能?==
+A:将"配置"中转换设置面板中的“弹幕退避”这一项打上勾表示开启此功能.
+
+==Q:所谓的更新是什么意思？如何进行？==
+A:比如第一天你下载过了一个视频A和弹幕，过了两天后你发现A的弹幕被冲掉了一部分，但是新加的弹幕也很值得收藏，这样你可以使用更新字幕的功能，将新加入的弹幕与原有的弹幕合并成一个字幕文件（程序自动去掉重复弹幕）。
+
+使用方法：在已完成任务列表中选中一个任务，然后点击“更新”按钮。需要注意的是旧弹幕文件将会被覆盖。
+
+但是注意nico类的弹幕是无法更新的，此功能只支持Acfun.
+
+
+==Q:有些视频在acfun上被分割成了part1,part2这样的,如何下载并合并成同一个文件?==
+A:第一步像普通视频一样将每一部分都下载下来,(你会发现在你观看part2时与part1时的地址是不一样的);
+
+下载完成后, 点击"合并本地视频",在弹出窗口中点击"+"增加你要连接的视频, 在左边的列表中从上到下的顺序为连接的顺序,你可以用"↓""↑"来控制它们的顺序,可以通过"-"删除不需要连接的视频,设定好后点"OK", 程序会弹出一个用于设定保存名称的窗口,输入要保存的名字点击保存即可. 
+
+注意:在连接视频时字幕要与视频同名且在同一目录下. 
+
+==Q:我转换出来的字幕有些会有错位,这是怎么回事?==
+A:原因有以下几种:
+ * 原始的字幕就错位了;
+ * 程序出bug了;
+ * 你没有填写正确的视频宽高比.
+ * 你没有设定去除末尾半角空格.
+
+==Q:转换的字幕里有很多没用的评论，我该如何去掉它们？==
+A:请使用配套的Acfun字幕过滤器(acfunsubfilter)．
+
+==Q:如何进行多个字幕的合并？==
+A:首先你要知道每个弹幕对应的视频长度是多长，单位为秒。
+ # 用acfunsubfilter把第二段及以后的弹幕利用edit->shiftsubs按提示给弹幕加时间偏移，比如第一段视频时间长度为400秒，则将第二段弹幕的时间应向后偏移400秒。加完偏移后保存。
+ # 用acfunlocalizer将保存后的若干段弹幕转换为ssa字幕
+ # 用记事本打开转换后的字幕，并把第二段及以后的字幕中的[Events]以后所有以“Dialogue:”开头的行依次拷贝到第一段字幕的末尾，然后保存第一段字幕，并修改其文件名与视频名相同即可。
+
+
+==Q:为什么在手动转换字幕的时候跳出程序崩溃的窗口？==
+A:目前已知的一种情况是字幕所在的文件夹过深或文件名过长导致超出windows系统限制，请确保xml字幕文件绝对路径不超过260字节。
+
+
+==Q:我是否可以在下载自动转换弹幕时只保留神弹幕？==
+A:你可以载入每一个转换设置，并将“只转换特效弹幕”选项勾选，然后保存该设置，以后每次下载的时候就只会转换带有颜色和位置定位信息的特效弹幕。
+
+注意：在2.603之后，该功能对acfun和bilibili格式的弹幕将修正行为为：只转换acfun和bilibili的锁定弹幕。
+
+如果对于这种过滤方式感觉太粗糙，不够精细，请使用配套的Acfun字幕过滤器(acfunsubfilter)。
+
+
+==Q:如何关闭分层弹幕渲染？==
+A:关闭acfunlocalizer后，打开currentconfig.cfg,将其中的<IsMultiLayer>1</IsMultiLayer>中的1改为0，保存后退出，再次打开acfunlocalizer即可。
+
+此外，在2.600版本之后，在高级转换设置中还增添了是否分层渲染的开关。
+
+==Q:为什么下载转换的弹幕比网站上的少了很多？==
+A:请检查“配置”－〉“过滤配置”中的正则表达式的设置,如果不需要过滤，请清空该项。
+
+
+==Q:为什么手动转换的弹幕比自动下载时转换的少了很多？==
+A:请在手动转换之前，选择与待转换弹幕格式相对应的转换配置
+
+"配置"－>"转换设置"->"载入转换设置"从下拉列表中选择相对应的配置后，再进行手动转换。
+
+
+
+=任务列表=
+==Q:如何重新下载历史任务列表中的任务？==
+A:选中任务后右键，选择重新下载。
+
+==Q:如何快速打开已下载完的任务？==
+A:双击任务的“下载名称”栏即可,1.40版之后也可以使用右键菜单
+
+==Q:任务列表中的↓√×T表示什么意思？==
+A:↓表示正在下载的，√表示已经下载完成的，×表示以前下载过，但是因为种种原因出错没有下载完或转换完, T表示此任务已停止,除非重新开始下载,否则它不会自动下载; 任务状态为空白的,说明它进入了等待下载列表。
+
+==Q:如何调整下载任务的顺序？==
+A:只能调整待下载的任务的顺序，可以选中后右键选择向上或向下，顺序对正在下载的任务不影响，仅影响处在待下载列表中的任务，当有任务完成时，将会下载待下载列表中最上面的任务。
+
+==Q:为什么有些任务无法删除？==
+A:可能有以下情况：
+ # 不能删除正在下载的任务。
+ # 如果不是情况1,请先选择一下左边的树状视图的某个分类，然后再进行删除。
+
+==Q:在长期下载过程中，列表越来越长，很难找到以前下载到的视频，怎么办？==
+A:2.305版本之后添加了查找功能，在主页->查找->关键字的文本框中输入要查找视频名称的关键词，回车后列表中即可显示所有包含该关键词的已下载的视频节目．注意：关键词只能有一个． 
+
+
+=视频字幕播放=
+==Q:为什么转换后的字幕在播放本地视频的时候没有出现弹幕？==
+A:请安装k-lite mega codec pack或者“完美解码”这样的包含vobsub的解码包。并且要保证字幕名字与视频名字相同，且文件在同一目录下。个人更推荐klite mega codec pack
+
+==Q:为什么字幕在播放时比较卡？==
+A:有多方面的原因，有可能是因为解码器比较老旧（请更新解码包），也可能是播放器的问题（不要使用暴风影音，而使用kmplayer, wmp, mpc等播放器），还有可能是您的CPU太慢了。。。>_<
+
+==Q:为什么播放时没有声音？==
+A:请更新解码包。
+
+==Q:为什么播放时没有图像只有声音？==
+A:请确认在网页上播放时是否有图像，如果有，那么请更新解码包。
+
+==Q:KMP无法像AC那样让字幕滚动飘过，就是普通外挂电影字幕那样,集中显示在下方，KMP上还需要设置一下什么吗?==
+A:解决方法步骤如下： 
+ # 右键-》字幕-》字幕效果-》支持扩展特性 不要勾这个选项，如果勾上了，请取消掉它 （1.22版以后不必要）
+ # 在kmp中按F2，弹出窗口中选择字幕处理-》多重字幕/其它 ，在右边的“高级”选项卡中的“外部字幕模块”中勾选“开启”“实时渲染”两个选项。 
+ # 关掉kmp重新打开，就可以看到与acfun一样的效果了。
+
+==Q:完美解码的KMP中出现了2个字幕,一个正常的,一个很卡,这是怎么回事?==
+A:解决方法步骤如下：
+ # 参数设置->字幕处理->多重字幕/其他->高级
+勾选"开启", 勾选"实时渲染",勾选"保持视频画面内字幕的相对位置"
+ # 关掉kmp, 打开完美解码设置,字幕插件选择"禁用vobsub"
+ # 重新开启kmp载入视频.
+
+==Q:为什么下下来的视频播放不出来,一秒一分钟的快进黑屏?==
+A:这是由于某些视频采用的特殊压制方法,具体解决办法参见:http://tieba.baidu.com/f?ct=335675392&tn=baiduPostBrowser&sc=7173869528&z=689789695#7173869528 感谢真红の瞳℡ ;在2.004版本之后，下载转换器本身也可以进行此类视频修复。
+
+==Q:为什么下下来的视频修复时显示不必修复，但是又不能播放?==
+A:默认修复选项都没有选中，请将配置->修复配置中的选项都勾选后再进行修复。
+
+==Q:为什么下下来的视频播放时像幻灯片一样，特别的卡？==
+A:如果你是用的klite mega codec pack播放的，这种视频是UP主压制时flv包的时间标签与实际的视频不相符导致的，可以使用kmplayer来播放，具体设置为：
+
+  选项－》参数设置－》滤镜－》分离器－》常规－》flv中选择“kmp flv分离器”
+
+但是这样也仅能正常播放视频而已，弹幕仍然会一闪而过甚至很多都不出现，解决办法目前只能是重新压制视频。
+当然还有另一种可能就是视频分辩率和码率都太高，超出了您的爱机的处理能力……
+
+
+==Q:为什么我装了klite mega codec pack，使用wmp或mpc仍然无法观看到流畅的弹幕?==
+A:这种现象出现的原因很多，现在已知的原因包括：
+ * 如果你是用的wmp播放，使用vobsub(vsfilter)挂载字幕，出现字幕卡的现象，那么请检查：
+ vobsub配置->misc->pre-buffer subpictures选项,如果已勾选，则把勾去掉.
+ vobsub配置窗口可以在播放视频时双击系统托盘的vobsub图标（绿箭头），或者从开始－>程序－>Klite codec pack->Configuration->DirectVobsub找到;
+ * 如果你用的是mpc播放，请检查：
+ View->Options->Subtitles->Texture Settings
+  * 将其中的Sub pictures to buffer数值设为0
+  * 将其中的Allow animation when buffering选项勾选.
+
+
+
+=其它= 
+==Q:有时在下载时会出现C++Runtime错误，这是为什么？==
+A:这是因为程序还是beta版本，还有不少没有排除的错误，这可能跟程序逻辑有关，也有可能跟你当时的网络情况有关，如果你希望得到解决，请联系[mailto:chunqing286@gmail.com 作者] 
+
+==Q:清除缓存.bat这个是干什么用的?==
+A:由于下载会使用到系统的缓存文件夹,大量下载后可能会在里面产生一些垃圾文件,您可以运行这个批处理文件,用于释放空间.
+
+==Q:如何修改默认关闭的动作？==
+A:关闭程序，删除程序所在目录的CurrentConfig.cfg，重启程序，当再次点击关闭按钮时将会再次询问关闭默认动作。
+
+==Q:为什么运行程序时报找不到xxxx.dll等类似错误？==
+A:在2.400版本之后，为缩减程序体积，采用了动态链接方案，请至这里下载解压缩后将其中的dll文件全部复制到与AcFunLocalizer.exe相同的文件夹下，即可正常运行。。
+
+==Q:英文系统出现乱码怎么办？==
+A:以英文版windows xp为例，Start->Control Panel->Date，Time，Language, and Regional Options->Regional and Language Options
+
+在弹出窗口中Regional Options选项卡中的Standards and formats中的下拉列表中选择Chinese(PRC), 在Advanced选项卡中的Language for non-Unicode programs下拉列表中选中Chinese(PRC)，然后点击OK按钮保存设置，重启计算机后即可正常。
+
+
+==Q:如何添加IE右键下载菜单？==
+A： 1.安装使用：首先双击运行install.bat，中间如果有防火墙阻止运行，请选择不要阻止。然后手动运行一次Acfunlocalizer.exe，以后就都可以通过右键点击链接或页白空白处，在菜单中选择“使用acfunlocalizer下载”来下载链接指向的页面或者当前页。安装后需要重新启动IE才可使用。
+
+2.卸载：运行uninstall.bat，即可卸载。
